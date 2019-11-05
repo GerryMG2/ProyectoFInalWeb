@@ -1,5 +1,25 @@
 extends layout
 block content
     form(action="/register", method="post")
-        label(for="name") 
-        input(type="text") ingrese
+        div.form-group
+            label(for="name") Name:
+            input#name.form-control(type='text', placeholder='' name='name')
+        
+        div.form-group
+            label(for="code") Codigo:
+            input#code.form-control(type='text', placeholder='' code='code')
+        
+
+        div.form-group
+            label(for="email") Email:
+            input#email.form-control(type='email', placeholder='name@gmail.com' code='email')
+
+        div.form-group
+            label(for='pw') Password:
+            input#pw.form-control(type='password' name='password')
+        
+        div.form-group
+            label(for='pw2') Confirm Password:
+            input#pw2.form-control(type='password' name='confirmPassword')
+        button.btn.btn-primary(type='submit') Sign up
+    p Hola #{nombre}

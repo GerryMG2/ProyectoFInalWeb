@@ -11,7 +11,7 @@ var reservationSchema = new Schema(
       typeReserv: {type: String},
       hourReserv:{type: Date},
       status:{type:String},
-      inCharge:[ObjectId],
+      
 
     }
 );
