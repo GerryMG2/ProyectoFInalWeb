@@ -9,6 +9,8 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var app = express();
 
+//set up express session
+var session = require('express-session');
 
 
 //Set up mongoose connection
@@ -47,5 +49,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//set up sessions in app
+app.use(session({
+  secret: '7\n\xca\xef\xe2\xa4RNFqOPq\xb7\x8c\xb1\xbb\xfd\xd1kTUI\xf2\x11\xf9C/\x06!\xdb\x06\xfc\x1f',
+  resave: false,
+  saveUninitialized: true
+}))
 
 module.exports = app;
