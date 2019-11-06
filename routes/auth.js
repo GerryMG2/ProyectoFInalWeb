@@ -3,7 +3,7 @@ var router = express.Router();
 const querystring = require('querystring');
 /* GET home page. */
 router.get('/register', function (req, res, next) {
-  res.render('register', { title: 'Registro' });
+  res.render('register_page', { title: 'Registro' });
 });
 
 router.post('/register', function (req, res, next) {
