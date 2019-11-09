@@ -1,4 +1,6 @@
 const querystring = require('querystring');
+const serviceUsers = require("../services/userService");
+const servicioUsuarios = serviceUsers();
 
 
 function loginGet(req,res){
@@ -17,4 +19,6 @@ function loginPost (req, res) {
     }
   }
 
+
+  // servicioUsuarios.validate(req.body.username, req.body.password);
   module.exports.loginPost=loginPost

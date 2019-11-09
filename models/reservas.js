@@ -4,8 +4,8 @@ var Schema = mongoose.schema;
 
 var reservationSchema = new Schema(
     {
-      userId:ObjectId,
-      LabId:ObjectId,
+      userId: Schema.Types.ObjectId,
+      LabId:Schema.Types.ObjectId,
       date: { type: Date, default: Date.now },
       dayReserv:[String],
       typeReserv: {type: String},

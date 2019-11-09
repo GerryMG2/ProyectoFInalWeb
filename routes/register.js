@@ -1,11 +1,12 @@
 
 var express = require('express');
 var router = express.Router();
-var auth = require('../auth/auth')
 
-router.get('/',controllerAuth.register);
+var registerController = require("../controllers/registerController");
 
-router.post('/', controllerAuth.registerP);
+router.get('/',registerController.register);
+
+router.post('/', registerController.registerP);
 
 module.exports=router;
 

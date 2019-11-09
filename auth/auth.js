@@ -3,7 +3,7 @@ var auth = function(req, res, next) {
     if (req.session && req.session.user === "jose" && req.session.admin)
       return next();
     else
-      return res.redirect('login');
+      return res.redirect('/login');
   };
 
 
