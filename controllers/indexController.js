@@ -1,5 +1,5 @@
 
-function indexGet(req, res) {
+async function indexGet(req, res) {
     console.log(req.query.nombre)
     res.render('index', { title: 'Main page', nombre: req.query.nombre });
   }

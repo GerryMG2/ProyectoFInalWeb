@@ -1,29 +1,59 @@
+const querystring = require("querystring");
+const serviciousuario = require("../services/userService");
+const servicioUser = new serviciousuario();
+const bcrypt = require('bcrypt');
 
-
-const serviciousuario = require("../services/userService")();
-
-
-function register(req,res){
-    res.render('register_page', { title: 'Registro' });
+async function register(req,res){
+    res.render('register_page', { title: 'Registro',msg: "" });
 }
 
-const querystring = require("querystring");
 
 module.exports.register = register;
 
-function postregister (req, res) {
-
-    usuario = {
-      username: req.body.username,
-    }
-    serviciousuario.create(usuario);
-
-
-    const query = querystring.stringify({
-      "nombre": req.body.name,
-    });
-    res.redirect('/main?' + query);
+async function postregister (req, res) {  
   
+  try {
+    console.log(req.body);
+    if(req.body.password == req.body.confirmPassword){
+      var passHash = '';
+  
+      bcrypt.hash(req.body.password, 10, function(err, hash){  
+        if(err){
+          msg = "Ups algo paso :("
+        res.render('register_page', { title: 'Registro',msg: msg });
+        }else{
+          console.log("hash");
+          console.log(hash);
+          passHash = hash;
+        }
+      })
+  
+      var msg = "";
+      var usuario = {
+        name: req.body.name,
+        code: req.body.code,
+        email: req.body.email,
+        password: passHash
+      };
+
+      console.log(usuario)
+  
+      var validar = await servicioUser.create(usuario);
+      if(validar){
+        res.render('login_page', { title: 'Registro',msg: msg });
+      
+      }else{
+        msg = "No se pudo registrar"
+        res.render('register_page', { title: 'Registro',msg: msg });
+      }    
+    
+      }else{
+        msg = "Las contraseñas no son iguales!"
+        res.render('register_page', { title: 'Registro',msg: msg });
+      }      
+  } catch (error) {
+    console.log(error);
   }
+}
 
   module.exports.registerP = postregister;

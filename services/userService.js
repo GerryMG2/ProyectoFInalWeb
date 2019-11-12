@@ -10,21 +10,29 @@ class userService{
     }
 
 
-    create(usuario){
+    async create(usuario){
+        const newUsuario = new this.db(usuario);
+        await newUsuario.save().then((err,result) => {
+            if(err){
+                return false;
+            }
+            console.log(result);
+            return true;
+            
+        });
         
-        //TODO: method to create users
     }
 
-    update(usuario){
+    async update(usuario){
         //TODO: method to update users
     }
 
 
-    delete(id){
+    async delete(id){
         // TODO: Method to delete users
     }
 
-    validate(username,password){
+    async validate(username,password){
         
 
         //TODO: validaion credentials

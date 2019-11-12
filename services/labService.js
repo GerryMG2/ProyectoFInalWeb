@@ -7,17 +7,17 @@ class labsService{
         this.dbL=dbLabs;
     }
 
-    create(laboratorio){
+    async create(laboratorio){
         //TODO method to create labs
 
     }
 
-    update(laboratorio){
+    async update(laboratorio){
         //TODO: method to update labs
 
     }
 
-    delete(laboratorio){
+    async delete(laboratorio){
         //TODO: method to delete labs
 
     }

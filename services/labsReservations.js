@@ -9,22 +9,22 @@ class labsReservations{
         this.dbR=dbReserv
     }
 
-    create(laboratorio){
+    async create(laboratorio){
         //TODO method to create reservations
 
     }
 
-    update(laboratorio){
+    async update(laboratorio){
         //TODO: method to update reservations
 
     }
 
-    delete(laboratorio){
+    async delete(laboratorio){
         //TODO: method to delete reservations
 
     }
 
-    approve(laboratorio){
+    async approve(laboratorio){
         //TODO: method to approve reservations
 
     }

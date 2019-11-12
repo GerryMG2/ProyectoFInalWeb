@@ -8,7 +8,7 @@ const authController = require('../controllers/authController')
 
 
 
-router.get('/',authController.loginGet );
+router.get('/',authController.loginGet);
 
 router.post('/',authController.loginPost );
 

@@ -2,15 +2,15 @@ form(action="/register", method="post")
         .field
             label.label(for="name") Name:
             .control
-                input#name.input.is-success(type='text', placeholder='' name='name')
+                input#name.input(type='text', placeholder='' name='name')
         .field
             label.label(for="code") Codigo:
             .control
-                input#code.input(type='text', placeholder='' code='code')
+                input#code.input(type='text', placeholder='' name='code')
         .field
             label.label(for="email") Email:
             .control
-                input#email.input(type='email', placeholder='name@gmail.com' code='email')
+                input#email.input(type='email', placeholder='name@gmail.com' name='email')
 
         .field
             label.label(for='pw') Password:

@@ -1,0 +1,12 @@
+form(action="/login", method="post")
+        .field
+            label.label(for="code") Codigo:
+            .control
+                input#code.input(type='text', placeholder='' code='code')
+
+        .field
+            label.label(for='pw') Password:
+            .control
+                input#pw.input(type='password' name='password')
+        
+        button.button(type='submit') Sign in
