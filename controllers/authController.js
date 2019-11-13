@@ -23,10 +23,13 @@ async function loginPost(req, res) {
         if (validate) {
           req.session.user = req.body.code;
           req.session.admin = superUser;
-          if (req.session.returnto) {
-            var redirect = req.session.returnto;
-            delete req.session.returnto;
-            res.render(redirect);
+          if (req.session.returnTo) {
+            console.log("Cookie: ");
+            console.log(req.session.returnTo);
+
+            var redirect = req.session.returnTo;
+            delete req.session.returnTo;
+            res.redirect(redirect);
           } else {
             res.render("index",{title: "Main Page", nombre: req.session.user, admin: req.session.superUser});
           }
