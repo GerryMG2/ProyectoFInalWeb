@@ -17,7 +17,7 @@ var session = require('express-session');
 //Set up mongoose connection
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb+srv://crisarevalom:krismiranda7@pw2019-lg9ht.mongodb.net/test?retryWrites=true&w=majority';
-mongoose.connect(mongoDB);
+mongoose.connect(mongoDB,{useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -30,6 +30,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: '7\n\xca\xef\xe2\xa4RNFqOPq\xb7\x8c\xb1\xbb\xfd\xd1kTUI\xf2\x11\xf9C/\x06!\xdb\x06\xfc\x1f',
+  resave: true,
+  saveUninitialized: true
+}))
 
 app.use('/', indexRouter);
 app.use('/login', authRouter);
@@ -52,10 +58,6 @@ app.use(function(err, req, res, next) {
 });
 
 //set up sessions in app
-app.use(session({
-  secret: '7\n\xca\xef\xe2\xa4RNFqOPq\xb7\x8c\xb1\xbb\xfd\xd1kTUI\xf2\x11\xf9C/\x06!\xdb\x06\xfc\x1f',
-  resave: false,
-  saveUninitialized: true
-}))
+
 
 module.exports = app;

@@ -1,51 +1,67 @@
+const dbUser = require("../models/user");
+const bycrypt = require("bcrypt");
+class userService {
+  constructor() {
+    this.db = dbUser;
+  }
 
+  create(usuario, cb) {
+    try {
+      const newUsuario = new this.db(usuario);
+      newUsuario.save((err, result) => {
+        console.log("Err: ");
+        console.log(err);
+        console.log("result: ");
+        console.log(result);
 
-const dbUser = require('../models/user');
-
-
-class userService{
-    
-    constructor(){
-        this.db = dbUser;
+        if (err) {
+          console.log("Error: ");
+          console.log(err);
+          console.log("*****");
+          cb(false);
+        }
+        console.log("Resultado: ");
+        console.log(result);
+        console.log("*******");
+        cb(true);
+      });
+    } catch (error) {
+      console.log("Error Try Catch Service: ");
+      console.log(error);
     }
+  }
 
+  update(usuario, cb) {
+    //TODO: method to update users
+  }
 
-    async create(usuario){
-        const newUsuario = new this.db(usuario);
-        await newUsuario.save().then((err,result) => {
-            if(err){
-                return false;
+  delete(id, cb) {
+    // TODO: Method to delete users
+  }
+
+  validate(code, password, cb) {
+    try {
+      this.db.findOne({ code: code }, "password superuser", (err, user) => {
+        if (err) {
+          console.log(err);
+        } else {
+          if (bycrypt.compareSync(password, user.password)) {
+            if (user.superUser) {
+              cb(true, true);
             }
-            console.log(result);
-            return true;
-            
-        });
-        
+            cb(true, false);
+          } else {
+            cb(false, false);
+          }
+        }
+      });
+    } catch (error) {
+      cb(false);
+      console.log(error);
     }
 
-    async update(usuario){
-        //TODO: method to update users
-    }
-
-
-    async delete(id){
-        // TODO: Method to delete users
-    }
-
-    async validate(username,password){
-        
-
-        //TODO: validaion credentials
-    }
-
-
-
-
-
-
-
-
-
+    //TODO: validaion credentials
+  }
 }
 
 module.exports = userService;

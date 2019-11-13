@@ -9,7 +9,6 @@ var userSchema = new Schema(
         email: {type: String, unique: true}, 
         password: {type: String, required: true},
         superUser:{type: Boolean, default: false},
-
     }
 );
 
