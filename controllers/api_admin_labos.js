@@ -76,7 +76,7 @@ async function updateLaboratorio(req, res) {
   }
 }
 
-moudule.exports.updateLab = updateLaboratorio;
+module.exports.updateLab = updateLaboratorio;
 
 async function deleteLaboratorio(req,res){
     try {
