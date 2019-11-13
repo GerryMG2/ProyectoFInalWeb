@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var registerRouter = require('./routes/register');
+var logoutRouter = require('./routes/logout')
 var app = express();
 
 
@@ -16,8 +17,8 @@ var session = require('express-session');
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb+srv://crisarevalom:krismiranda7@pw2019-lg9ht.mongodb.net/test?retryWrites=true&w=majority';
-mongoose.connect(mongoDB,{useNewUrlParser: true});
+var mongoDB = 'mongodb://crisarevalom:krismiranda7@pw2019-shard-00-00-lg9ht.mongodb.net:27017,pw2019-shard-00-01-lg9ht.mongodb.net:27017,pw2019-shard-00-02-lg9ht.mongodb.net:27017/test?ssl=true&replicaSet=PW2019-shard-0&authSource=admin&retryWrites=true&w=majority';
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -39,15 +40,16 @@ app.use(session({
 
 app.use('/', indexRouter);
 app.use('/login', authRouter);
-app.use('/register',registerRouter);
+app.use('/register', registerRouter);
+app.use('/logout',logoutRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

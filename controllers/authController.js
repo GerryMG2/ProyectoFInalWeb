@@ -28,7 +28,7 @@ async function loginPost(req, res) {
             delete req.session.returnto;
             res.render(redirect);
           } else {
-            res.render("index",{title: "Main Page"});
+            res.render("index",{title: "Main Page", nombre: req.session.user, admin: req.session.superUser});
           }
         }else{
           res.render("login_page",{title: "login", msg: "El usuario o la contraseña es incorrecta"})
