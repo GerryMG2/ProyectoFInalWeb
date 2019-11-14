@@ -1,5 +1,5 @@
 async function laboratorios(req, res) {
-  res.render("admin_labo_page", { title: "Registro", msg: "" });
+  res.render("labo_page_admin", { title: "Registro", msg: "" });
 }
 
 module.exports.laboratorios = laboratorios;

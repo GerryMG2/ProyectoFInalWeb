@@ -1,11 +1,15 @@
 extends layout_admin
 
+block header
+    .container.has-text-centered
+        h1 Laboratorios
 block content
-    .container#formulario
-        include form_lab
+    .container
+        .section#formulario.has-background-white-ter
+            include form_lab
     .container#lista
 
 
 
 block scripts
-    script(src="/javascript/labo_page_admin")
+    script(src="/javascript/admin_labs.js")

@@ -1,0 +1,46 @@
+form
+    .field.is-horizontal
+        .field-label.is-normal.is-small
+            label.label(for="nombre") Nombre: 
+        .field-body
+            .field.has-addons
+                p.control.is-expanded
+                    input#name.input.is-small(type='text', placeholder='' name='name')
+            .field-label.is-normal.is-small
+                label.label.is-small(for="codigo") Codigo:
+            .field.has-addons
+                p.control.is-expanded
+                    input#name.input.is-small(type='text', placeholder='' name='name')
+    
+            .field-label.is-normal.is-small
+                label.label(for="name") Capacidad:
+        
+            .field.has-addons
+                p.control.is-expanded
+                    input#name.input.is-small(type='number', placeholder='' name='name')    
+    
+    
+    .field.is-horizontal
+        .field-label.is-normal.is-small
+            label.label(for="edificio") Edificio:
+        .field-body
+            .field.has-addons
+                .control.is-expanded
+                    .select.is-fullwidth.is-small
+                        select#opciones-edificios(name="building")
+            .field-label.is-normal.is-small
+                label.label(for="encargado") Encargado:
+            .field.has-addons
+                .control.is-expanded
+                    .select.is-fullwidth.is-small
+                        select#opciones-inCharge(name="inCharge")
+        
+    .field.is-horizontal
+        .field-label
+        .field-body
+            .field.is-grouped.is-grouped-right
+                .control       
+                    button#btn-principal.button.is-small(type='submit') Crear
+            
+                .control  
+                    button#btn-limpiar.button.is-small(type='submit') Limpiar
