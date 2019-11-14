@@ -5,6 +5,45 @@ class userService {
     this.db = dbUser;
   }
 
+
+  getEncargados(cb) {
+    try {
+      this.db.find({superUser: true}, function (err, docs) {
+        if (err) {
+          console.log("Error: ");
+          console.log(err);
+          cb(false, {});
+        } else {
+          cb(true, docs);
+        }
+      });
+
+    } catch (error) {
+      cb(false, {});
+      console.log("Error: ");
+      console.log(error);
+    }
+  }
+
+  get(filtros, cb) {
+    try {
+      this.db.find(filtros, function (err, docs) {
+        if (err) {
+          console.log("Error: ");
+          console.log(err);
+          cb(false, {});
+        } else {
+          cb(true, docs);
+        }
+      }).skip(10 * (pags - 1)).limit(10);
+
+    } catch (error) {
+      cb(false, {});
+      console.log("Error: ");
+      console.log(error);
+    }
+  }
+
   create(usuario, cb) {
     try {
       const newUsuario = new this.db(usuario);

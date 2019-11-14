@@ -1,4 +1,4 @@
-form
+form#form-principal
     .field.is-horizontal
         .field-label.is-normal.is-small
             label.label(for="nombre") Nombre: 
@@ -10,14 +10,14 @@ form
                 label.label.is-small(for="codigo") Codigo:
             .field.has-addons
                 p.control.is-expanded
-                    input#name.input.is-small(type='text', placeholder='' name='name')
+                    input#code.input.is-small(type='text', placeholder='' name='name')
     
             .field-label.is-normal.is-small
                 label.label(for="name") Capacidad:
         
             .field.has-addons
                 p.control.is-expanded
-                    input#name.input.is-small(type='number', placeholder='' name='name')    
+                    input#capacity.input.is-small(type='number', placeholder='' name='name')    
     
     
     .field.is-horizontal
@@ -40,7 +40,7 @@ form
         .field-body
             .field.is-grouped.is-grouped-right
                 .control       
-                    button#btn-principal.button.is-small(type='submit') Crear
+                    button#btn-principal.button.is-small Crear
             
                 .control  
-                    button#btn-limpiar.button.is-small(type='submit') Limpiar
+                    button#btn-limpiar.button.is-small Limpiar

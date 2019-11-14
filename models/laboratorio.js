@@ -8,7 +8,7 @@ var labSchema = new Schema(
       code:{type:String},
       name:{type: String},
       capacity:{type: Number},
-      inCharge:[{type: Number}],
+      inCharge:{type: String},
     }
 );
 module.exports = mongoose.model("lab", labSchema);
