@@ -31,12 +31,14 @@ class labsService {
     //TODO: method to update labs
     try {
       var query = { "code ": laboratorio.code };
-      this.dbL.findOneAndUpdate(query, laboratorio, { upsert: true }, function (err, doc) {
+      this.dbL.findOneAndUpdate(query, laboratorio, { upsert: true }, function(
+        err,
+        doc
+      ) {
         if (err) cb(false);
-        console.log("Document: ")
+        console.log("Document: ");
         console.log(doc);
         cb(true);
-
       });
     } catch (error) {
       console.log(error);
@@ -47,7 +49,7 @@ class labsService {
   delete(idLaboratorio, cb) {
     //TODO: method to delete labs
     try {
-      laboratorio.remove({ _id: idLaboratorio }, function (error) {
+      laboratorio.remove({ _id: idLaboratorio }, function(error) {
         if (error) {
           console.log("Error ");
           console.log(error);
@@ -55,7 +57,7 @@ class labsService {
         } else {
           cb(true);
         }
-      })
+      });
     } catch (error) {
       console.log("Error en delete: ");
       console.log(error);
@@ -65,21 +67,37 @@ class labsService {
 
   get(filtros, pags, cb) {
     try {
-      console.log(filtros)
-      this.dbL.find(filtros, function (err, docs) {
-        if (err) {
-        
-          console.log("Paginas: ");
-          console.log("Error: ");
-          console.log(err);
-          cb(false, {}, paginas);
-        } else {
-          var paginas = docs.length;
-          paginas = Math.ceil(paginas / 10);
-          cb(true, docs, paginas);
-        }
-      }).skip(10 * (pags - 1)).limit(10);
-
+      let filtrosMade = {};
+      if (filtros == "") {
+      } else {
+        filtrosMade = {
+          name: filtros
+        };
+      }
+      console.log(filtrosMade);
+      
+      this.dbL
+        .find(filtrosMade, function(err, docs) {
+          if (err) {
+            console.log("Paginas: ");
+            console.log("Error: ");
+            console.log(err);
+            cb(false, {}, paginas);
+          } else {
+          
+            dbLabs.find(filtrosMade, (err, docs2) => {
+              if (!err) {
+                var paginas = docs2.length;
+                paginas = Math.ceil(paginas / 10);
+                cb(true, docs, paginas);
+              } else {
+                cb(false, {}, 0);
+              }
+            });
+          }
+        })
+        .skip(10 * (pags - 1))
+        .limit(10);
     } catch (error) {
       cb(false, {}, 0);
       console.log("Error: ");

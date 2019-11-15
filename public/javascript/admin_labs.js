@@ -127,7 +127,7 @@ crearLabFetch = (e,body, formulario, totalPaginas) => {
         }).then(()=>{
             console.log("esperar medio segundo");
             setTimeout(() => {
-                getLabs({}, 1, totalPaginas, bodytable,e);    
+                getLabs("", 1, totalPaginas, bodytable,e);    
             }, 500);
             
         })
@@ -135,6 +135,7 @@ crearLabFetch = (e,body, formulario, totalPaginas) => {
         
 
 };
+
 
 
 
@@ -194,7 +195,7 @@ function start() {
     llenarEdificios(selectEdificios);
     llenarEncargados(selectEncargado);
 
-    getLabs({}, 2, totalPaginas, bodytable);
+    getLabs("", 1, totalPaginas, bodytable);
 }
 
 
