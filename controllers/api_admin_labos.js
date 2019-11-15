@@ -3,11 +3,12 @@ const labService = new labServices();
 
 async function getLaboratorios(req, res) {
   try {
-    labService.get(req.params.filtros, req.params.page, (validar, docs, pags) => {
+    console.log("params", req.query.filtros)
+    labService.get(req.query.filtros, parseInt(req.query.page), (validar, docs, pags) => {
       if (validar) {
         var respuesta = {
           docs: docs,
-          paginas: pags
+          paginas: parseInt(pags)
         }
         res.status(200).json(respuesta);
       }

@@ -30,8 +30,8 @@ class labsService {
   update(laboratorio, cb) {
     //TODO: method to update labs
     try {
-      var query = { "code ": laboratorio.code }; 
-      this.dbL.findOneAndUpdate(query, laboratorio, { upsert: true }, function(err,doc) {
+      var query = { "code ": laboratorio.code };
+      this.dbL.findOneAndUpdate(query, laboratorio, { upsert: true }, function (err, doc) {
         if (err) cb(false);
         console.log("Document: ")
         console.log(doc);
@@ -39,48 +39,52 @@ class labsService {
 
       });
     } catch (error) {
-        console.log(error);
-        cb(false);
+      console.log(error);
+      cb(false);
     }
   }
 
   delete(idLaboratorio, cb) {
     //TODO: method to delete labs
     try {
-        laboratorio.remove({_id: idLaboratorio}, function(error){
-            if(error){
-                console.log("Error ");
-                console.log(error);
-                cb(false);
-            }else{
-                cb(true);
-            }
-        })
+      laboratorio.remove({ _id: idLaboratorio }, function (error) {
+        if (error) {
+          console.log("Error ");
+          console.log(error);
+          cb(false);
+        } else {
+          cb(true);
+        }
+      })
     } catch (error) {
-        console.log("Error en delete: ");
-        console.log(error);
-        cb(false);
+      console.log("Error en delete: ");
+      console.log(error);
+      cb(false);
     }
   }
 
-  get(filtros,pags,cb) {
-      try {
-          this.dbL.find(filtros, function(err,docs){
-            if(err){
-                var paginas = docs.length;
-                console.log("Error: ");
-                console.log(err);
-                cb(false,{}, paginas);
-            }else{
-                cb(true,docs, 0);
-            }
-          }).skip(10 * (pags - 1)).limit(10);
-          
-      } catch (error) {
-          cb(false,{}, 0);
+  get(filtros, pags, cb) {
+    try {
+      console.log(filtros)
+      this.dbL.find(filtros, function (err, docs) {
+        if (err) {
+        
+          console.log("Paginas: ");
           console.log("Error: ");
-          console.log(error);
-      }
+          console.log(err);
+          cb(false, {}, paginas);
+        } else {
+          var paginas = docs.length;
+          paginas = Math.ceil(paginas / 10);
+          cb(true, docs, paginas);
+        }
+      }).skip(10 * (pags - 1)).limit(10);
+
+    } catch (error) {
+      cb(false, {}, 0);
+      console.log("Error: ");
+      console.log(error);
+    }
   }
 }
 

@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var labSchema = new Schema(
     {
       building:{type: String},
-      code:{type:String},
+      code:{type:String, unique: true},
       name:{type: String},
       capacity:{type: Number},
       inCharge:{type: String},
