@@ -2,18 +2,23 @@ const labServices = require("../services/labService");
 const labService = new labServices();
 
 async function getLaboratorios(req, res) {
-    try {
-        labService.get(req.body.filtros,req.body.page,(validar,docs) => {
-            if(validar){
-                res.status(200).json(docs);
-            }
-            else{
-                res.status(500).json({});
-            }
-        });
-    } catch (error) {
-        res.status(500).json({});
-    }
+  try {
+    labService.get(req.params.filtros, req.params.page, (validar, docs, pags) => {
+      if (validar) {
+        var respuesta = {
+          docs: docs,
+          paginas: pags
+        }
+        res.status(200).json(respuesta);
+      }
+      else {
+        res.status(500).json({ docs: {}, paginas: 0 });
+      }
+    });
+  } catch (error) {
+
+    res.status(500).json({ docs: {}, paginas: 0 });
+  }
 }
 
 module.exports.getLaboratorios = getLaboratorios;
@@ -57,44 +62,44 @@ async function updateLaboratorio(req, res) {
       inCharge: req.body.inCharge
     };
 
-    labService.update(labs,(validar)=>{
-        if(validar){
-            res.status(201).json({ result: "ok", msg: "Laboratorio actualizado" });
-        }
-        else{
-            res.status(500).json({result: "ok", msg: "No se pudo crear"})
-        }
+    labService.update(labs, (validar) => {
+      if (validar) {
+        res.status(201).json({ result: "ok", msg: "Laboratorio actualizado" });
+      }
+      else {
+        res.status(500).json({ result: "ok", msg: "No se pudo crear" })
+      }
     })
-    
+
 
 
 
   } catch (error) {
     console.log("Error: ");
     console.log(error);
-    res.status(500).json({ result: "error", msg: "No se pudo crear" });  
+    res.status(500).json({ result: "error", msg: "No se pudo crear" });
   }
 }
 
 module.exports.updateLab = updateLaboratorio;
 
-async function deleteLaboratorio(req,res){
-    try {
-        labService.delete(req.body._id,(validar)=>{
-            if(validar){
-                res.status(201).json({ result: "ok", msg: "Laboratorio eliminado" });
-       
-            }else{
-                res.status(500).json({ result: "error", msg: "No se pudo eliminar" });
-       
-            }
-        })
-    } catch (error) {
-        console.log("Error: ");
-        console.log(error);
+async function deleteLaboratorio(req, res) {
+  try {
+    labService.delete(req.body._id, (validar) => {
+      if (validar) {
+        res.status(201).json({ result: "ok", msg: "Laboratorio eliminado" });
+
+      } else {
         res.status(500).json({ result: "error", msg: "No se pudo eliminar" });
-       
-    }
+
+      }
+    })
+  } catch (error) {
+    console.log("Error: ");
+    console.log(error);
+    res.status(500).json({ result: "error", msg: "No se pudo eliminar" });
+
+  }
 }
 
 module.exports.deleteLab = deleteLaboratorio;

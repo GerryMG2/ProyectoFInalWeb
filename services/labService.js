@@ -67,16 +67,17 @@ class labsService {
       try {
           this.dbL.find(filtros, function(err,docs){
             if(err){
+                var paginas = docs.length;
                 console.log("Error: ");
                 console.log(err);
-                cb(false,{});
+                cb(false,{}, paginas);
             }else{
-                cb(true,docs);
+                cb(true,docs, 0);
             }
           }).skip(10 * (pags - 1)).limit(10);
           
       } catch (error) {
-          cb(false,{});
+          cb(false,{}, 0);
           console.log("Error: ");
           console.log(error);
       }
