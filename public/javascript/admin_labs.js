@@ -55,9 +55,9 @@ LabBorrar = (id, e, formulario, totalPaginas) => {
     })
     .then(response => {
       console.log("success: ", response);
-      Swal.fire(response.msg, "Continua gestionado laboratorios", "success");
+      Swal.fire(response.msg, "Continua gestionado laboratorios", response.ok);
     })
-    .then(() => {})
+    .then(() => { })
     .then(() => {
       console.log("esperar medio segundo");
       setTimeout(() => {
@@ -115,7 +115,7 @@ getLabs = (filtros, pagina, paginatotales, tabla, formulario, e) => {
 
         let btnBorrar = document.createElement("button");
         btnBorrar.innerHTML = "Borrar";
-        btnBorrar.addEventListener("click", function(e) {
+        btnBorrar.addEventListener("click", function (e) {
           e.preventDefault();
           LabBorrar(element._id, formulario, paginatotales, e);
         });
@@ -123,7 +123,7 @@ getLabs = (filtros, pagina, paginatotales, tabla, formulario, e) => {
 
         let btnEditar = document.createElement("button");
         btnEditar.innerHTML = "Editar";
-        btnEditar.addEventListener("click", function(e) {
+        btnEditar.addEventListener("click", function (e) {
           e.preventDefault();
           EditarLab(element, formulario, e);
         });
@@ -161,7 +161,7 @@ crearLabFetch = (e, body, formulario, totalPaginas) => {
     })
     .then(response => {
       console.log("success: ", response);
-      Swal.fire(response.msg, "Continua gestionado laboratorios", "success");
+      Swal.fire(response.msg, "Continua gestionado laboratorios", response.ok);
     })
     .then(() => {
       formulario.reset();
@@ -193,7 +193,7 @@ function start() {
     e.preventDefault();
     console.log(btnActualizar.classList);
     btnActualizar.classList.remove("is-hidden")
-    btnActualizar.classList += btnActualizar.classList+" is-hidden";
+    btnActualizar.classList += btnActualizar.classList + " is-hidden";
     formulario.reset();
     code.disabled = false;
   });
@@ -226,18 +226,12 @@ function start() {
   });
 
   EditarLab = (element, formulario, e) => {
-   
+
     btnActualizar.classList.remove("is-hidden");
     console.log(btnActualizar.classList);
     code.disabled = true;
     e.preventDefault();
-    let options_and_body = {
-      method: "PUT",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
+    
 
     nombre.value = element.name;
     code.value = element.code;
@@ -250,11 +244,11 @@ function start() {
     }
 
     for (let index = 0; index < selectEncargado.options.length; index++) {
-        if (selectEncargado.options[index].value == element.inCharge) {
-          selectEncargado.selectedIndex = index;
-        }
+      if (selectEncargado.options[index].value == element.inCharge) {
+        selectEncargado.selectedIndex = index;
       }
-    
+    }
+
   };
 
 

@@ -39,7 +39,7 @@ async function createLaboratorios(req, res) {
     };
     labService.create(labs, validar => {
       if (validar) {
-        res.status(201).json({ result: "ok", msg: "Laboratorio creado" });
+        res.status(201).json({ result: "success", msg: "Laboratorio creado" });
       } else {
         res.status(500).json({ result: "error", msg: "No se pudo crear" });
       }
@@ -67,9 +67,9 @@ async function updateLaboratorio(req, res) {
 
     labService.update(labs, validar => {
       if (validar) {
-        res.status(201).json({ result: "ok", msg: "Laboratorio actualizado" });
+        res.status(201).json({ result: "success", msg: "Laboratorio actualizado" });
       } else {
-        res.status(500).json({ result: "ok", msg: "No se pudo crear" });
+        res.status(500).json({ result: "error", msg: "No se pudo crear" });
       }
     });
   } catch (error) {
@@ -85,7 +85,7 @@ async function deleteLaboratorio(req, res) {
   try {
     labService.delete(req.body._id, validar => {
       if (validar) {
-        res.status(201).json({ result: "ok", msg: "Laboratorio eliminado" });
+        res.status(201).json({ result: "success", msg: "Laboratorio eliminado" });
       } else {
         res.status(500).json({ result: "error", msg: "No se pudo eliminar" });
       }
