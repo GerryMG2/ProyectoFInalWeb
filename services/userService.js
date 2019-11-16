@@ -8,7 +8,7 @@ class userService {
 
   getEncargados(cb) {
     try {
-      this.db.find({superUser: true}, function (err, docs) {
+      this.db.find({ superUser: true }, function (err, docs) {
         if (err) {
           console.log("Error: ");
           console.log(err);
@@ -48,21 +48,19 @@ class userService {
     try {
       const newUsuario = new this.db(usuario);
       newUsuario.save((err, result) => {
-        console.log("Err: ");
-        console.log(err);
-        console.log("result: ");
-        console.log(result);
 
         if (err) {
           console.log("Error: ");
           console.log(err);
           console.log("*****");
           cb(false);
+        } else {
+
+          console.log("Resultado: ");
+          console.log(result);
+          console.log("*******");
+          cb(true);
         }
-        console.log("Resultado: ");
-        console.log(result);
-        console.log("*******");
-        cb(true);
       });
     } catch (error) {
       console.log("Error Try Catch Service: ");
@@ -80,23 +78,31 @@ class userService {
 
   validate(code, password, cb) {
     try {
-      this.db.findOne({ code: code }, "password superuser", (err, user) => {
+      this.db.findOne({ code: code }, "password superUser", (err, user) => {
         if (err) {
+          
           console.log(err);
+          cb(false,false);
         } else {
+          console.log("user: ",user)
           if (bycrypt.compareSync(password, user.password)) {
             if (user.superUser) {
+              console.log("es super user");
               cb(true, true);
+            } else {
+
+              console.log("no super user");
+              cb(true, false);
             }
-            cb(true, false);
           } else {
             cb(false, false);
           }
         }
       });
     } catch (error) {
-      cb(false);
+      
       console.log(error);
+      cb(false,false);
     }
 
     //TODO: validaion credentials

@@ -21,6 +21,7 @@ async function loginPost(req, res) {
       req.body.password,
       (validate, superUser) => {
         if (validate) {
+          console.log("super user: ", superUser);
           req.session.user = req.body.code;
           req.session.admin = superUser;
           if (req.session.returnTo) {
