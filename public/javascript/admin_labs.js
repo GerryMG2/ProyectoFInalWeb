@@ -188,6 +188,7 @@ function start() {
   var bodytable = document.getElementById("bodytable");
   var totalPaginas = 0;
   var btnActualizar = document.getElementById("btn-actualizar");
+  
   btn_limpiar.addEventListener("click", e => {
     e.preventDefault();
     console.log(btnActualizar.classList);
@@ -197,53 +198,6 @@ function start() {
     code.disabled = false;
   });
 
-  btnActualizar.addEventListener("click", e => {
-    e.preventDefault();
-    if (nombre.value && code.value && capacidad.value) {
-      let body = {
-        name: nombre.value,
-        code: code.value,
-        capacity: parseInt(capacidad.value),
-        inCharge: selectEncargado.value,
-        building: selectEdificios.value
-      };
-
-      let options_and_body = {
-        method: "PUT",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      };
-
-
-      options_and_body["body"] = JSON.stringify(body);
-      fetch(URL_API_LABORATORIOS, options_and_body)
-        .then(res => res.json())
-        .catch(error => {
-          console.log("error: ", error);
-          Swal.fire("Hubo un problema para actualizar el laboratorio", error, "error");
-        })
-        .then(response => {
-          console.log("success: ", response);
-          Swal.fire(response.msg, "Continua gestionado laboratorios", response.ok);
-        })
-        .then(() => {
-          
-          btn_limpiar.click();
-        })
-        .then(() => {
-          console.log("esperar medio segundo");
-          setTimeout(() => {
-            getLabs("", 1, totalPaginas, bodytable, formulario, e);
-          }, 500);
-        });
-
-    } else {
-
-    }
-
-  });
 
   crearlab = (event, formulario, totalPaginas) => {
     console.log("entrar a crear labo");
@@ -296,6 +250,7 @@ function start() {
     }
 
   };
+
 
   llenarEdificios(selectEdificios);
   llenarEncargados(selectEncargado);
