@@ -49,7 +49,7 @@ class labsService {
   delete(idLaboratorio, cb) {
     //TODO: method to delete labs
     try {
-      laboratorio.remove({ _id: idLaboratorio }, function(error) {
+      this.dbL.remove({ _id: idLaboratorio }, function(error) {
         if (error) {
           console.log("Error ");
           console.log(error);

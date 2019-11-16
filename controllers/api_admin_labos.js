@@ -3,21 +3,23 @@ const labService = new labServices();
 
 async function getLaboratorios(req, res) {
   try {
-    console.log("params", req.query.filtros)
-    labService.get(req.query.filtros, parseInt(req.query.page), (validar, docs, pags) => {
-      if (validar) {
-        var respuesta = {
-          docs: docs,
-          paginas: parseInt(pags)
+    console.log("params", req.query.filtros);
+    labService.get(
+      req.query.filtros,
+      parseInt(req.query.page),
+      (validar, docs, pags) => {
+        if (validar) {
+          var respuesta = {
+            docs: docs,
+            paginas: parseInt(pags)
+          };
+          res.status(200).json(respuesta);
+        } else {
+          res.status(500).json({ docs: {}, paginas: 0 });
         }
-        res.status(200).json(respuesta);
       }
-      else {
-        res.status(500).json({ docs: {}, paginas: 0 });
-      }
-    });
+    );
   } catch (error) {
-
     res.status(500).json({ docs: {}, paginas: 0 });
   }
 }
@@ -63,18 +65,13 @@ async function updateLaboratorio(req, res) {
       inCharge: req.body.inCharge
     };
 
-    labService.update(labs, (validar) => {
+    labService.update(labs, validar => {
       if (validar) {
         res.status(201).json({ result: "ok", msg: "Laboratorio actualizado" });
+      } else {
+        res.status(500).json({ result: "ok", msg: "No se pudo crear" });
       }
-      else {
-        res.status(500).json({ result: "ok", msg: "No se pudo crear" })
-      }
-    })
-
-
-
-
+    });
   } catch (error) {
     console.log("Error: ");
     console.log(error);
@@ -86,20 +83,17 @@ module.exports.updateLab = updateLaboratorio;
 
 async function deleteLaboratorio(req, res) {
   try {
-    labService.delete(req.body._id, (validar) => {
+    labService.delete(req.body._id, validar => {
       if (validar) {
         res.status(201).json({ result: "ok", msg: "Laboratorio eliminado" });
-
       } else {
         res.status(500).json({ result: "error", msg: "No se pudo eliminar" });
-
       }
-    })
+    });
   } catch (error) {
     console.log("Error: ");
     console.log(error);
     res.status(500).json({ result: "error", msg: "No se pudo eliminar" });
-
   }
 }
 
