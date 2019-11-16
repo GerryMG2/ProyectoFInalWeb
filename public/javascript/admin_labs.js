@@ -188,6 +188,7 @@ function start() {
   var bodytable = document.getElementById("bodytable");
   var totalPaginas = 0;
   var btnActualizar = document.getElementById("btn-actualizar");
+  
   btn_limpiar.addEventListener("click", e => {
     e.preventDefault();
     console.log(btnActualizar.classList);
@@ -197,11 +198,6 @@ function start() {
     code.disabled = false;
   });
 
-  btnActualizar.addEventListener("click", e =>{
-    e.preventDefault();
-    
-    
-  });
 
   crearlab = (event, formulario, totalPaginas) => {
     console.log("entrar a crear labo");
@@ -260,6 +256,7 @@ function start() {
       }
     
   };
+
 
   llenarEdificios(selectEdificios);
   llenarEncargados(selectEncargado);
