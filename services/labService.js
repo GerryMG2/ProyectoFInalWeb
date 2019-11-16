@@ -30,15 +30,19 @@ class labsService {
   update(laboratorio, cb) {
     //TODO: method to update labs
     try {
-      var query = { "code ": laboratorio.code };
-      this.dbL.findOneAndUpdate(query, laboratorio, { upsert: true }, function(
+      var query = { "code": laboratorio.code };
+      this.dbL.findOneAndUpdate(query, laboratorio, { upsert: true }, function (
         err,
         doc
       ) {
-        if (err) cb(false);
-        console.log("Document: ");
-        console.log(doc);
-        cb(true);
+        if (err) {
+          console.log("Error: ", err); 
+          cb(false); 
+        } else {
+          console.log("Document: ");
+          console.log(doc);
+          cb(true);
+        }
       });
     } catch (error) {
       console.log(error);
@@ -49,7 +53,7 @@ class labsService {
   delete(idLaboratorio, cb) {
     //TODO: method to delete labs
     try {
-      this.dbL.remove({ _id: idLaboratorio }, function(error) {
+      this.dbL.remove({ _id: idLaboratorio }, function (error) {
         if (error) {
           console.log("Error ");
           console.log(error);
@@ -75,16 +79,16 @@ class labsService {
         };
       }
       console.log(filtrosMade);
-      
+
       this.dbL
-        .find(filtrosMade, function(err, docs) {
+        .find(filtrosMade, function (err, docs) {
           if (err) {
             console.log("Paginas: ");
             console.log("Error: ");
             console.log(err);
             cb(false, {}, paginas);
           } else {
-          
+
             dbLabs.find(filtrosMade, (err, docs2) => {
               if (!err) {
                 var paginas = docs2.length;
