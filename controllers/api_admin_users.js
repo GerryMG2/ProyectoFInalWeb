@@ -30,7 +30,19 @@ async function update(req,res){
 module.exports.updateUser = update;
 
 async function deleteUser(req,res){
-
+    try {
+        userService.delete(req.body.code, validar => {
+            if(validar){
+                res.status(201).json({ result: "success", msg: "Usuario eliminado"});
+            } else {
+                res.status(500).json({ result: "error", msg: "No se pudo eliminar"});
+            }
+        });
+    } catch (error) {
+        console.log("Error: ");
+        console.log(error);
+        res.status(500).json({ result: "error", msg: "No se pudo eliminar"})
+    }
 }
 
 module.exports.deleteUser = deleteUser;

@@ -19,6 +19,38 @@ opcionUsuarios = users =>{
     });
 };
 
+borrarUser = (codeU, formulario, totalPaginas, e) =>{
+    e.preventDefault();
+    let options_and_body = {
+        method: "DELETE",
+        credentials: "same-origin",
+        headers: {
+        "Content-Type": "application/json"
+        }
+    };
+    options_and_body["body"] = JSON.stringify({
+        code: codeU
+    });
+
+    fetch(URL_API_USUARIOS, options_and_body)
+        .then(res => res.json())
+        .catch(error => {
+            console.log("error: ", error);
+            Swal.fire("Hubo un problema para eliminar el usuario", error, "error");
+        })
+        .then(response => {
+            console.log("success: ", response);
+            Swal.fire(response.msg, "Continua gestionando usuarios!", response.ok);
+        })
+        .then(() => { })
+        .then(() => {
+            console.log("Esperar medio segundo");
+            setTimeout(() => {
+                getUsers("", 1, totalPaginas, tableU, e);
+            }, 500);
+        });
+};
+
 getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
     if(e){
         e.preventDefault();
@@ -69,7 +101,7 @@ getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
                 btnBorrar.innerHTML = "Borrar";
                 btnBorrar.addEventListener("click", function(e){
                     e.preventDefault();
-
+                    borrarUser(element.code, formulario, paginatotales, e);
                 });
                 opciones.appendChild(btnBorrar);
 
@@ -77,9 +109,11 @@ getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
                 btnEditar.innerHTML = "Editar";
                 btnEditar.addEventListener("click", function (e){
                     e.preventDefault();
-
+                    editarUser(element, formulario, e);
                 });
                 opciones.appendChild(btnEditar);
+
+
 
                 row.appendChild(th);
                 row.appendChild(nombre);
@@ -95,7 +129,7 @@ getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
 
 
 start = ()=>{
-    var formUser = document.getElementById("form_users");
+    var formUser = document.getElementById("form-user");
     var name = document.getElementById("name");
     var code = document.getElementById("code");
     code.disabled = true;
@@ -104,17 +138,80 @@ start = ()=>{
     var btn_limpiar = document.getElementById("btn-limpiar");
     var btn_actualizar = document.getElementById("btn-actualizar");
     var btn_buscar = document.getElementById("btn-buscar");
-    var bodytable = document.getElementById("bodytableUsers");
+    var tableU = document.getElementById("tableUser");
     var totalPaginas = 0;
    
     btn_limpiar.addEventListener("click", e => {
         e.preventDefault();
+        console.log(btn_actualizar.classList);
+        btn_actualizar.classList.remove("is-hidden");
+        btn_actualizar.classList += btn_actualizar.classList + " is-hidden";
         formUser.reset();
     });
 
-    opcionUsuarios(opcionesUsers);
-    getUsers("", 1, totalPaginas, bodytable, formulario);
-};
+    btn_actualizar.addEventListener("click", e => {
+        e.preventDefault();
 
+        if(name.value && email.value && code.value){
+            let body = {
+                name: name.value,
+                code: code.value,
+                email: email.value,
+                superUser: opcionesUsers.value
+            };
+
+            let options_and_body = {
+                method: "PUT",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            };
+
+            options_and_body["body"] = JSON.stringify(body);
+            fetch(URL_API_USUARIOS, options_and_body)
+                .then(res => res.json())
+                .catch(error => {
+                    console.log("error: ", error);
+                    Swal.fire("Hubo un problema en actualizar usuario", error, "error");
+                })
+                .then(response =>{
+                    console.log("success: ", response);
+                    Swal.fire(response.msg, "Continua gestionando usuarios!", response.ok);
+                })
+                .then(() => {
+                    btn_limpiar.click();
+                })
+                .then(() => {
+                    console.log("esperar medio segundo");
+                    setTimeout(() => {
+                        getUsers("", 1, totalPaginas, tableU, formulario, e);
+                    }, 500);
+                });
+        } else {
+
+        }
+    });
+
+    editarUser = (element, formulario, e) => {
+        btn_actualizar.classList.remove("is-hidden");
+        console.log(btn_actualizar.classList);
+        e.preventDefault();
+
+        name.value = element.name;
+        email.value = element.email;
+        code.value = element.code;
+
+        // for (let index = 0; index < tipoUsuarios.options.length; index++) {
+        //     if(tipoUsuarios.options[index].value == element.superUser){
+        //         tipoUsuarios.selectedIndex = index;
+        //     }
+        // }
+    };
+    // error!
+
+    opcionUsuarios(opcionesUsers);
+    getUsers("", 1, totalPaginas, tableU, formulario);
+};
 
 window.onload = start;

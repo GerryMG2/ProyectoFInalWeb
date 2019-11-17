@@ -34,7 +34,7 @@ llenarEncargados = encargados => {
     });
 };
 
-LabBorrar = (id, e, formulario, totalPaginas) => {
+LabBorrar = (id, formulario, totalPaginas, e) => {
   e.preventDefault();
   let options_and_body = {
     method: "DELETE",
