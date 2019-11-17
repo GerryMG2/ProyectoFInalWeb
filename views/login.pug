@@ -1,12 +1,18 @@
 form(action="/login", method="post")
+    .container.has-text-centered
+        .column.is-4.is-offset-4
+            h3.title.has-text-black Login
+            hr.login-hr
+            p.subtitle.has-text-black Please login to proceed.
     .field
-        label.label(for="code") Codigo:
+        label.label.column.is-offset-3(for="code") Code:
         .control
-            input#code.input(type='text', placeholder='' name='code')
+            input#code.input.column.is-half.is-offset-one-quarter.is-rounded.is-info(type='text', placeholder='' name='code')
 
     .field
-        label.label(for='pw') Password:
+        label.label.column.is-offset-3(for='pw') Password:
         .control
-            input#pw.input(type='password' name='password')
+            input#pw.input.column.is-half.is-offset-one-quarter.is-rounded.is-info(type='password' name='password')
     
-    button.button(type='submit') Sign in
+    button.button.is-info.column.is-half.is-offset-one-quarter.is-1.is-fullwidth(type='submit') Sign in
+    p.has-text-grey

@@ -1,24 +1,33 @@
 form(action="/register", method="post")
-    .field
-        label.label(for="name") Name:
-        .control
-            input#name.input(type='text', placeholder='' name='name')
-    .field
-        label.label(for="code") Codigo:
-        .control
-            input#code.input(type='text', placeholder='' name='code')
-    .field
-        label.label(for="email") Email:
-        .control
-            input#email.input(type='email', placeholder='name@gmail.com' name='email')
-
-    .field
-        label.label(for='pw') Password:
-        .control
-            input#pw.input(type='password' name='password')
+    .container.has-text-centered
+        .column.is-4.is-offset-4
+            h3.title.has-text-black Registation
+            hr.login-hr
+            p.subtitle.has-text-black Please complete the fields.
     
     .field
-        label.label(for='pw2') Confirm Password:
+        label.label.column.is-offset-3(for="name") Name:
         .control
-            input#pw2.input(type='password' name='confirmPassword')
-    button.button(type='submit') Sign up
+            input#name.input.column.is-half.is-offset-one-quarter.is-rounded.is-success(type='text', placeholder='' name='name')
+    .field
+        label.label.column.is-offset-3(for="code") Codigo:
+        .control
+            input#code.input.column.is-half.is-offset-one-quarter.is-rounded.is-success(type='text', placeholder='' name='code')
+    .field
+        label.label.column.is-offset-3(for="email") Email:
+        .control
+            input#email.input.column.is-half.is-offset-one-quarter.is-rounded.is-success(type='email', placeholder='name@gmail.com' name='email')
+
+    .field
+        label.label.column.is-offset-3(for='pw') Password:
+        .control
+            input#pw.input.column.is-half.is-offset-one-quarter.is-rounded.is-success(type='password' name='password')
+    
+    .field
+        label.label.column.is-offset-3(for='pw2') Confirm Password:
+        .control
+            input#pw2.input.column.is-half.is-offset-one-quarter.is-rounded.is-success(type='password' name='confirmPassword')
+    .field
+        label.label
+        .control
+            button.button.is-dark.is-success.column.is-half.is-offset-one-quarter.is-1.is-fullwidth(type='submit') Sign up 

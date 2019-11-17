@@ -1,0 +1,22 @@
+nav.navbar
+  .container
+    .navbar-brand
+      span.navbar-burger.burger(data-target='navbarMenu')
+        span
+        span
+        span
+    #navbarMenu.navbar-menu
+      .navbar-end
+        a.navbar-item.is-active
+          | Laboratorios
+        .navbar-item.has-dropdown.is-hoverable
+          a.navbar-link
+            | Cuenta
+          .navbar-dropdown
+            a.navbar-item
+              | Perfil
+            a.navbar-item
+              | Ajustes
+            hr.navbar-divider
+            a.navbar-item
+              | Logout
