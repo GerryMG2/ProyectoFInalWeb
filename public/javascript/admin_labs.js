@@ -190,10 +190,6 @@ function start() {
   var btnActualizar = document.getElementById("btn-actualizar");
 
 
-
-
-
-
   btn_limpiar.addEventListener("click", e => {
     e.preventDefault();
     console.log(btnActualizar.classList);

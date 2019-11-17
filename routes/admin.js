@@ -6,6 +6,7 @@ const lab = require('../controllers/admin_controller');
 
 /* GET home page. */
 router.get('/laboratorios', auth,admin, lab.laboratorios);
+router.get('/secondUsers', auth, admin, lab.secondsUsers);
 
 
 module.exports = router;

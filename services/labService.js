@@ -75,9 +75,10 @@ class labsService {
       if (filtros == "") {
       } else {
         filtrosMade = {
-          name: filtros
+          name: /filtros/
         };
       }
+    
       console.log(filtrosMade);
 
       this.dbL
@@ -86,7 +87,7 @@ class labsService {
             console.log("Paginas: ");
             console.log("Error: ");
             console.log(err);
-            cb(false, {}, paginas);
+            cb(false, {}, 0);
           } else {
 
             dbLabs.find(filtrosMade, (err, docs2) => {
@@ -99,9 +100,7 @@ class labsService {
               }
             });
           }
-        })
-        .skip(10 * (pags - 1))
-        .limit(10);
+        }).skip(10 * (pags - 1)).limit(10);
     } catch (error) {
       cb(false, {}, 0);
       console.log("Error: ");

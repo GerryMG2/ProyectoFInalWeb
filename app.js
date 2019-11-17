@@ -10,7 +10,8 @@ var registerRouter = require('./routes/register');
 var logoutRouter = require('./routes/logout');
 var adminRouter = require('./routes/admin');
 var adminLabosRoutes = require('./routes/admin_labos');
-var adminUserRoutes = require("./routes/admin_api_users");
+var adminUserRoutes = require("./routes/admin_users");
+
 
 
 var app = express();
@@ -70,6 +71,5 @@ app.use(function (err, req, res, next) {
 });
 
 //set up sessions in app
-
 
 module.exports = app;

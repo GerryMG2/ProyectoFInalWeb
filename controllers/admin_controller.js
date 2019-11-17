@@ -3,3 +3,9 @@ async function laboratorios(req, res) {
 }
 
 module.exports.laboratorios = laboratorios;
+
+async function secondsUsers(req, res) {
+  res.render("users_page_admin", { title: "Mod_Usuarios", msg: "" });
+}
+
+module.exports.secondsUsers = secondsUsers;

@@ -25,24 +25,42 @@ class userService {
     }
   }
 
-  get(filtros, cb) {
+  get(filtros, pags,cb) {
     try {
-      this.db.find(filtros, function (err, docs) {
+      let filtrosMade = {};
+      if(filtros == ""){
+      }else{
+        filtrosMade = {
+          name: /filtros/
+        };
+      }
+      console.log(filtrosMade);
+
+      this.db.find(filtrosMade, function (err, docs) {
         if (err) {
           console.log("Error: ");
           console.log(err);
-          cb(false, {});
-        } else {
-          cb(true, docs);
+          cb(false, {}, 0);
+        }else {
+          dbUser.find(filtrosMade, (err, docs2) =>{
+            if(!err){
+              var paginas = docs2.length;
+              paginas = Math.ceil(paginas / 10);
+              cb(true, docs, paginas);
+            } else {
+              cb(false, {}, 0);
+            }
+          });
         }
       }).skip(10 * (pags - 1)).limit(10);
 
     } catch (error) {
-      cb(false, {});
+      cb(false, {}, 0);
       console.log("Error: ");
       console.log(error);
     }
   }
+
 
   create(usuario, cb) {
     try {
@@ -70,10 +88,42 @@ class userService {
 
   update(usuario, cb) {
     //TODO: method to update users
+    try {
+      var query = {"code": usuario.code};
+      this.db.findOneAndUpdate(query, usuario, {upsert: true}, function(
+        err, doc
+      ){
+        if(err){
+          console.log("Error: ", err);
+          cb(false);
+        }else{
+          console.log("Document: ");
+          console.log(doc);
+          cb(true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      cb(false);
+    }
   }
 
   delete(id, cb) {
-    // TODO: Method to delete users
+    try {
+      this.db.remove({code: id}, function (error){
+        if(error){
+          console.log("Error users: ");
+          console.log(error);
+          cb(false);
+        } else {
+          cb(true);
+        }
+      });
+    } catch (error) {
+      console.log("Error en delete users: ")
+      console.log(error);
+      cb(false);
+    }
   }
 
   validate(code, password, cb) {
