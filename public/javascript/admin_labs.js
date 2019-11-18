@@ -115,14 +115,24 @@ getLabs = (filtros, pagina, paginatotales, tabla, formulario, e) => {
 
         let btnBorrar = document.createElement("button");
         btnBorrar.innerHTML = "Borrar";
+        btnBorrar.classList.add("button");
+        btnBorrar.classList.add("is-danger");
+        btnBorrar.classList.add("is-small");
+        btnBorrar.classList.add("is-outlined");
+
         btnBorrar.addEventListener("click", function (e) {
           e.preventDefault();
           LabBorrar(element._id, formulario, paginatotales, e);
         });
         opciones.appendChild(btnBorrar);
 
+
         let btnEditar = document.createElement("button");
         btnEditar.innerHTML = "Editar";
+        btnEditar.classList.add("button");
+        btnEditar.classList.add("is-primary");
+        btnEditar.classList.add("is-small");
+        btnEditar.classList.add("is-outlined");
         btnEditar.addEventListener("click", function (e) {
           e.preventDefault();
           EditarLab(element, formulario, e);
