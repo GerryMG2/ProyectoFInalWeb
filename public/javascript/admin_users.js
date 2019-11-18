@@ -2,25 +2,16 @@
 URL_API_USUARIOS = "/api/admin/users"
 
 options = {
-<<<<<<< HEAD
   method: "GET",
   credentials: "same-origin",
   headers: {
     "Content-Type": "application/json"
   }
-=======
-    method: "GET",
-    credentials: "same-origin",
-    headers: {
-        "Content-Type": "application/json"
-    }
->>>>>>> button admin
 };
 
 tipoUsuarios = ["Usuario", "Administrador"];
 
 opcionUsuarios = users => {
-<<<<<<< HEAD
   tipoUsuarios.forEach(element => {
     let opcion = document.createElement("option");
     opcion.innerHTML = element;
@@ -28,27 +19,6 @@ opcionUsuarios = users => {
   });
 };
 
-=======
-    tipoUsuarios.forEach(element => {
-        let opcion = document.createElement("option");
-        opcion.innerHTML = element;
-        users.appendChild(opcion);
-    });
-};
-
-borrarUser = (codeU, formulario, totalPaginas, e) => {
-    e.preventDefault();
-    let options_and_body = {
-        method: "DELETE",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    };
-    options_and_body["body"] = JSON.stringify({
-        code: codeU
-    });
->>>>>>> button admin
 
 borrarUser = (codeU, formulario, totalPaginas, tableUser,e) => {
   e.preventDefault();
