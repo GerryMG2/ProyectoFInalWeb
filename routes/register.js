@@ -1,4 +1,3 @@
-
 var express = require('express');
 var router = express.Router();
 const main_page = require('../auth/main_page')

@@ -11,6 +11,7 @@ var logoutRouter = require('./routes/logout');
 var adminRouter = require('./routes/admin');
 var adminLabosRoutes = require('./routes/admin_labos');
 var adminUserRoutes = require("./routes/admin_users");
+var reservas = require("./routes/reserva_labs");
 
 
 
@@ -51,7 +52,7 @@ app.use('/logout',logoutRouter);
 app.use('/admin', adminRouter);
 app.use('/api/admin/labos', adminLabosRoutes);
 app.use('/api/admin/users', adminUserRoutes);
-
+app.use('/reservas', reservas);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

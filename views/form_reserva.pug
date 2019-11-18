@@ -1,0 +1,46 @@
+form#form-reserva
+    .field.is-horizontal
+        
+        .field-label.is-normal.is-small
+            label.label(for="nombre") Nombre: 
+        .field-body
+            .field.has-addons
+                p.control.is-expanded
+                    input#name.input.is-small(type='text', placeholder='' name='name')
+            
+            .field-label.is-normal.is-small
+                label.label.is-small(for="codigo") Código (carnet):
+            .field.has-addons
+                p.control.is-expanded
+                    input#code.input.is-small(type='text', placeholder='' name='name')
+    
+    //- ------------------------------------------------
+    .field.is-horizontal
+
+        .field-label.is-normal.is-small
+            label.label(for="email") Email:
+        .field-body
+            .field.has-addons
+                p.control.is-expanded
+                    input#email.input.is-small(type='text', placeholder='00000000@uca.edu.sv' name='name')        
+            
+            .field-label.is-normal.is-small
+                label.label(for="tipo") Tipo usuario:
+            .field.has-addons
+                .control.is-expanded
+                    .select.is-fullwidth.is-small
+                        select#opciones-users(name="tipoUser")
+
+            
+    .field.is-horizontal
+        .field-label
+        .field-body
+            .field.is-grouped
+                .control  
+                    button#btn-limpiar.button.is-small Limpiar
+                .control       
+                    button#btn-actualizar.button.is-small.is-hidden Actualizar
+                p.control.is-expanded
+                    input#filtros.input.is-small(placeholder="Buscar por Código (carnet)")
+                p.control
+                    a#btn-buscar.button.is-small Buscar
