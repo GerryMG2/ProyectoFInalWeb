@@ -20,7 +20,6 @@ var app = express();
 //set up express session
 var session = require('express-session');
 
-
 //Set up mongoose connection
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb://crisarevalom:krismiranda7@pw2019-shard-00-00-lg9ht.mongodb.net:27017,pw2019-shard-00-01-lg9ht.mongodb.net:27017,pw2019-shard-00-02-lg9ht.mongodb.net:27017/test?ssl=true&replicaSet=PW2019-shard-0&authSource=admin&retryWrites=true&w=majority';
