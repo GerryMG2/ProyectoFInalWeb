@@ -6,6 +6,7 @@ async function update(req,res){
     try {
         console.log("Req.body: ");
         console.log(req.body);
+        
         var users = {
             name: req.body.name,
             code: req.body.code, 
