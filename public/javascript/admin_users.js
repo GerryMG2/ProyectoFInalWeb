@@ -115,7 +115,7 @@ getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
                     e.preventDefault();
                     borrarUser(element.code, formulario, paginatotales, tableUser, e);
                 });
-                opciones.appendChild(btn_borrar);
+                opciones.appendChild(btnBorrar);
 
                 let btnEditar = document.createElement("button");
                 btnEditar.innerHTML = "Editar";
@@ -127,7 +127,7 @@ getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
                     e.preventDefault();
                     editarUser(element, formulario, e);
                 });
-                opciones.appendChild(btn_editar);
+                opciones.appendChild(btnEditar);
 
                 row.appendChild(th);
                 row.appendChild(nombre);
