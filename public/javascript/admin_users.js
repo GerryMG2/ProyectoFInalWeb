@@ -2,16 +2,25 @@
 URL_API_USUARIOS = "/api/admin/users"
 
 options = {
+<<<<<<< HEAD
   method: "GET",
   credentials: "same-origin",
   headers: {
     "Content-Type": "application/json"
   }
+=======
+    method: "GET",
+    credentials: "same-origin",
+    headers: {
+        "Content-Type": "application/json"
+    }
+>>>>>>> button admin
 };
 
 tipoUsuarios = ["Usuario", "Administrador"];
 
 opcionUsuarios = users => {
+<<<<<<< HEAD
   tipoUsuarios.forEach(element => {
     let opcion = document.createElement("option");
     opcion.innerHTML = element;
@@ -19,6 +28,27 @@ opcionUsuarios = users => {
   });
 };
 
+=======
+    tipoUsuarios.forEach(element => {
+        let opcion = document.createElement("option");
+        opcion.innerHTML = element;
+        users.appendChild(opcion);
+    });
+};
+
+borrarUser = (codeU, formulario, totalPaginas, e) => {
+    e.preventDefault();
+    let options_and_body = {
+        method: "DELETE",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+    options_and_body["body"] = JSON.stringify({
+        code: codeU
+    });
+>>>>>>> button admin
 
 borrarUser = (codeU, formulario, totalPaginas, tableUser,e) => {
   e.preventDefault();
@@ -53,7 +83,7 @@ borrarUser = (codeU, formulario, totalPaginas, tableUser,e) => {
 };
 
 getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
-    if(e){
+    if (e) {
         e.preventDefault();
     }
   
@@ -68,7 +98,11 @@ getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
         .join("&");
     let options_and_body = {
         method: "GET",
+<<<<<<< HEAD
         credentials: "same-origin",
+=======
+        credentiales: "same-origin",
+>>>>>>> button admin
         headers: {
             "Content-Type": "application/json"
         }
@@ -103,18 +137,40 @@ getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
                 }
                 tipoUser.innerHTML = tip;
                 let opciones = document.createElement("td");
+<<<<<<< HEAD
                 
                 let btn_borrar = document.createElement("button");
                 btn_borrar.innerHTML = "Borrar";
                 btn_borrar.addEventListener("click", (e)=>{
+=======
+
+                let btnBorrar = document.createElement("button");
+                btnBorrar.innerHTML = "Borrar";
+                btnBorrar.classList.add("button");
+                btnBorrar.classList.add("is-danger");
+                btnBorrar.classList.add("is-small");
+                btnBorrar.classList.add("is-outlined");
+
+                btnBorrar.addEventListener("click", function (e) {
+>>>>>>> button admin
                     e.preventDefault();
                     borrarUser(element.code, formulario, paginatotales, tableUser, e);
                 });
                 opciones.appendChild(btn_borrar);
 
+<<<<<<< HEAD
                 let btn_editar = document.createElement("button");
                 btn_editar.innerHTML = "Editar";
                 btn_editar.addEventListener("click", function(e){
+=======
+                let btnEditar = document.createElement("button");
+                btnEditar.innerHTML = "Editar";
+                btnEditar.classList.add("button");
+                btnEditar.classList.add("is-primary");
+                btnEditar.classList.add("is-small");
+                btnEditar.classList.add("is-outlined");
+                btnEditar.addEventListener("click", function (e) {
+>>>>>>> button admin
                     e.preventDefault();
                     editarUser(element, formulario, e);
                 });
@@ -132,7 +188,12 @@ getUsers = (filtros, pagina, paginatotales, tabla, formulario, e) => {
         });
 };
 
+<<<<<<< HEAD
 start = () =>{
+=======
+
+start = () => {
+>>>>>>> button admin
     var formUser = document.getElementById("form-user");
     var name = document.getElementById("name");
     var code = document.getElementById("code");
@@ -155,11 +216,16 @@ start = () =>{
 
     btn_actualizar.addEventListener("click", e => {
         e.preventDefault();
+<<<<<<< HEAD
         let superUser = false;
         if(opUsers.value == "Administrador"){
             superUser = true;
         }
         if(name.value && code.value && email.value){
+=======
+
+        if (name.value && email.value && code.value) {
+>>>>>>> button admin
             let body = {
                 name: name.value,
                 code: code.value,
