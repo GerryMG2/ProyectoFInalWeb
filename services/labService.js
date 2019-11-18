@@ -12,15 +12,16 @@ class labsService {
     try {
       const newLaboratorio = new this.dbL(laboratorio);
       newLaboratorio.save((err, result) => {
-        console.log(err);
-        console.log(result);
+
 
         if (err) {
           console.log(err);
           cb(false);
+        } else {
+
+          console.log(result);
+          cb(true);
         }
-        console.log(result);
-        cb(true);
       });
     } catch (error) {
       console.log(error);
@@ -36,8 +37,8 @@ class labsService {
         doc
       ) {
         if (err) {
-          console.log("Error: ", err); 
-          cb(false); 
+          console.log("Error: ", err);
+          cb(false);
         } else {
           console.log("Document: ");
           console.log(doc);
@@ -78,7 +79,7 @@ class labsService {
           name: /filtros/
         };
       }
-    
+
       console.log(filtrosMade);
 
       this.dbL

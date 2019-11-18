@@ -4,13 +4,20 @@ var Schema = mongoose.schema;
 
 var reservationSchema = new Schema(
     {
+      // codigo del usuario
       userId: { type: String, required: true },
+
+      // codigo del laboratorio
       LabId: { type: String, required: true },
+      // fecha que se hizo la reserva
       date: { type: Date, default: Date.now },
-      dayReserv:[String],
-      typeReserv: {type: String},
-      hourReserv:{type: Date},
-      status:{type:String},
+      // dias de reserva [Lunes, martes, jueves] Ejemplo
+
+
+      eventos: [{inicio: {type: Date}, fin: {type: Date} }],
+      status:{type:String, default: "Sin verificacion"},
+      description: {type: String}
+      
       
 
     }
