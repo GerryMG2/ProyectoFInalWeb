@@ -10,6 +10,12 @@ class labsReservations {
     }
 
     static intercept(eventoA, eventoB) {
+        console.log("evento a",eventoA);
+        console.log("evento b",eventoB);
+        eventoA.fin = new Date(eventoA.fin);
+        eventoA.inicio = new Date(eventoA.inicio);
+        eventoB.inicio = new Date(eventoB.inicio);
+        eventoB.fin = new Date(eventoB.fin)
         let rangoA = eventoA.fin.getTime() - eventoA.inicio.getTime();
         let rangoB = eventoB.fin.getTime() - eventoB.inicio.getTime();
         let mayor = eventoB.fin.getTime();
@@ -39,7 +45,7 @@ class labsReservations {
                 let eventoAprobados = docs.map((u) => {
                     return u.eventos;
                 })
-                eventosAprobados = [].concat.apply([], eventoAprobados);
+                let eventosAprobados = [].concat.apply([], eventoAprobados);
                 console.log("Eventos Aprobados: ", eventosAprobados);
                 let error = 0;
                 eventosAprobados.forEach(eveA => {

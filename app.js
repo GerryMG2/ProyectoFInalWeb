@@ -13,7 +13,7 @@ var adminLabosRoutes = require('./routes/admin_labos');
 var adminUserRoutes = require("./routes/admin_users");
 var profileRouter = require('./routes/profile');
 var reservas = require("./routes/reserva_labs");
-
+var adminReservasRouter = require("./routes/admin_reservas");
 
 
 var app = express();
@@ -53,8 +53,8 @@ app.use('/logout',logoutRouter);
 app.use('/admin', adminRouter);
 app.use('/api/admin/labos', adminLabosRoutes);
 app.use('/api/admin/users', adminUserRoutes);
+app.use('/api/admin/reservas',adminReservasRouter )
 app.use('/profile', profileRouter);
-
 app.use('/reservas', reservas);
 
 // catch 404 and forward to error handler

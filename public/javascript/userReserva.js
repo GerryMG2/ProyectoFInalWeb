@@ -1,8 +1,3 @@
-
-
-
-
-
 start = () => {
   var formulario = document.getElementById("form-reserva");
   var labos = document.getElementById("opciones-labos");
@@ -12,7 +7,6 @@ start = () => {
   var btnCrear = document.getElementById("btn-crear");
   var btnActualizar = document.getElementById("btn-actualizar");
   let contador = 1;
-
 
   btnHorario.addEventListener("click", e => {
     e.preventDefault();
@@ -83,11 +77,11 @@ start = () => {
     let eventos = [];
     for (let index = 0; index < ListaHorarioInicio.length; index++) {
       let obj = {
-        inicio: new Date(Date.parse(ListaHorarioInicio[0].value)),
-        fin: new Date(Date.parse(ListaHorarioFin[0].value))
+        inicio: new Date(Date.parse(ListaHorarioInicio[index].value)),
+        fin: new Date(Date.parse(ListaHorarioFin[index].value))
       };
 
-      if (obj.inicio < obj.fin) {
+      if ( (new Date(Date.parse(ListaHorarioInicio[index].value))) < (new Date(Date.parse(ListaHorarioFin[index].value)))) {
       } else {
         err++;
       }
@@ -100,24 +94,53 @@ start = () => {
       // continuar
       console.log(eventos);
 
-      if (1) {
+      if (descripcion.value && eventos.length >= 1) {
+        URL_ENCARGADOS = "/api/admin/reservas";
+        options = {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+
+        options['body'] = JSON.stringify({
+            LabId: labos.selectedOptions[0].getAttribute("valor"),
+            description: descripcion.value,
+            eventos: eventos
+        });
+
+        console.log(options)
+        console.log(URL_ENCARGADOS);
+
+        fetch(URL_ENCARGADOS, options)
+          .then(res => res.json())
+          .catch(error => console.log("error: ", error))
+          .then(response => {
+              if(response){
+                console.log("success: ", response);
+            alert("Se creo la reserva con exito")
+              }else{
+                  alert("No se pudo crear")
+              }
+            
+          });
       }
     } else {
       alert("Alguna fecha de finalizacion es menor o igual que una de inicio");
     }
   });
 
-
   llenarEncargados = () => {
     URL_ENCARGADOS = "/api/admin/labos/labs";
     options = {
-        method: "GET",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json"
-        }
+      method: "GET",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json"
+      }
     };
-    
+
     fetch(URL_ENCARGADOS, options)
       .then(res => res.json())
       .catch(error => console.log("error: ", error))
@@ -131,7 +154,6 @@ start = () => {
         });
       });
   };
-
 
   console.log("empezo");
   llenarEncargados();
