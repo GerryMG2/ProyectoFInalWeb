@@ -31,8 +31,8 @@ class labsReservations {
 
     }
 
-    async validateEvents(eventos, cb) {
-        this.dbR.find({ status: "aprobada" }, function (err, docs) {
+    async validateEvents(reserva, cb) {
+        this.dbR.find({ status: "aprobada", LabId: reserva.LabId }, function (err, docs) {
             if (err) {
                 cb(false);
             } else {
@@ -43,7 +43,7 @@ class labsReservations {
                 console.log("Eventos Aprobados: ", eventosAprobados);
                 let error = 0;
                 eventosAprobados.forEach(eveA => {
-                    eventos.forEach(eve => {
+                    reserva.eventos.forEach(eve => {
                         if (labsReservations.intercept(eve, eveA)) {
                             error++;
                         }
@@ -65,7 +65,7 @@ class labsReservations {
         //TODO method to create reservations
         try {
 
-            this.validateEvents(reserva.eventos, (validar) => {
+            this.validateEvents(reserva, (validar) => {
                 if (validar) {
 
                     const newReserva = new this.dbR(reserva);
@@ -182,11 +182,6 @@ class labsReservations {
           }
 
     }
-
-    
-
-
-
-
 }
 
+module.exports = labsReservations;
