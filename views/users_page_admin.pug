@@ -1,8 +1,7 @@
-extends layout_admin
+extends layout_all
 
 block header
-    .container.has-text-centered
-        h1 Usuarios
+    include header
 block content
     section.section#formulario.container.has-background-grey-lighter
             include form_users

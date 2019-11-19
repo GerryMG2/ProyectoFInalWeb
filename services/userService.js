@@ -5,6 +5,27 @@ class userService {
     this.db = dbUser;
   }
 
+  getByCode(code,cb){
+    try {
+      console.log(code);
+      this.db.find({code: code}, function (err, docs) {
+        if (err) {
+          console.log("Error: ");
+          console.log(err);
+          cb(false, {});
+        } else {
+          console.log(docs);
+          cb(true, docs);
+        }
+      });
+
+    } catch (error) {
+      cb(false, {});
+      console.log("Error: ");
+      console.log(error);
+    }
+  }
+
 
   getEncargados(cb) {
     try {
