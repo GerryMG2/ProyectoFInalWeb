@@ -1,5 +1,5 @@
 async function reservas(req, res) {
-  res.render("form_reserva", { title: "Reservas", msg: "" });
+  res.render("reserva_page", { title: "Reservas", msg: "" });
 }
 
 module.exports.reservas = reservas;
