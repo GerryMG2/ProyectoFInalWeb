@@ -13,13 +13,9 @@ var reservationSchema = new Schema(
       date: { type: Date, default: Date.now },
       // dias de reserva [Lunes, martes, jueves] Ejemplo
 
-
       eventos: [{inicio: {type: Date}, fin: {type: Date} }],
       status:{type:String, default: "Sin verificacion"},
       description: {type: String}
-      
-      
-
     }
 );
 module.exports = mongoose.model("reservation", reservationSchema);
