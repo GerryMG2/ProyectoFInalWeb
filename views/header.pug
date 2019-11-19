@@ -3,15 +3,36 @@ nav.navbar
     #navbarMenu.navbar-menu
       .navbar-end
         a.navbar-item.is-active
-          | Laboratorios
-        .navbar-item.has-dropdown.is-hoverable
-          a.navbar-link
-            | Cuenta
-          .navbar-dropdown
-            a.navbar-item(href='/profile')
-              | Perfil 
-            a.navbar-item
+          | Laboratorios UCA
+        if !usad 
+          .navbar-item.has-dropdown.is-hoverable
+            a.navbar-link
+              | Cuenta
+            .navbar-dropdown
+              a.navbar-item(href='/main')
+                | Principal 
+              a.navbar-item(href='/reservas')
+                | Reservas
+              hr.navbar-divider
+              a.navbar-item(href="/profile")
+                |Perfil
+              a.navbar-item(href='/logout')
+                | Logout
+        else
+          .navbar-item.has-dropdown.is-hoverable
+            a.navbar-link
               | Administrar
-            hr.navbar-divider
-            a.navbar-item(href='/logout')
-              | Logout
+            .navbar-dropdown
+              a.navbar-item(href='/main')
+                | Main 
+              a.navbar-item(href='/admin/laboratorios')
+                | Laboratorios
+              a.navbar-item(href='/admin/secondUsers')
+                | Usuarios
+              a.navbar-item(href='/reservas')
+                | Reservas
+              hr.navbar-divider
+              a.navbar-item(href="/profile")
+                | Profile
+              a.navbar-item(href='/logout')
+                | Logout
