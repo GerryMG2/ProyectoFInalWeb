@@ -26,6 +26,24 @@ async function getLaboratorios(req, res) {
 
 module.exports.getLaboratorios = getLaboratorios;
 
+async function getLab(req, res) {
+  try {
+    labService.getLab((validar, labos)=>{
+      if(validar){
+        res.status(200).json(labos);
+      } else {
+        res.status(500).json({});
+      }
+    });
+  } catch (error) {
+      console.log("Error: ");
+      console.log(error);
+      res.status(500).json({});
+  }
+}
+
+module.exports.getLab = getLab;
+
 async function createLaboratorios(req, res) {
   try {
     console.log("Req.body: ");

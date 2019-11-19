@@ -30,10 +30,9 @@ async function createReserva(req, res) {
         console.log("Req.body: ");
         console.log(req.body);
         var reserva = {
-            userId: req.body.userId,
+            userId: req.session.user,
             LabId: req.body.LabId,
             eventos: req.body.eventos,
-            status: req.body.status,
             description: req.body.description
         };
         ReservasServicio.create(reserva, validar => {

@@ -108,6 +108,27 @@ class labsService {
       console.log(error);
     }
   }
-}
 
+  getLab(cb){
+    try {
+      this.dbL.find({}, function (err, docs) {
+          if (err) {
+            console.log("Paginas: ");
+            console.log("Error: ");
+            console.log(err);
+            cb(false, {});
+          } else {
+            let lista = docs.map(function (e){
+                return {name: e.name, code: e.code}
+            });
+            cb(true, lista);
+          }
+        });
+    } catch (error) {
+      cb(false, {}, 0);
+      console.log("Error: ");
+      console.log(error);
+    }
+  }
+}
 module.exports = labsService;
