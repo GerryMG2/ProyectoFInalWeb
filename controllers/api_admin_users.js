@@ -89,7 +89,6 @@ async function getSuperUserCode(req,res){
         console.log("Error: ");
         console.log(error)        
         res.status(500).json({})
-
     }
 }
 
