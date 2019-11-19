@@ -2,13 +2,21 @@ form#form-reserva
     .field.is-horizontal
         .field-label.is-normal.is-small
             label.label(for="labo") Laboratorio:
-        .field.has-addons
-            .control.is-expanded
-                .select.is-fullwidth.is-small
-                    select#opciones-labos(name="nameLabos")
-            
-                .field-label
-                    .field-body
-                        .field.is-grouped
-                            .control  
-                                button#btn-horario.button.is-small Seleccionar horario
+        .field-body
+            .field.has-addons
+                .control.is-expanded
+                    .select.is-fullwidth.is-small
+                        select#opciones-labos(name="nameLabos")
+    .field.is-horizontal
+        .field-label.is-normal.is-small
+            label.label(for="description") Descripcion:
+        .field-body
+            .field.has-addons
+                .control.is-expanded
+                    textarea#descText.textarea(name="description", placeholder="Ingrese la descriptcion de la reserva")
+    .field.is-horizontal    
+        .field-label
+        .field-body
+            .field.is-grouped
+                .control 
+                    button#btn-horario.button.is-small Agregar horario

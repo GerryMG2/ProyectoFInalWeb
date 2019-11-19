@@ -1,12 +1,36 @@
-extends layout_admin
+extends layout_all
 
 block header
     include header
+    link(href='jscss/bootstrap.min.css' rel='stylesheet' media='screen')
+    link(href='jscss/bootstrap-datetimepicker.min.css' rel='stylesheet' media='screen')
+
 block content
     section.section#formulario.container.has-background-grey-lighter
-            include form_reserva
+        include form_reserva
+    section.section#listaHorario
+        .container
+            include listaHorario
+
+
+
+
+//- 
+
+      
+
+
+
+//- 
+
+
    
 
 block scripts
-    //- script(src="/javascript/admin_labs.js")
+
+    script(type='text/javascript' src='/js/jquery/jquery-1.8.3.min.js' charset='UTF-8')
+    script(type='text/javascript' src='/js/bootstrap/js/bootstrap.min.js')
+    script(type='text/javascript' src='/js/bootstrap-datetimepicker.js' charset='UTF-8')
+    script(type='text/javascript' src='/js/locales/bootstrap-datetimepicker.fr.js' charset='UTF-8')
     script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
+    script(src="/javascript/userReserva.js")        
