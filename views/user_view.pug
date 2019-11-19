@@ -14,11 +14,35 @@
           li
             a#editm
               span.icon.is-small
-                i.fas.fa-envelope(aria-hidden='true')
+                i.fas.fa-envelope
               span Mail
                 li
                   a#editp
                     span.icon.is-small
-                      i.fas.fa-lock(aria-hidden='true')
+                      i.fas.fa-lock
                     span Password
-                    
+  
+  form#form-pass
+    .field
+      label.label.column.is-offset-1 Contraseña actual
+    .control
+      input#oldPass.input.column.is-offset-1.is-one-quarter(type='text' placeholder='')
+    .field
+      label.label.column.is-offset-1 Nueva contraseña
+    .control
+      input#newPass.input.column.is-offset-1.is-one-quarter(type='text' placeholder='')
+    .field
+      label.label.column.is-offset-1 Confirmar contraseña
+    .control
+      input#confirmPass.input.column.is-offset-1.is-one-quarter(type='text' placeholder='')
+      button.button.is-success.column.is-one-fifth.is-offset-one-quarter.is-1
+        span.icon
+          i.fas.fa-check
+        span Save
+
+  form#form-email.is-hidden
+    .field
+      label.label.column.is-offset-1 Nuevo email
+    .control
+      input#newEmail.input.column.is-offset-1.is-one-quarter(type='text' placeholder='name@gmail.com')
+    
