@@ -1,6 +1,27 @@
 const LabsReservas = require("../services/labsReservations");
 const ReservasServicio = new LabsReservas();
 
+
+
+async function getReservasA(req, res) {
+    try {
+        
+        ReservasServicio.getEventos(
+            (validar, docs) => {
+                if(validar) {
+                    res.status(200).json(docs);
+                } else {
+                    res.status(500).json({});
+                }
+            }
+        );
+    } catch (error) {
+        res.status(500).json({});
+    }
+}
+module.exports.getEventos = getReservasA;
+
+
 async function getReserva(req, res) {
     try {
         console.log("params", req.query.filtros);
