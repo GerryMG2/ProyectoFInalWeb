@@ -2,13 +2,28 @@ extends layout
 
 block header
   include header
+  link(href='fullcalendar/core/main.css' rel='stylesheet')
+  link(href='fullcalendar/daygrid/main.css' rel='stylesheet')
+  link(href='fullcalendar/timegrid/main.css' rel='stylesheet')
+  link(href='fullcalendar/list/main.css' rel='stylesheet')
+  script(src='fullcalendar/core/main.js')
+  script(src='fullcalendar/core/locales-all.js')
+  script(src='fullcalendar/interaction/main.js')
+  script(src='fullcalendar/daygrid/main.js')
+  script(src='fullcalendar/timegrid/main.js')
+  script(src='fullcalendar/list/main.js')
+  script(src="javascript/main.js")
+
 
 block content
-  #calendar
+  .section
+    .container
+      #top
+        | Idioma: 
+        select#locale-selector
+      #calendar
+
 block scripts
   
-  script(src='/fullcalendar/core/main.js')
-  script(src='/fullcalendar/daygrid/main.js')
-  script(src="/fullcalendar/timegrid/main.js")
-  script(src='/javascript/main.js')
+  
   

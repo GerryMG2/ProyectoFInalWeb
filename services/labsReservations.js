@@ -49,13 +49,18 @@ class labsReservations {
           console.log(err);
           cb(false, {});
         } else {
+
           let lista = docs.map(e => {
             return e.eventos.map(l => {
-              return { titulo: e.description, evento: l };
+              return { title: e.description, start: l.inicio, end: l.fin };
             });
           });
 
-          cb(true, lista);
+          let eventos = [].concat.apply([], lista);
+
+          console.log(eventos);
+
+          cb(true, eventos);
         }
       });
     } catch (error) {
