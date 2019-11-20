@@ -155,19 +155,26 @@ class userService {
           console.log(err);
           cb(false,false);
         } else {
-          console.log("user: ",user)
-          if (bycrypt.compareSync(password, user.password)) {
-            if (user.superUser) {
-              console.log("es super user");
-              cb(true, true);
+          try {
+            console.log("user: ",user)
+            if (bycrypt.compareSync(password, user.password)) {
+              if (user.superUser) {
+                console.log("es super user");
+                cb(true, true);
+              } else {
+  
+                console.log("no super user");
+                cb(true, false);
+              }
             } else {
-
-              console.log("no super user");
-              cb(true, false);
+              cb(false, false);
             }
-          } else {
+          } catch (error) {
+            console.log(error);
             cb(false, false);
           }
+         
+          
         }
       });
     } catch (error) {

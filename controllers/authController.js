@@ -16,29 +16,36 @@ async function loginPost(req, res) {
       error: true
     });
   } else {
-    serviceUser.validate(
-      req.body.code,
-      req.body.password,
-      (validate, superUser) => {
-        if (validate) {
-          console.log("super user: ", superUser);
-          req.session.user = req.body.code;
-          req.session.admin = superUser;
-          if (req.session.returnTo) {
-            console.log("Cookie: ");
-            console.log(req.session.returnTo);
-
-            var redirect = req.session.returnTo;
-            delete req.session.returnTo;
-            res.redirect(redirect);
-          } else {
-            res.render("index",{title: "Main Page", nombre: req.session.user, usad: superUser, admin: req.session.superUser});
+    console.log("code: ");
+    console.log(req.body.code);
+    if(req.body.code && req.body.password){
+      serviceUser.validate(
+        req.body.code,
+        req.body.password,
+        (validate, superUser) => {
+          if (validate) {
+            console.log("super user: ", superUser);
+            req.session.user = req.body.code;
+            req.session.admin = superUser;
+            if (req.session.returnTo) {
+              console.log("Cookie: ");
+              console.log(req.session.returnTo);
+  
+              var redirect = req.session.returnTo;
+              delete req.session.returnTo;
+              res.redirect(redirect);
+            } else {
+              res.render("index",{title: "Main Page", nombre: req.session.user, usad: superUser, admin: req.session.superUser});
+            }
+          }else{
+            res.render("login_page",{title: "login", msg: "El usuario o la contraseña es incorrecta"})
           }
-        }else{
-          res.render("login_page",{title: "login", msg: "El usuario o la contraseña es incorrecta"})
         }
-      }
-    );
+      );
+    }else{
+      res.render("login_page",{title: "login", msg: "El usuario o la contraseña es incorrecta"});
+    }
+    
   }
 }
 
