@@ -1,4 +1,4 @@
-form(action="/login", method="post")
+form#login(action="/login", method="post")
     .container.has-text-centered
         .column.is-4.is-offset-4
             h3.title.has-text-grey-dark Login
@@ -13,6 +13,12 @@ form(action="/login", method="post")
         label.label.column.is-offset-3(for='pw') Password:
         .control
             input#pw.input.column.is-half.is-offset-one-quarter.is-rounded.is-info(type='password' name='password')
-    
-    button.button.is-info.column.is-half.is-offset-one-quarter.is-1.is-fullwidth(type='submit') Sign in
-    p.has-text-grey
+    .field.is-grouped
+        p.control
+        a#signIn.button.is-info.column.is-half.is-offset-3.is-1.is-fullwidth(type='submit') Sign in
+        p.has-text-grey
+
+        p.control
+        a(href="/register").button.is-info.column.is-half.is-1.is-fullwidth(type='register') Registrarse 
+            p.has-text-grey
+

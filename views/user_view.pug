@@ -16,26 +16,29 @@
               span.icon.is-small
                 i.fas.fa-envelope
               span Mail
-                li
-                  a#editp
-                    span.icon.is-small
-                      i.fas.fa-lock
-                    span Password
-  
-  form#form-pass
+          li
+            a#editp
+              span.icon.is-small
+                i.fas.fa-lock
+              span Password
+
+  form#form-pass.is-hidden
     .field
       label.label.column.is-offset-1 Contraseña actual
     .control
-      input#oldPass.input.column.is-offset-1.is-one-quarter(type='text' placeholder='')
+      input#oldPass.input.column.is-offset-1.is-one-quarter(type='password' placeholder='')
     .field
       label.label.column.is-offset-1 Nueva contraseña
     .control
-      input#newPass.input.column.is-offset-1.is-one-quarter(type='text' placeholder='')
+      input#newPass.input.column.is-offset-1.is-one-quarter(type='password' placeholder='')
     .field
       label.label.column.is-offset-1 Confirmar contraseña
     .control
-      input#confirmPass.input.column.is-offset-1.is-one-quarter(type='text' placeholder='')
-      button.button.is-success.column.is-one-fifth.is-offset-one-quarter.is-1
+      input#confirmPass.input.column.is-offset-1.is-one-quarter(type='password' placeholder='')
+    .field
+    label.label
+    .control  
+      button#saveP.button.is-success.column.is-one-fifth.is-offset-one-quarter.is-1
         span.icon
           i.fas.fa-check
         span Save
@@ -43,6 +46,13 @@
   form#form-email.is-hidden
     .field
       label.label.column.is-offset-1 Nuevo email
+      
+      input#newEmail.input.column.is-offset-1.is-one-quarter(type='email' placeholder= " ")
+    .field
+    label.label
     .control
-      input#newEmail.input.column.is-offset-1.is-one-quarter(type='text' placeholder='name@gmail.com')
-    
+      button#saveM.button.is-success.column.is-one-fifth.is-offset-one-quarter.is-1
+        span.icon
+          i.fas.fa-check
+        span Save
+

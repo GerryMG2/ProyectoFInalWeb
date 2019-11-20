@@ -7,5 +7,8 @@ block content
         include user_view
 
 block scripts
+    script.
+        var usercode = "#{codigo}";
     script(src="/javascript/configuraciones.js")
-    script(src="https://kit.fontawesome.com/213e7d2279.js', crossorigin='anonymous")
+    script(src='https://kit.fontawesome.com/213e7d2279.js' crossorigin='anonymous')
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")

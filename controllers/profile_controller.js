@@ -7,7 +7,7 @@ async function profileGet(req, res) {
         if (validar) {
             console.log("User: ");
             console.log(user[0].name);
-            res.render("user_page", { title: "User page", nombre: user[0].name, correo: user[0].email, usad: user[0].superUser, admin: req.session.admin });
+            res.render("user_page", { title: "User page", nombre: user[0].name, correo: user[0].email, usad: user[0].superUser, admin: req.session.admin, codigo: req.session.user });
 
         } else{
             console.log("User: ");

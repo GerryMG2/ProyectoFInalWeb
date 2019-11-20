@@ -1,14 +1,52 @@
 const dbUser = require("../models/user");
 const bycrypt = require("bcrypt");
+
+
 class userService {
   constructor() {
     this.db = dbUser;
   }
+  updatePass(code, oldPass, newPass, confPass, cb) {
+    try { 
+      this.validate(code,oldPass, (validar,superUser) =>{
+        if(validar && newPass != "" && newPass == confPass){
+          var passHash = bycrypt.hashSync(newPass, 10);
 
-  getByCode(code,cb){
+      var query = { "code": code };
+      this.db.findOneAndUpdate(query, {password: passHash}, { upsert: true }, function (
+        err, doc
+      ) {
+        if (err) {
+          console.log("Error: ", err);
+          cb(false);
+        } else {
+          console.log("Document: ");
+          console.log(doc);
+          cb(true);
+        }
+      });
+
+        } else{
+          cb(false);
+        }
+
+      });
+
+    } catch (error) {
+      console.log(error);
+      cb(false);
+    }
+  }
+
+  updateEmail(newMail,cb){
+
+  }
+
+
+  getByCode(code, cb) {
     try {
       console.log(code);
-      this.db.find({code: code}, function (err, docs) {
+      this.db.find({ code: code }, function (err, docs) {
         if (err) {
           console.log("Error: ");
           console.log(err);
@@ -46,11 +84,11 @@ class userService {
     }
   }
 
-  get(filtros, pags,cb) {
+  get(filtros, pags, cb) {
     try {
       let filtrosMade = {};
-      if(filtros == ""){
-      }else{
+      if (filtros == "") {
+      } else {
         filtrosMade = {
           name: /filtros/
         };
@@ -62,9 +100,9 @@ class userService {
           console.log("Error: ");
           console.log(err);
           cb(false, {}, 0);
-        }else {
-          dbUser.find(filtrosMade, (err, docs2) =>{
-            if(!err){
+        } else {
+          dbUser.find(filtrosMade, (err, docs2) => {
+            if (!err) {
               var paginas = docs2.length;
               paginas = Math.ceil(paginas / 10);
               cb(true, docs, paginas);
@@ -110,14 +148,14 @@ class userService {
   update(usuario, cb) {
     //TODO: method to update users
     try {
-      var query = {"code": usuario.code};
-      this.db.findOneAndUpdate(query, usuario, {upsert: true}, function(
+      var query = { "code": usuario.code };
+      this.db.findOneAndUpdate(query, usuario, { upsert: true }, function (
         err, doc
-      ){
-        if(err){
+      ) {
+        if (err) {
           console.log("Error: ", err);
           cb(false);
-        }else{
+        } else {
           console.log("Document: ");
           console.log(doc);
           cb(true);
@@ -131,8 +169,8 @@ class userService {
 
   delete(id, cb) {
     try {
-      this.db.remove({code: id}, function (error){
-        if(error){
+      this.db.remove({ code: id }, function (error) {
+        if (error) {
           console.log("Error users: ");
           console.log(error);
           cb(false);
@@ -151,18 +189,18 @@ class userService {
     try {
       this.db.findOne({ code: code }, "password superUser", (err, user) => {
         if (err) {
-          
+
           console.log(err);
-          cb(false,false);
+          cb(false, false);
         } else {
           try {
-            console.log("user: ",user)
+            console.log("user: ", user)
             if (bycrypt.compareSync(password, user.password)) {
               if (user.superUser) {
                 console.log("es super user");
                 cb(true, true);
               } else {
-  
+
                 console.log("no super user");
                 cb(true, false);
               }
@@ -173,14 +211,14 @@ class userService {
             console.log(error);
             cb(false, false);
           }
-         
-          
+
+
         }
       });
     } catch (error) {
-      
+
       console.log(error);
-      cb(false,false);
+      cb(false, false);
     }
 
     //TODO: validaion credentials
