@@ -6,7 +6,7 @@ var reservationSchema = new Schema(
     {
       // codigo del usuario
       userId: { type: String, required: true },
-
+      
       // codigo del laboratorio
       LabId: { type: String, required: true },
       // fecha que se hizo la reserva

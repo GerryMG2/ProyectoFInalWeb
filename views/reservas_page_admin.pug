@@ -1,0 +1,19 @@
+extends layout_all
+
+block header
+    include header
+block content
+    section.section#formulario.container.has-background-grey-lighter
+        include form_reserva_admin
+   
+           
+    section.section#lista.container
+        .table-container
+            include table_reservas
+        
+
+
+
+block scripts
+    script(src="/javascript/admin_users.js")
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")

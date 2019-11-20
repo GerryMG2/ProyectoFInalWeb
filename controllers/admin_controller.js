@@ -9,3 +9,9 @@ async function secondsUsers(req, res) {
 }
 
 module.exports.secondsUsers = secondsUsers;
+
+async function adminReservas(req, res) {
+  res.render("reservas_page_admin", {usad: req.session.admin, title: "Admin_Reservas", msg: ""});
+}
+
+module.exports.adminReservas = adminReservas;
