@@ -1,0 +1,57 @@
+form#form-adminReservas
+    .field.is-horizontal
+        
+        .field-label.is-normal.is-small
+            label.label(for="nombre") Hecha por: 
+        .field-body
+            .field.has-addons
+                p.control.is-expanded
+                    input#name.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')
+            
+            .field-label.is-normal.is-small
+                label.label.is-small(for="lab") Laboratorio:
+            .field.has-addons
+                p.control.is-expanded
+                    input#lab.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')
+    
+            .field-label.is-normal.is-small
+                label.label(for="name") Fecha realizada:
+            .field.has-addons
+                p.control.is-expanded
+                    input#fecha.input.is-small(type='text', placeholder='' name='name')    
+    
+    
+    .field.is-horizontal
+        .field-label.is-normal.is-small
+            label.label(for="horario") Horario de reserva: 
+        .field-body
+            .field.has-addons
+                p.control.is-expanded
+                    input#horario.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')
+            
+            .field-label.is-normal.is-small
+                label.label(for="estado") Estado:
+            .field.has-addons
+                .control.is-expanded
+                    .select.is-fullwidth.is-small
+                        select#estado(name="status")
+
+            .field-label.is-normal.is-small
+                label.label(for="name") Descripción:
+            .field.has-addons
+                p.control.is-expanded
+                    input#fecha.input.is-small(type='text', placeholder='' name='name')    
+    
+    .field.is-horizontal
+        .field-label
+        .field-body
+            .field.is-grouped
+                .control       
+                    button#btn-actualizar.button.is-small.is-hidden Actualizar
+            
+                .control  
+                    button#btn-limpiar.button.is-small.is-danger Limpiar
+                p.control.is-expanded
+                    input#filtros.input.is-small.is-rounded.is-primary(placeholder="Buscar por nombre")
+                p.control
+                    a#btn-buscar.button.is-small.is-info.is-rounded Buscar
