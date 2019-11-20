@@ -27,12 +27,18 @@ class labsReservations {
             menor = eventoB.inicio.getTime();
         }
 
+
         let rangoTotal = mayor - menor;
+        console.log("rango total:", rangoTotal);
+        console.log("rangoA", rangoA);
+        console.log("rangoB", rangoB);
+        console.log("mayor", mayor);
+        console.log("menor", menor);
         if (rangoA + rangoB < rangoTotal) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
 
     }
@@ -55,6 +61,8 @@ class labsReservations {
                         }
                     });
                 });
+
+                console.log(error);
 
                 if (error == 0) {
                     cb(true)
@@ -85,6 +93,7 @@ class labsReservations {
 
                         }
                     });
+                    cb(true)
 
                 } else {
                     cb(false);

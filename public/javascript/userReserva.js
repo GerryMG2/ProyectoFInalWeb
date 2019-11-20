@@ -117,11 +117,11 @@ start = () => {
           .then(res => res.json())
           .catch(error => console.log("error: ", error))
           .then(response => {
-              if(response){
+              if(response.result != "error"){
                 console.log("success: ", response);
-            alert("Se creo la reserva con exito")
+                alert("Se creo la reserva con exito");
               }else{
-                  alert("No se pudo crear")
+                  alert("No se pudo crear");
               }
             
           });
