@@ -40,6 +40,10 @@ start = () => {
     contenedor.appendChild(contenedorHorario);
 
     let btnBorrar = document.createElement("button");
+    btnBorrar.classList.add("button");
+    btnBorrar.classList.add("is-danger");
+    btnBorrar.classList.add("is-small");
+    btnBorrar.classList.add("is-outlined");
     contenedorOpciones.appendChild(btnBorrar);
     contenedor.appendChild(contenedorOpciones);
     li.appendChild(contenedor);
