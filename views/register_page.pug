@@ -1,4 +1,9 @@
 extends layout
 block content
     p= msg
-    include register_form
+    .section
+        .container
+
+            include register_form
+block scripts
+    script(src="/javascript/register.js")

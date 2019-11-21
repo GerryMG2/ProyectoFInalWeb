@@ -22,7 +22,9 @@ start = () => {
   var nEmail = document.getElementById("newEmail")
   var confEmail = document.getElementById("saveM")
 
+ 
  confP.addEventListener("click", e => {
+
    e.preventDefault();
    if(oPass.value != ""){
      if((nPass!="") && (nPass.value == cPass.value)){
@@ -51,6 +53,7 @@ start = () => {
         console.log("success: ", response);
         if(response.result == "success"){
           Swal.fire(response.msg, ":)", response.result);
+          location = location;
 
         } else{
           Swal.fire(response.msg, ":(", response.result);
@@ -66,12 +69,58 @@ start = () => {
 
    }
 
- })
+ }); 
+
+ document.querySelector('#form-pass').addEventListener('keypress', function (e) {
+  var key = e.which || e.keyCode;
+  if (key === 13) { // 13 is enter
+    confP.click();
+  }
+});
 
  confEmail.addEventListener("click", e=>{
 e.preventDefault();
+if(nEmail!=""){
+  let =URL ="/api/admin/users/email"
 
- })
+  let options = {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }
+  options["body"] = JSON.stringify({
+    email: nEmail.value
+  });
+
+  fetch(URL, options)
+  .then(res => res.json())
+  .catch(error => console.log("error: ", error))
+  .then(response => {
+    console.log("success: ", response);
+    if(response.result == "success"){
+      Swal.fire(response.msg, ":)", response.result);
+      location=location;
+
+    } else{
+      Swal.fire(response.msg, ":(", response.result);
+    }
+  });
+
+} else{
+  Swal.fire("Ingrese los datos", "vuelva a intentarlo", "error");
+
+ }
+
+ });
+
+ document.querySelector('#form-email').addEventListener('keypress', function (e) {
+  var key = e.which || e.keyCode;
+  if (key === 13) { // 13 is enter
+    confEmail.click();
+  }
+});
 
 
 

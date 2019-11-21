@@ -7,26 +7,26 @@ class userService {
     this.db = dbUser;
   }
   updatePass(code, oldPass, newPass, confPass, cb) {
-    try { 
-      this.validate(code,oldPass, (validar,superUser) =>{
-        if(validar && newPass != "" && newPass == confPass){
+    try {
+      this.validate(code, oldPass, (validar, superUser) => {
+        if (validar && newPass != "" && newPass == confPass) {
           var passHash = bycrypt.hashSync(newPass, 10);
 
-      var query = { "code": code };
-      this.db.findOneAndUpdate(query, {password: passHash}, { upsert: true }, function (
-        err, doc
-      ) {
-        if (err) {
-          console.log("Error: ", err);
-          cb(false);
-        } else {
-          console.log("Document: ");
-          console.log(doc);
-          cb(true);
-        }
-      });
+          var query = { "code": code };
+          this.db.findOneAndUpdate(query, { password: passHash }, { upsert: true }, function (
+            err, doc
+          ) {
+            if (err) {
+              console.log("Error: ", err);
+              cb(false);
+            } else {
+              console.log("Document: ");
+              console.log(doc);
+              cb(true);
+            }
+          });
 
-        } else{
+        } else {
           cb(false);
         }
 
@@ -38,7 +38,30 @@ class userService {
     }
   }
 
-  updateEmail(newMail,cb){
+  updateEmail(newMail,code, cb) {
+    try {
+      if (newMail != "") {
+        var query = { "code": code };
+        this.db.findOneAndUpdate(query, {email: newMail}, function (
+          err, doc
+        ) {
+          if (err) {
+            console.log("Error: ", err);
+            cb(false);
+          } else {
+            console.log("Document: ");
+            console.log(doc);
+            cb(true);
+          }
+        });
+      } else {
+        cb(false);
+      }
+
+    } catch (error) {
+      console.log(error);
+      cb(false);
+    }
 
   }
 

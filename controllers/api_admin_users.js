@@ -16,7 +16,7 @@ async function updatePass(req, res) {
                     res.status(500).json({ result: "error", msg: "No se pudo crear" });
                 }
             });
-        } else{
+        } else {
             res.status(500).json({ result: "error", msg: "No se pudo cambiar la contraseña" });
         }
 
@@ -33,15 +33,22 @@ async function updateEmail(req, res) {
     try {
         console.log("Req.body: ");
         console.log(req.body);
-        
 
-            userService.updatePass(req.body.code, req.body.oldPass, req.body.newPass, req.body.confPass, validar => {
+        if (req.body.email != "") {
+
+            userService.updateEmail(req.body.email, req.session.user, validar => {
                 if (validar) {
-                    res.status(201).json({ result: "success", msg: "Usuario actualizado!" });
+                    res.status(201).json({ result: "success", msg: "Email actualizado!" });
                 } else {
-                    res.status(500).json({ result: "error", msg: "No se pudo crear" });
+                    res.status(500).json({ result: "error", msg: "No se pudo actualizar" });
                 }
             });
+
+        } else{
+            res.status(500).json({ result: "error", msg: "No se pudo actualizar" });
+
+        }
+
 
     } catch (error) {
         console.log("Error: ");
@@ -50,6 +57,7 @@ async function updateEmail(req, res) {
     }
 
 }
+module.exports.updateEmail = updateEmail;
 
 module.exports.updatePass = updatePass;
 
