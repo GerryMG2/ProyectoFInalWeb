@@ -5,3 +5,10 @@ async function indexGet(req, res) {
 }
 
 module.exports.indexGet = indexGet;
+
+
+async function defaultPage(req,res){
+  res.redirect("/main");
+}
+
+module.exports.defaultPage = defaultPage;
