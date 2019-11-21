@@ -2,24 +2,25 @@ form#form-adminReservas
     .field.is-horizontal
         
         .field-label.is-normal.is-small
-            label.label(for="nombre") Hecha por: 
+            label.label(for="userId") Hecha por: 
         .field-body
             .field.has-addons
                 p.control.is-expanded
                     input#name.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')
             
             .field-label.is-normal.is-small
-                label.label.is-small(for="lab") Laboratorio:
+                label.label.is-small(for="labId") Laboratorio:
             .field.has-addons
                 p.control.is-expanded
                     input#lab.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')
     
             .field-label.is-normal.is-small
-                label.label(for="name") Fecha realizada:
+                label.label(for="dateMade") Fecha realizada:
             .field.has-addons
                 p.control.is-expanded
-                    input#fecha.input.is-small(type='text', placeholder='' name='name')    
-    
+                    input#fecha.input.is-small.is-rounded.is-primary(type='datetime-local', placeholder='' name='name')
+
+    //- ---------------------------------------------------------------------------------------------------------
     
     .field.is-horizontal
         .field-label.is-normal.is-small
@@ -28,27 +29,30 @@ form#form-adminReservas
             .field.has-addons
                 p.control.is-expanded
                     input#horario.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')
-            
+
             .field-label.is-normal.is-small
                 label.label(for="estado") Estado:
             .field.has-addons
                 .control.is-expanded
                     .select.is-fullwidth.is-small
-                        select#estado(name="status")
+                        select#estado.input.is-small.is-rounded.is-primary(name="status")    
 
-            .field-label.is-normal.is-small
-                label.label(for="name") Descripción:
+    //- --------------------------------------------------------------------------------------------------------------
+
+    .field.is-horizontal
+        .field-label.is-normal.is-small
+            label.label(for="descripcion") Descripción:
+        .field-body
             .field.has-addons
                 p.control.is-expanded
-                    input#fecha.input.is-small(type='text', placeholder='' name='name')    
+                    input#descripcion.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')    
     
     .field.is-horizontal
         .field-label
         .field-body
             .field.is-grouped
                 .control       
-                    button#btn-actualizar.button.is-small.is-hidden Actualizar
-            
+                    button#btn-actualizar.button.is-small.is-hidden Actualizar            
                 .control  
                     button#btn-limpiar.button.is-small.is-danger Limpiar
                 p.control.is-expanded

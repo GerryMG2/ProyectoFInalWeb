@@ -13,10 +13,10 @@ form#form-reserva
                 p.control.is-expanded
                     input#labId.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='LabId')
             .field-label.is-normal.is-small
-                label.label(for="userId") :Fecha Realizacion
+                label.label(for="dateMade") Fecha realizacion:
             .field.has-addons
                 p.control.is-expanded
-                    input#date-created.input.is-small.is-rounded.is-primary(type='date', placeholder='' name='dateMade')
+                    input#date-created.input.is-small.is-rounded.is-primary(type='datetime-local', placeholder='' name='dateMade')
     .field.is-horizontal
         .field-label
         .field-body
