@@ -1,4 +1,4 @@
-form(action="/register", method="post")
+form#register(action="/register", method="post")
     .container.has-text-centered
         .column.is-4.is-offset-4
             h3.title.has-text-grey-dark Registation
@@ -27,7 +27,14 @@ form(action="/register", method="post")
         label.label.column.is-offset-3(for='pw2') Confirm Password:
         .control
             input#pw2.input.column.is-half.is-offset-one-quarter.is-rounded.is-success(type='password' name='confirmPassword')
-    .field
-        label.label
-        .control
-            button.button.is-dark.is-success.column.is-half.is-offset-one-quarter.is-1.is-fullwidth(type='submit') Sign up 
+    .field.is-grouped
+            p.control
+            a.button#submit.button.is-dark.is-success.column.is-half.is-offset-one-quarter.is-1.is-fullwidth(type='submit') Sign up 
+            p.has-text-grey
+
+            p.control
+            a(href="/login").is-info.column.is-half.is-1.is-fullwidth(type='register') Sign in
+                p.has-text-grey
+
+
+
