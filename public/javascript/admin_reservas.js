@@ -19,13 +19,39 @@ estadoReserva = estado => {
     
 };
 
-function callSwalWithHTML(html) {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = html;
-    Swal.fire("Horarios: ", html);
+borrarReserva = (id, formulario, totalPaginas, tablaReservas, verHorario, conteHora, conteDesc, e) => {
+    e.preventDefault();
+    let options_and_body = {
+        method: "DELETE",
+        credentials: "same-origin", 
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+    options_and_body["body"] = JSON.stringify({
+        _id: id
+    });
+
+    fetch(URL_API_RESERVAS, options_and_body)
+        .then(res => res.json())
+        .catch(error => {
+            console.log("error: ", error);
+            Swal.fire("Hubo un problema para eliminar la reserva", error, "error");
+        })
+        .then(response => {
+            console.log("success: ", response);
+            Swal.fire(response.msg, "Continua gestionando reservas!", response.ok);
+        })
+        .then(() => {})
+        .then(() => {
+            console.log("Esperar medio segundo");
+            setTimeout(() => {
+                getReservas("", 1, totalPaginas,tablaReservas, formulario, verHorario, conteHora, conteDesc, e);
+            }, 500);
+        });
 };
 
-getReservas = (filtros, pagina, paginatotales, tabla, formulario, e ) => {
+getReservas = (filtros, pagina, paginatotales, tabla, formulario, verHorarios,conteHora, conteDesc,e ) => {
     if(e){
         e.preventDefault();
     }
@@ -66,7 +92,9 @@ getReservas = (filtros, pagina, paginatotales, tabla, formulario, e ) => {
                 let LaboId = document.createElement("td");
                 LaboId.innerHTML = element.LabId;
                 let fechaReser = document.createElement("td");
-                fechaReser.innerHTML = element.date;
+                let fechacreacion  = new Date(element.date);
+
+                fechaReser.innerHTML = fechacreacion.toLocaleString();
                 
                 let diasReserva = document.createElement("td");
                 let btn_rangeHora = document.createElement("td");
@@ -75,16 +103,49 @@ getReservas = (filtros, pagina, paginatotales, tabla, formulario, e ) => {
                 btn_rangeHora.classList.add("is-primary");
                 btn_rangeHora.classList.add("is-small");
                 btn_rangeHora.classList.add("is-outlined");
+                console.log(verHorarios);                
 
                 btn_rangeHora.addEventListener("click", function (e) {
+                    conteHora.innerHTML = "";
                     e.preventDefault();
                     let lista = document.createElement("ul");
                     element.eventos.forEach(element => {
                         let li = document.createElement("li");
-                        li.innerHTML =  JSON.stringify(element);
+                        let fechaI = new Date(element.inicio);
+                        let fechaF = new Date(element.fin);
+                        
+                        let title = document.createElement("h2");
+                        title.innerHTML = element.title;
+
+                        let fechaInicio = document.createElement("div");                        
+                        fechaInicio.innerHTML = fechaI.toLocaleString();
+                        fechaInicio.className = "level-item";
+
+                        let fechaFin = document.createElement("div");
+                        fechaFin.innerHTML = fechaF.toLocaleString();
+                        fechaFin.className = "level-item";
+
+                        
+                        let izq= document.createElement("div");
+                        let derecha = document.createElement("div");
+                        
+                        li.classList.add("level");
+                        izq.classList.add("level-left");
+                        derecha.classList.add("level-rigth");
+                        let brtag = document.createElement("br");
+                        brtag.className = "level-item";
+                                                
+                        izq.appendChild(fechaInicio);
+
+                        derecha.appendChild(fechaFin);
+                        
+                        li.appendChild(izq);
+                        li.appendChild(derecha);
+
                         lista.appendChild(li);
+                        conteHora.appendChild(lista);
                     });
-                    callSwalWithHTML(lista);
+                    verHorarios.style.display = "block";
                 });
                 diasReserva.appendChild(btn_rangeHora);
 
@@ -94,19 +155,24 @@ getReservas = (filtros, pagina, paginatotales, tabla, formulario, e ) => {
                 
 
                 let descripcion = document.createElement("td");
-                let btn_descrip = document.createElement("td");
+                let btn_descrip = document.createElement("button");
                 btn_descrip.innerHTML = "Ver descrición";
                 btn_descrip.classList.add("button");
                 btn_descrip.classList.add("is-primary");
                 btn_descrip.classList.add("is-small");
                 btn_descrip.classList.add("is-outlined");
                 btn_descrip.addEventListener("click", function (e) {
+                    console.log(conteDesc);
+                    conteDesc.innerHTML = "";
                     e.preventDefault();
-                    
+                    let desc = document.createElement("p");
+                    desc.innerHTML = element.description;
+                    conteDesc.appendChild(desc);
+                    verDescripcion.style.display = "block";
                 });
                 descripcion.appendChild(btn_descrip);
 
-
+                
                 let opciones = document.createElement("td");
                 let btn_borrar = document.createElement("button");
                 btn_borrar.innerHTML = "borrar";
@@ -116,7 +182,7 @@ getReservas = (filtros, pagina, paginatotales, tabla, formulario, e ) => {
                 btn_borrar.classList.add("is-outlined");
                 btn_borrar.addEventListener("click", function (e) {
                     e.preventDefault();
-                    // funcion Borrar!
+                    borrarReserva(element._id, formulario, paginatotales, tabla, verHorario, conteHora, conteDesc,e);
                 });
                 opciones.appendChild(btn_borrar);
 
@@ -161,6 +227,39 @@ start = () => {
     var btn_buscar = document.getElementById("btn-buscar");
     var tablaReservas = document.getElementById("tableReserva");
     var totalPaginas = 0;
+    var verHorarios = document.getElementById("verHorario");
+    var closeHorarios = document.getElementById("closeHorario");
+    var closeHorariosx = document.getElementById("closeHorariox");
+    var conteHora = document.getElementById("contenidoHorarios");
+    var modelDescrip = document.getElementById("verDescripcion");
+    var conteDesc = document.getElementById("contenidoDescrip");
+
+
+    closeDescripcion.onclick = function(){
+        modelDescrip.style.display = "none";
+    }
+
+    closeDescripx.onclick = function(){
+        modelDescrip.style.display = "none";
+    }
+
+    
+    closeHorarios.onclick = function(){
+        verHorarios.style.display = "none";
+    }
+
+    closeHorariosx.onclick = function(){
+        verHorarios.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == verHorarios) {
+            verHorarios.style.display = "none";
+        }
+        else if(event.target == modelDescrip){
+            modelDescrip.style.display = "none";
+        }
+      }
 
     btn_limpiar.addEventListener("click", e => {
         e.preventDefault();
@@ -172,7 +271,7 @@ start = () => {
 
 
     estadoReserva(estadoRes);
-    getReservas("", 1, totalPaginas, tablaReservas, formulario);
+    getReservas("", 1, totalPaginas, tablaReservas, formulario, verHorarios, conteHora, conteDesc);
 }
 
 window.onload = start;

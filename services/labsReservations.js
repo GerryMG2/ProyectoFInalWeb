@@ -117,7 +117,6 @@ class labsReservations {
               cb(true);
             }
           });
-          cb(true);
         } else {
           cb(false);
         }
