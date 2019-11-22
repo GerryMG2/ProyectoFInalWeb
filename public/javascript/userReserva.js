@@ -40,6 +40,10 @@ start = () => {
     contenedor.appendChild(contenedorHorario);
 
     let btnBorrar = document.createElement("button");
+    btnBorrar.classList.add("button");
+    btnBorrar.classList.add("is-danger");
+    btnBorrar.classList.add("is-small");
+    btnBorrar.classList.add("is-outlined");
     contenedorOpciones.appendChild(btnBorrar);
     contenedor.appendChild(contenedorOpciones);
     li.appendChild(contenedor);
@@ -70,6 +74,7 @@ start = () => {
   });
 
   btnCrear.addEventListener("click", e => {
+    console.log("crear");
     e.preventDefault();
     let ListaHorarioInicio = document.getElementsByClassName("inicioH");
     let ListaHorarioFin = document.getElementsByClassName("finH");
@@ -115,11 +120,14 @@ start = () => {
 
         fetch(URL_ENCARGADOS, options)
           .then(res => res.json())
-          .catch(error => console.log("error: ", error))
+          .catch(error => {
+              console.log("error: ", error);
+              Swal.fire("Hubo un problema en crear la reserva!", error, "error");
+          })
           .then(response => {
               if(response.result != "error"){
                 console.log("success: ", response);
-                alert("Se creo la reserva con exito");
+                Swal.fire(response.msg, "Continua haciendo reservas", response.ok);
               }else{
                   alert("No se pudo crear");
               }

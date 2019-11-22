@@ -4,7 +4,7 @@ block header
     include header
 block content
     section.section#formulario.container.has-background-grey-lighter
-        include form_reserva_admin
+        include admin_reservas
    
            
     section.section#lista.container
@@ -13,7 +13,9 @@ block content
         
 
 
+block modals
+    include modals_admin
 
 block scripts
-    script(src="/javascript/admin_users.js")
+    script(src="/javascript/admin_reservas.js")
     script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
