@@ -22,7 +22,17 @@ start = () => {
   var nEmail = document.getElementById("newEmail")
   var confEmail = document.getElementById("saveM")
   var editphoto = document.getElementById("editPhoto");
-  
+
+  document.getElementById('file-upload').onchange = function(e) {
+    e.preventDefault();
+    console.log("change")
+    document.getElementById("editfoto").onsubmit = (e)=>{
+      return false;
+    };
+    document.getElementById("editfoto").submit();
+    location=location;
+
+  };
  
  confP.addEventListener("click", e => {
 

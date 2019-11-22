@@ -2,8 +2,8 @@
   .card-content
     .media
       .media-left
-        figure.image.is-50x50
-          img#avatarimg(src='https://bulma.io/images/placeholders/96x96.png' alt='Placeholder image')
+        object#avatarimg.image.is-rounded.is-128x128(data=`/images/user${codigo}.png` type='image/png')
+          img#avatarimg.image.is-rounded.is-128x128(src=`https://bulma.io/images/placeholders/128x128.png` alt='Placeholder image')
       .media-content
         p.title.is-4 #{nombre}
         p.subtitle.is-6 #{correo}
@@ -22,11 +22,17 @@
                 i.fas.fa-lock
               span Password
           li
-            form#editfoto(action="api/admin/users/upload", method="post")
-              input(type="file")#editPhoto
-                span.icon.is-small
-                  i.fas.fa-image
-                span Avatar
+            form#editfoto(action="/api/admin/users/upload", method="post",  enctype="multipart/form-data", onsubmit="return false", target="hidden-iframe")
+              .file
+                label.file-label
+                  input.file-input#file-upload(type='file' name='avatar')
+                  span.file-cta
+                    span.file-icon
+                      i.fas.fa-image
+                    span.file-label
+                      | Image&mldr;
+
+              
 
 
   form#form-pass.is-hidden
@@ -62,4 +68,4 @@
         span.icon
           i.fas.fa-check
         span Save
-
+iframe(name='hidden-iframe' style='display: none;')

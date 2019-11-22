@@ -155,14 +155,15 @@ module.exports.getSuperUsers = getSuperUserCode;
 
 async function upload(req, res){
     try {
-        if(!req.file){
+        console.log(req.files.avatar)
+        if(!req.files){
             res.status(500).json({result: "Error", msg: "No se pudo cargar la imagen"})
         }else{
-            console.log(req.file);
+            console.log(req.files.avatar);
             let avatar = req.files.avatar;
  
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
-            avatar.mv(`./public/images/user${req.session.user}.jpg`);
+            avatar.mv(`./public/images/user${req.session.user}.png`);
             res.status(200).json({result: "success", msg: "La imagen se subió con éxito"});
         }
         
