@@ -14,10 +14,15 @@ var adminUserRoutes = require("./routes/admin_users");
 var profileRouter = require('./routes/profile');
 var reservas = require("./routes/reserva_labs");
 var adminReservasRouter = require("./routes/admin_reservas");
-
+const fileUpload = require('express-fileupload');
 
 
 var app = express();
+
+
+app.use(fileUpload({
+  createParentPath: true
+}));
 
 
 //set up express session
@@ -45,6 +50,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
+
 
 
 app.use('/', indexRouter);

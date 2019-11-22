@@ -3,7 +3,7 @@
     .media
       .media-left
         figure.image.is-50x50
-          img(src='https://bulma.io/images/placeholders/96x96.png' alt='Placeholder image')
+          img#avatarimg(src='https://bulma.io/images/placeholders/96x96.png' alt='Placeholder image')
       .media-content
         p.title.is-4 #{nombre}
         p.subtitle.is-6 #{correo}
@@ -21,6 +21,13 @@
               span.icon.is-small
                 i.fas.fa-lock
               span Password
+          li
+            form#editfoto(action="api/admin/users/upload", method="post")
+              input(type="file")#editPhoto
+                span.icon.is-small
+                  i.fas.fa-image
+                span Avatar
+
 
   form#form-pass.is-hidden
     .field

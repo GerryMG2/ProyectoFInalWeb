@@ -21,7 +21,8 @@ start = () => {
   var confP = document.getElementById("saveP");
   var nEmail = document.getElementById("newEmail")
   var confEmail = document.getElementById("saveM")
-
+  var editphoto = document.getElementById("editPhoto");
+  
  
  confP.addEventListener("click", e => {
 

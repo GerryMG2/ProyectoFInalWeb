@@ -12,4 +12,5 @@ router.put('/', admin, adminUsers.updateUser);
 router.delete('/', admin, adminUsers.deleteUser);
 router.post('/password',auth,adminUsers.updatePass);
 router.post('/email',auth,adminUsers.updateEmail);
+router.post('/upload', auth, adminUsers.upload);
 module.exports = router;
