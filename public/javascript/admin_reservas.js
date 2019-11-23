@@ -195,6 +195,7 @@ getReservas = (filtros, pagina, paginatotales, tabla, formulario, verHorarios,co
 
                 btn_editar.addEventListener("click", function(e) {
                    e.preventDefault();
+                   editarReserva(element, formulario, e);
                     // funcion editar!
                 });
                 opciones.appendChild(btn_editar);
@@ -215,11 +216,13 @@ getReservas = (filtros, pagina, paginatotales, tabla, formulario, verHorarios,co
 
 start = () => {
     var formAdReserva = document.getElementById("form-adminReservas");
-    var userId = document.getElementById("name");
-    var labId = document.getElementById("lab");
+    var user = document.getElementById("name");
+    user.disabled = true;
+    var lab = document.getElementById("lab");
     var reserFecha = document.getElementById("fecha");
     reserFecha.disabled = true;
-    var horarioRes = document.getElementById("horario");
+    var horarioResI = document.getElementById("horarioIni");
+    var horarioResF = document.getElementById("horarioFin");
     var estadoRes = document.getElementById("estado");
     var descripRes = document.getElementById("descripcion");
     var btn_actualizar = document.getElementById("btn-actualizar");
@@ -265,9 +268,31 @@ start = () => {
         e.preventDefault();
         console.log(btn_actualizar.classList);
         btn_actualizar.classList.remove("is-hidden");
-        btn_actualizar.classList += btn_actualizar.classList + "is-hidden";
+        btn_actualizar.classList += btn_actualizar.classList + " is-hidden";
         formAdReserva.reset();
     });
+
+    editarReserva = (element, formulario, e) =>{
+        btn_actualizar.classList.remove("is-hidden");
+        console.log(btn_actualizar.classList);
+        e.preventDefault();
+        
+        user.value = element.userId;
+        lab.value = element.LabId;
+
+        let fechacreacion = new Date(element.date);
+        reserFecha.value = fechacreacion.toLocaleString();
+        
+        element.eventos.forEach(element => {
+            let fechaI = new Date(element.inicio);
+            let fechaF = new Date(element.fin);
+            horarioResI.value = fechaI.toLocaleString();
+            horarioResF.value = fechaF.toLocaleString();                
+        });
+        
+  
+        descripRes.value = element.description;       
+    };
 
 
     estadoReserva(estadoRes);

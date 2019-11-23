@@ -18,18 +18,24 @@ form#form-adminReservas
                 label.label(for="dateMade") Fecha realizada:
             .field.has-addons
                 p.control.is-expanded
-                    input#fecha.input.is-small.is-rounded.is-primary(type='datetime-local', placeholder='' name='name')
+                    input#fecha.input.is-small.is-rounded.is-primary(type='', placeholder='' name='name')
 
     //- ---------------------------------------------------------------------------------------------------------
     
     .field.is-horizontal
         .field-label.is-normal.is-small
-            label.label(for="horario") Horario de reserva: 
+            label.label(for="horario") Días reserva inicio: 
         .field-body
             .field.has-addons
                 p.control.is-expanded
-                    input#horario.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')
-
+                    input#horarioIni.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')
+        
+            .field-label.is-normal.is-small
+                label.label.is-small(for="labId") Días reserva fin:
+            .field.has-addons
+                p.control.is-expanded
+                    input#horarioFin.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')
+    
             .field-label.is-normal.is-small
                 label.label(for="estado") Estado:
             .field.has-addons
@@ -41,11 +47,11 @@ form#form-adminReservas
 
     .field.is-horizontal
         .field-label.is-normal.is-small
-            label.label(for="descripcion") Descripción:
+            label.label(for="descricion") Descripción:
         .field-body
             .field.has-addons
-                p.control.is-expanded
-                    input#descripcion.input.is-small.is-rounded.is-primary(type='text', placeholder='' name='name')    
+                .control.is-expanded
+                    textarea#descripcion.textarea(name="description", placeholder="")
     
     .field.is-horizontal
         .field-label
