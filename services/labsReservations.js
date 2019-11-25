@@ -74,7 +74,7 @@ class labsReservations {
     let ocurr = 0;
     for (let index = 0; index < eventos.length -1; index++) {
         for (let j = index + 1; j < eventos.length; j++) {
-            if(intercept(eventos[index], eventos[j])){
+            if(labsReservations.intercept(eventos[index], eventos[j])){
               ocurr++;
             }
           
