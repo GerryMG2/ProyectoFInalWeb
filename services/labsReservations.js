@@ -69,6 +69,26 @@ class labsReservations {
     }
   }
 
+  static validateItself(eventos){
+    console.log(eventos)
+    let ocurr = 0;
+    for (let index = 0; index < eventos.length -1; index++) {
+        for (let j = index + 1; j < eventos.length; j++) {
+            if(intercept(eventos[index], eventos[j])){
+              ocurr++;
+            }
+          
+        }
+      
+    }
+
+    if(ocurr > 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   async validateEvents(reserva, cb) {
     this.dbR.find({ status: "aprobada", LabId: reserva.LabId }, function(
       err,
@@ -90,6 +110,14 @@ class labsReservations {
             }
           });
         });
+        console.log(error)
+        console.log(reserva.eventos)
+
+        if(!labsReservations.validateItself(reserva.eventos)){
+          error++;
+        }
+
+
 
         console.log(error);
 
@@ -129,25 +157,42 @@ class labsReservations {
 
   async update(reserva, cb) {
     try {
-      this.validateEvents(reserva.eventos, validar => {
-        if (validar) {
-          var query = {
-            _id: reserva._id
-          };
-          this.dbR.findOneAndRemove(query, reserva, (err, result) => {
-            if (err) {
-              console.log("Error: ", err);
-              cb(false);
-            } else {
-              console.log("Document: ");
-              console.log(result);
-              cb(true);
-            }
-          });
-        } else {
-          cb(false);
-        }
-      });
+      if(reserva.status != "aprobada"){
+        var query = {
+          _id: reserva._id
+        };
+        this.dbR.findOneAndUpdate(query, reserva, (err, result) => {
+          if (err) {
+            console.log("Error: ", err);
+            cb(false);
+          } else {
+            console.log("Document: ");
+            console.log(result);
+            cb(true);
+          }
+        });
+      }else{
+        this.validateEvents(reserva, validar => {
+          if (validar) {
+            var query = {
+              _id: reserva._id
+            };
+            this.dbR.findOneAndUpdate(query, reserva, (err, result) => {
+              if (err) {
+                console.log("Error: ", err);
+                cb(false);
+              } else {
+                console.log("Document: ");
+                console.log(result);
+                cb(true);
+              }
+            });
+          } else {
+            cb(false);
+          }
+        });
+      }
+      
     } catch (error) {
       console.log("Error: ", error);
       cb(false);
