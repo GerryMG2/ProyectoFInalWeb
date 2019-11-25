@@ -76,11 +76,12 @@ async function updateReserva(req, res) {
         console.log("Req.body: ");
         console.log(req.body);
         var reserva = {
+            _id: req.body._id,
             userId: req.body.userId,
             LabId: req.body.LabId,
-            eventos: req.body.eventos,
             status: req.body.status,
-            description: req.body.description
+            description: req.body.description, 
+            eventos: req.body.eventos
         };
         
         ReservasServicio.update(reserva, validar => {
