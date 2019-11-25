@@ -9,6 +9,7 @@ var reservationSchema = new Schema(
       
       // codigo del laboratorio
       LabId: { type: String, required: true },
+      LabIdR: {type: String, required: true},
       // fecha que se hizo la reserva
       date: { type: Date, default: Date.now },
       // dias de reserva [Lunes, martes, jueves] Ejemplo

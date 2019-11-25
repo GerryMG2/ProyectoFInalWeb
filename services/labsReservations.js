@@ -52,7 +52,7 @@ class labsReservations {
 
           let lista = docs.map(e => {
             return e.eventos.map(l => {
-              return { title: e.description, start: l.inicio, end: l.fin };
+              return { title: e.LabIdR.name, start: l.inicio, end: l.fin };
             });
           });
 
@@ -62,7 +62,7 @@ class labsReservations {
 
           cb(true, eventos);
         }
-      });
+      }).populate({path: "LabIdR", model: "lab"});
     } catch (error) {
       console.log("error: ", error);
       cb(false, {});
