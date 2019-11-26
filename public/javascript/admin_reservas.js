@@ -30,6 +30,7 @@ borrarReserva = (
   conteDesc,
   size,
   orden,
+  filtrosT,
   e
 ) => {
   e.preventDefault();
@@ -59,7 +60,7 @@ borrarReserva = (
       console.log("Esperar medio segundo");
       setTimeout(() => {
         getReservas(
-          "",
+          filtrosT,
           1,
           totalPaginas,
           tablaReservas,
@@ -226,6 +227,7 @@ getReservas = (
             conteDesc,
             size, 
             orden,
+            filtrosT,
             e
           );
         });
@@ -286,8 +288,9 @@ start = () => {
   var nombreOrder = document.getElementById("nombreOrder");
   var labOrder = document.getElementById("labOrder");
   var fechaOrder = document.getElementById("fechaOrder");
+  var filtrosT = "";
   var orden ={
-
+    date: -1
   };
 
 
@@ -313,7 +316,7 @@ nombreOrder.addEventListener("click", (e) => {
 
   }
   getReservas(
-    "",
+    filtrosT,
     1,
     totalPaginas,
     tablaReservas,
@@ -349,7 +352,7 @@ labOrder.addEventListener("click", (e) => {
       
   }
   getReservas(
-    "",
+    filtrosT,
     1,
     totalPaginas,
     tablaReservas,
@@ -384,7 +387,7 @@ fechaOrder.addEventListener("click", (e) => {
 
   }
   getReservas(
-    "",
+    filtrosT,
     1,
     totalPaginas,
     tablaReservas,
@@ -396,6 +399,26 @@ fechaOrder.addEventListener("click", (e) => {
     orden
   );
 });
+
+
+btn_buscar.addEventListener("click", (e)=>{
+  e.preventDefault();
+  console.log("filtros", filtros.value)
+  filtrosT = filtros.value;
+  getReservas(
+    filtrosT,
+    1,
+    totalPaginas,
+    tablaReservas,
+    formulario,
+    verHorarios,
+    conteHora,
+    conteDesc, 
+    10, 
+    orden
+  );
+} );
+
 
   // 
 
@@ -495,7 +518,7 @@ fechaOrder.addEventListener("click", (e) => {
           Swal.fire(response.msg, "Continua gestionando reservas", response.ok);
         }).then(something => {
             getReservas(
-                "",
+              filtrosT,
                 1,
                 totalPaginas,
                 tablaReservas,

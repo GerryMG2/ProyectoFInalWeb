@@ -34,7 +34,7 @@ llenarEncargados = encargados => {
     });
 };
 
-LabBorrar = (id, formulario, totalPaginas, e) => {
+LabBorrar = (id, formulario, totalPaginas,orden,filstroT, e) => {
   e.preventDefault();
   let options_and_body = {
     method: "DELETE",
@@ -61,7 +61,7 @@ LabBorrar = (id, formulario, totalPaginas, e) => {
     .then(() => {
       console.log("esperar medio segundo");
       setTimeout(() => {
-        getLabs("", 1, totalPaginas, bodytable,10, orden, e);
+        getLabs(filstroT, 1, totalPaginas, bodytable,10, orden, e);
       }, 500);
     });
 };
@@ -124,7 +124,7 @@ getLabs = (filtros, pagina, paginatotales, tabla, formulario,size,orden, e) => {
 
         btnBorrar.addEventListener("click", function (e) {
           e.preventDefault();
-          LabBorrar(element._id, formulario, paginatotales, orden, e);
+          LabBorrar(element._id, formulario, paginatotales, orden,filstroT, e);
         });
         opciones.appendChild(btnBorrar);
 
@@ -154,7 +154,7 @@ getLabs = (filtros, pagina, paginatotales, tabla, formulario,size,orden, e) => {
     });
 };
 
-crearLabFetch = (e, body, formulario, totalPaginas, orden) => {
+crearLabFetch = (e, body, formulario, totalPaginas, orden, filtrosT) => {
   e.preventDefault();
   let options_and_body = {
     method: "GET",
@@ -181,7 +181,7 @@ crearLabFetch = (e, body, formulario, totalPaginas, orden) => {
     .then(() => {
       console.log("esperar medio segundo");
       setTimeout(() => {
-        getLabs("", 1, totalPaginas, bodytable, formulario,10, orden, e);
+        getLabs(filtrosT, 1, totalPaginas, bodytable, formulario,10, orden, e);
       }, 500);
     });
 };
@@ -205,7 +205,7 @@ function start() {
   var edificioOrder = document.getElementById("edificioOrder");
   var encargadoOrder = document.getElementById("encargadoOrder");
   var capacidadOrder = document.getElementById("capacidadOrder");
-  
+  var filtrosT = "";
   var orden = {
     name: -1
   };
@@ -230,7 +230,7 @@ function start() {
         nombreOrder.setAttribute("ordenValue", "-1")
 
     }
-    getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+    getLabs(filtrosT, 1, totalPaginas, bodytable, formulario, 10, orden);;
 });
 
 codigoOrder.addEventListener("click", (e) => {
@@ -255,7 +255,7 @@ codigoOrder.addEventListener("click", (e) => {
 
         
     }
-    getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+    getLabs(filtrosT, 1, totalPaginas, bodytable, formulario, 10, orden);;
 });
 
 edificioOrder.addEventListener("click", (e) => {
@@ -279,7 +279,7 @@ edificioOrder.addEventListener("click", (e) => {
         edificioOrder.setAttribute("ordenValue", "-1")
 
     }
-    getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+    getLabs(filtrosT, 1, totalPaginas, bodytable, formulario, 10, orden);;
 });
 
 encargadoOrder.addEventListener("click", (e) => {
@@ -304,7 +304,7 @@ encargadoOrder.addEventListener("click", (e) => {
         encargadoOrder.setAttribute("ordenValue", "-1")
 
     }
-    getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+    getLabs(filtrosT, 1, totalPaginas, bodytable, formulario, 10, orden);;
 });
 
 capacidadOrder.addEventListener("click", (e) => {
@@ -329,8 +329,15 @@ capacidadOrder.addEventListener("click", (e) => {
       capacidadOrder.setAttribute("ordenValue", "-1")
 
   }
-  getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+  getLabs(filtrosT, 1, totalPaginas, bodytable, formulario, 10, orden);;
 });
+
+buscar.addEventListener("click", (e)=>{
+  e.preventDefault();
+  console.log("filtros", filtros.value)
+  filtrosT = filtros.value;
+  getLabs(filtrosT, 1, totalPaginas, bodytable, formulario, 10, orden);
+} );
 
 
   btn_limpiar.addEventListener("click", e => {
@@ -383,7 +390,7 @@ capacidadOrder.addEventListener("click", (e) => {
         .then(() => {
           console.log("esperar medio segundo");
           setTimeout(() => {
-            getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden, e);
+            getLabs(filtrosT, 1, totalPaginas, bodytable, formulario, 10, orden, e);
           }, 500);
         });
 
@@ -406,7 +413,7 @@ capacidadOrder.addEventListener("click", (e) => {
         building: selectEdificios.value
       };
       console.log("body: ", body);
-      crearLabFetch(event, body, formulario, totalPaginas, orden);
+      crearLabFetch(event, body, formulario, totalPaginas, orden, filtrosT);
     } else {
       // TODO: Agregar mensajes al usuario
     }
