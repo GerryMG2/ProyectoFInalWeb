@@ -1,44 +1,44 @@
-nav.navbar(role='navigation' aria-label='main navigation')
+nav.navbar.has-background-dark(role='navigation' aria-label='main navigation')
   .navbar-brand
     a#topNav.navbar-burger.burger(role='button' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample')
       span(aria-hidden='true')
       span(aria-hidden='true')
       span(aria-hidden='true')
   #navbarBasicExample.navbar-menu
-      a.navbar-item.is-active.navbar-end.is-four-fifths(href='/main')
+      a.navbar-item.is-active.navbar-end.is-four-fifths.has-background-dark.has-text-light(href='/main')
         | Laboratorios UCA
       if !usad 
-        .navbar-item.has-dropdown.is-hoverable
-          a.navbar-link
+        .navbar-item.has-dropdown.is-hoverable.has-text-light.has-background-dark
+          a.navbar-link.has-text-light.has-background-dark
             | Cuenta
-          .navbar-dropdown
-            a.navbar-item(href='/main')
+          .navbar-dropdown.has-background-dark
+            a.navbar-item.has-text-light(href='/main')
               | Principal 
-            a.navbar-item(href='/reservas')
+            a.navbar-item.has-text-light(href='/reservas')
               | Hacer reserva
             hr.navbar-divider
-            a.navbar-item(href="/profile")
+            a.navbar-item.has-text-light(href="/profile")
               |Perfil
-            a.navbar-item(href='/logout')
+            a.navbar-item.has-text-light(href='/logout')
               | Logout
       else
-        .navbar-item.has-dropdown.is-hoverable
-          a.navbar-link
+        .navbar-item.has-dropdown.is-hoverable.has-background-dark.has-text-light
+          a.navbar-link.has-background-dark.has-text-light
             | Administrar
-          .navbar-dropdown
-            a.navbar-item(href='/main')
+          .navbar-dropdown.has-background-dark.has-text-light
+            a.navbar-item.has-background-dark.has-text-light(href='/main')
               | Main 
-            a.navbar-item(href='/admin/laboratorios')
+            a.navbar-item.has-text-light(href='/admin/laboratorios')
               | Laboratorios
-            a.navbar-item(href='/admin/users')
+            a.navbar-item.has-text-light(href='/admin/users')
               | Usuarios
-            a.navbar-item(href='/admin/reservas')
+            a.navbar-item.has-text-light(href='/admin/reservas')
               | Reservas
-            hr.navbar-divider
-            a.navbar-item(href='/reservas')
+            hr.navbar-divider.
+            a.navbar-item.has-text-light(href='/reservas')
               | Hacer reservas
-            a.navbar-item(href="/profile")
+            a.navbar-item.has-text-light(href="/profile")
               | Profile
-            a.navbar-item(href='/logout')
+            a.navbar-item.has-text-light(href='/logout')
               | Logout
 

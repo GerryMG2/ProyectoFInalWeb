@@ -1,28 +1,28 @@
 form#form-reserva
     .field.is-horizontal
-        .field-label.is-normal.is-small
-            label.label(for="labo") Laboratorio:
+        .field-label.is-normal
+            label.label.has-text-black.is-size-4(for="labo") Laboratorio:
         .field-body
             .field.has-addons
                 .control.is-expanded
-                    .select.is-fullwidth.is-small
-                        select#opciones-labos(name="nameLabos")
+                    .select.is-fullwidth
+                        select#opciones-labos.is-large(name="nameLabos")
     .field.is-horizontal
-        .field-label.is-normal.is-small
-            label.label(for="description") Descripcion:
+        .field-label.is-normal
+            label.label.has-text-black.is-size-4(for="description") Descripcion:
         .field-body
             .field.has-addons
                 .control.is-expanded
-                    textarea#descText.textarea(name="description", placeholder="Ingrese la descriptcion de la reserva")
+                    textarea#descText.textarea.is-medium(name="description", placeholder="Ingrese la descriptcion de la reserva")
     .field.is-horizontal    
         .field-label
         .field-body
             .field.is-grouped
                 .control 
-                    button#btn-horario.button.is-small Agregar horario
+                    button#btn-horario.button.button.is-success.is-primary.is-medium Agregar horario
             .field.is-grouped
                 .control 
-                    button#btn-crear.button.is-small Crear
+                    button#btn-crear.button.is-info.is-medium Crear
             .field.is-grouped
                 .control 
-                    button#btn-actualizar.button.is-small Limpiar
+                    button#btn-actualizar.button.is-danger.is-medium Limpiar
