@@ -295,6 +295,7 @@ start = () => {
     });
 
     btn_actualizar.addEventListener("click", e => {
+        btn_actualizar.disabled = true;
         e.preventDefault();
         let superUser = false;
         if (opUsers.value == "Administrador") {
@@ -335,6 +336,7 @@ start = () => {
                     console.log("esperar medio segundo");
                     setTimeout(() => {
                         getUsers(filtrosT, 1, totalPaginas, tableUser, formulario, 10, e);
+                        btn_actualizar.disabled = false;
                     }, 500);
                 });
         } else {

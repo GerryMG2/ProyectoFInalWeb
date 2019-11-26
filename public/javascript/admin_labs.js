@@ -352,6 +352,7 @@ buscar.addEventListener("click", (e)=>{
 
   btnActualizar.addEventListener("click", e => {
     e.preventDefault(); 
+    btnActualizar.disabled = true;
 
     if (nombre.value && code.value && capacidad.value) {
 
@@ -391,6 +392,7 @@ buscar.addEventListener("click", (e)=>{
           console.log("esperar medio segundo");
           setTimeout(() => {
             getLabs(filtrosT, 1, totalPaginas, bodytable, formulario, 10, orden, e);
+            btnActualizar.disabled = false;
           }, 500);
         });
 
@@ -420,9 +422,11 @@ buscar.addEventListener("click", (e)=>{
   };
 
   btn_crear.addEventListener("click", e => {
+    btn_crear.disabled = true;
     e.preventDefault();
 
     crearlab(e, formulario, totalPaginas);
+    btn_crear.disabled = false;
     // console.log("se creo el lab");
   });
 
