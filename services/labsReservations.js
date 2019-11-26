@@ -41,8 +41,8 @@ class labsReservations {
   }
 
   static getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
+    var letters = "0123456789ABCDEF";
+    var color = "#";
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
@@ -51,50 +51,56 @@ class labsReservations {
 
   async getEventos(cb) {
     try {
-      this.dbR.find({ status: "aprobada" }, function(err, docs) {
-        if (err) {
-          console.log("Paginas: ");
-          console.log("Error: ");
-          console.log(err);
-          cb(false, {});
-        } else {
-
-          let lista = docs.map(e => {
-            let color = labsReservations.getRandomColor();    
-            return e.eventos.map(l => {
-              return { title: e.LabIdR.name, start: l.inicio, end: l.fin, color: color, overlap: false, resourceId: e.LabId };
+      this.dbR
+        .find({ status: "aprobada" }, function(err, docs) {
+          if (err) {
+            console.log("Paginas: ");
+            console.log("Error: ");
+            console.log(err);
+            cb(false, {});
+          } else {
+            let lista = docs.map(e => {
+              let color = labsReservations.getRandomColor();
+              return e.eventos.map(l => {
+                return {
+                  title: e.LabIdR.name,
+                  start: l.inicio,
+                  end: l.fin,
+                  color: color,
+                  overlap: false,
+                  resourceId: e.LabId
+                };
+              });
             });
-          });
 
-          let eventos = [].concat.apply([], lista);
+            let eventos = [].concat.apply([], lista);
 
-          console.log(eventos);
+            console.log(eventos);
 
-          cb(true, eventos);
-        }
-      }).populate({path: "LabIdR", model: "lab"});
+            cb(true, eventos);
+          }
+        })
+        .populate({ path: "LabIdR", model: "lab" });
     } catch (error) {
       console.log("error: ", error);
       cb(false, {});
     }
   }
 
-  static validateItself(eventos){
-    console.log(eventos)
+  static validateItself(eventos) {
+    console.log(eventos);
     let ocurr = 0;
-    for (let index = 0; index < eventos.length -1; index++) {
-        for (let j = index + 1; j < eventos.length; j++) {
-            if(labsReservations.intercept(eventos[index], eventos[j])){
-              ocurr++;
-            }
-          
+    for (let index = 0; index < eventos.length - 1; index++) {
+      for (let j = index + 1; j < eventos.length; j++) {
+        if (labsReservations.intercept(eventos[index], eventos[j])) {
+          ocurr++;
         }
-      
+      }
     }
 
-    if(ocurr > 0){
+    if (ocurr > 0) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
@@ -120,14 +126,12 @@ class labsReservations {
             }
           });
         });
-        console.log(error)
-        console.log(reserva.eventos)
+        console.log(error);
+        console.log(reserva.eventos);
 
-        if(!labsReservations.validateItself(reserva.eventos)){
+        if (!labsReservations.validateItself(reserva.eventos)) {
           error++;
         }
-
-
 
         console.log(error);
 
@@ -167,13 +171,14 @@ class labsReservations {
 
   async update(reserva, cb) {
     try {
-      if(reserva.status != "aprobada"){
+      if (reserva.status != "aprobada") {
         var query = {
           _id: reserva._id
         };
         this.dbR.findOneAndUpdate(query, reserva, (err, result) => {
           if (err) {
             console.log("Error: ", err);
+            console.log("Primer falso");
             cb(false);
           } else {
             console.log("Document: ");
@@ -181,45 +186,76 @@ class labsReservations {
             cb(true);
           }
         });
-      }else{
-        this.validateEvents(reserva, validar => {
-          if (validar) {
-            var query = {
-              _id: reserva._id
-            };
-            this.dbR.findOneAndUpdate(query, reserva, (err, result) => {
-              if (err) {
-                console.log("Error: ", err);
-                cb(false);
-              } else {
-                console.log("Document: ");
-                console.log(result);
-                cb(true);
-              }
-            });
-          } else {
+      } else {
+        this.dbR.find({ _id: reserva._id }, (err, docs) => {
+          if (err) {
+            console.log("err: ", err);
+            console.log("Segundo falso");
             cb(false);
+          } else {
+            console.log(docs[0].status);
+            if (docs[0].status == "aprobada") {
+              console.log("Ya estaba aprobada")
+              var query = {
+                _id: reserva._id
+              };
+              this.dbR.findOneAndUpdate(query, reserva, (err, result2) => {
+                if (err) {
+                  console.log("Error: ", err);
+                  console.log("Tercer falso");
+                  cb(false);
+                } else {
+                  console.log("Document: ");
+                  console.log(result2);
+                  cb(true);
+                }
+              });
+            } else {
+              console.log("No estaba aprobada")
+              this.validateEvents(reserva, validar => {
+                if (validar) {
+                  var query = {
+                    _id: reserva._id
+                  };
+                  this.dbR.findOneAndUpdate(query, reserva, (err, result3) => {
+                    if (err) {
+                      console.log("Error: ", err);
+                      console.log("Cuarto Falso falso");
+                      cb(false);
+                    } else {
+                      console.log("Document: ");
+                      console.log(result3);
+                      cb(true);
+                    }
+                  });
+                } else {
+                  console.log("Quinto falso");
+                  cb(false);
+                }
+              });
+            }
           }
         });
       }
-      
     } catch (error) {
       console.log("Error: ", error);
+      console.log("Sexto falso");
       cb(false);
     }
   }
 
-  async get(filtros, pags,size, orden, cb) {
+  async get(filtros, pags, size, orden, cb) {
     try {
       let filtrosMade = {};
       if (filtros == "") {
       } else {
+        console.log(filtros)
         filtrosMade = {
           $or: [
-            {status: {$regex: '.*' + filtros + '.*'}},
-            {LabId: {$regex: '.*' + filtros + '.*'}},
-            {userId: {$regex: '.*' + filtros + '.*'}}
-          ],
+            { status: { $regex: ".*" + filtros + ".*" } },
+            { LabId: { $regex: ".*" + filtros + ".*" } },
+            { userId: { $regex: ".*" + filtros + ".*" } }
+          ]
         };
       }
 
@@ -243,7 +279,8 @@ class labsReservations {
           }
         })
         .skip(size * (pags - 1))
-        .limit(size).sort(orden);
+        .limit(size)
+        .sort(orden);
     } catch (error) {
       console.log("error: ", error);
     }

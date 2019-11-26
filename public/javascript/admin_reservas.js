@@ -1,5 +1,5 @@
 
-
+var filtrosT2 = "";
 URL_API_RESERVAS = "/api/admin/reservas";
 
 options = {
@@ -59,8 +59,11 @@ borrarReserva = (
     .then(() => {
       console.log("Esperar medio segundo");
       setTimeout(() => {
+        console.log(filtrosT);
+        console.log(size);
+        console.log(orden);
         getReservas(
-          filtrosT,
+          "",
           1,
           totalPaginas,
           tablaReservas,
@@ -70,6 +73,7 @@ borrarReserva = (
           conteDesc,
           size, 
           orden,
+          "",
           e
         );
       }, 500);
@@ -87,6 +91,7 @@ getReservas = (
   conteDesc,
   size, 
   orden,
+  filtrosT,
   e
 ) => {
   if (e) {
@@ -94,7 +99,7 @@ getReservas = (
   }
 
   let params = {
-    filtros: filtros,
+    filtros: filtrosT,
     page: pagina, 
     size: size, 
     orden: JSON.stringify(orden)
@@ -227,7 +232,7 @@ getReservas = (
             conteDesc,
             size, 
             orden,
-            filtrosT,
+            filtrosT2,
             e
           );
         });
@@ -288,7 +293,7 @@ start = () => {
   var nombreOrder = document.getElementById("nombreOrder");
   var labOrder = document.getElementById("labOrder");
   var fechaOrder = document.getElementById("fechaOrder");
-  var filtrosT = "";
+  
   var orden ={
     date: -1
   };
@@ -316,7 +321,7 @@ nombreOrder.addEventListener("click", (e) => {
 
   }
   getReservas(
-    filtrosT,
+    filtros,
     1,
     totalPaginas,
     tablaReservas,
@@ -325,7 +330,9 @@ nombreOrder.addEventListener("click", (e) => {
     conteHora,
     conteDesc, 
     10, 
-    orden
+    orden,
+    filtrosT2
+
   );
 });
 
@@ -352,7 +359,7 @@ labOrder.addEventListener("click", (e) => {
       
   }
   getReservas(
-    filtrosT,
+    filtros,
     1,
     totalPaginas,
     tablaReservas,
@@ -361,7 +368,8 @@ labOrder.addEventListener("click", (e) => {
     conteHora,
     conteDesc, 
     10, 
-    orden
+    orden,
+    filtrosT2
   );
 });
 
@@ -387,7 +395,7 @@ fechaOrder.addEventListener("click", (e) => {
 
   }
   getReservas(
-    filtrosT,
+    filtros,
     1,
     totalPaginas,
     tablaReservas,
@@ -396,7 +404,8 @@ fechaOrder.addEventListener("click", (e) => {
     conteHora,
     conteDesc, 
     10, 
-    orden
+    orden,
+    filtrosT2
   );
 });
 
@@ -404,9 +413,9 @@ fechaOrder.addEventListener("click", (e) => {
 btn_buscar.addEventListener("click", (e)=>{
   e.preventDefault();
   console.log("filtros", filtros.value)
-  filtrosT = filtros.value;
+  filtrosT2 = filtros.value;
   getReservas(
-    filtrosT,
+    filtros,
     1,
     totalPaginas,
     tablaReservas,
@@ -415,7 +424,8 @@ btn_buscar.addEventListener("click", (e)=>{
     conteHora,
     conteDesc, 
     10, 
-    orden
+    orden, 
+    filtrosT2
   );
 } );
 
@@ -518,7 +528,7 @@ btn_buscar.addEventListener("click", (e)=>{
           Swal.fire(response.msg, "Continua gestionando reservas", response.ok);
         }).then(something => {
             getReservas(
-              filtrosT,
+              filtros,
                 1,
                 totalPaginas,
                 tablaReservas,
@@ -527,6 +537,7 @@ btn_buscar.addEventListener("click", (e)=>{
                 conteHora,
                 conteDesc,
                 10, orden,
+                filtrosT2,
                 e
               );
         });
@@ -536,7 +547,7 @@ btn_buscar.addEventListener("click", (e)=>{
 
   estadoReserva(estadoRes);
   getReservas(
-    "",
+    filtros,
     1,
     totalPaginas,
     tablaReservas,
@@ -545,7 +556,8 @@ btn_buscar.addEventListener("click", (e)=>{
     conteHora,
     conteDesc, 
     10, 
-    orden
+    orden,
+    filtrosT2
   );
 };
 
