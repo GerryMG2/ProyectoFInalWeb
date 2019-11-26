@@ -144,7 +144,7 @@ getReservas = (
         let btn_rangeHora = document.createElement("td");
         btn_rangeHora.innerHTML = "Ver horarios";
         btn_rangeHora.classList.add("button");
-        btn_rangeHora.classList.add("is-primary");
+        btn_rangeHora.classList.add("is-link");
         btn_rangeHora.classList.add("is-small");
         btn_rangeHora.classList.add("is-outlined");
         console.log(verHorarios);
@@ -199,7 +199,7 @@ getReservas = (
         let btn_descrip = document.createElement("button");
         btn_descrip.innerHTML = "Ver descrición";
         btn_descrip.classList.add("button");
-        btn_descrip.classList.add("is-primary");
+        btn_descrip.classList.add("is-success");
         btn_descrip.classList.add("is-small");
         btn_descrip.classList.add("is-outlined");
         btn_descrip.addEventListener("click", function(e) {
@@ -217,9 +217,9 @@ getReservas = (
         let btn_borrar = document.createElement("button");
         btn_borrar.innerHTML = "borrar";
         btn_borrar.classList.add("button");
-        btn_borrar.classList.add("is-primary");
         btn_borrar.classList.add("is-small");
         btn_borrar.classList.add("is-outlined");
+        btn_borrar.classList.add("is-danger");
         btn_borrar.addEventListener("click", function(e) {
           e.preventDefault();
           borrarReserva(
