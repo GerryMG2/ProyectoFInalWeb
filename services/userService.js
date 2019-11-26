@@ -107,13 +107,17 @@ class userService {
     }
   }
 
-  get(filtros, pags, cb) {
+  get(filtros, pags, size, orden ,cb) {
     try {
       let filtrosMade = {};
       if (filtros == "") {
       } else {
         filtrosMade = {
-          name: /filtros/
+          $or: [
+            {name: {$regex: '.*' + filtros + '.*'}},
+            {code: {$regex: '.*' + filtros + '.*'}},
+            {email: {$regex: '.*' + filtros + '.*'}}
+          ],
         };
       }
       console.log(filtrosMade);
@@ -134,7 +138,7 @@ class userService {
             }
           });
         }
-      }).skip(10 * (pags - 1)).limit(10);
+      }).skip(size * (pags - 1)).limit(size).sort(orden);
 
     } catch (error) {
       cb(false, {}, 0);

@@ -209,13 +209,17 @@ class labsReservations {
     }
   }
 
-  async get(filtros, pags, cb) {
+  async get(filtros, pags,size, orden, cb) {
     try {
       let filtrosMade = {};
       if (filtros == "") {
       } else {
         filtrosMade = {
-          status: /filtros/
+          $or: [
+            {status: {$regex: '.*' + filtros + '.*'}/},
+            {LabId: {$regex: '.*' + filtros + '.*'}},
+            {userId: {$regex: '.*' + filtros + '.*'}}
+          ],
         };
       }
 
@@ -238,8 +242,8 @@ class labsReservations {
             });
           }
         })
-        .skip(10 * (pags - 1))
-        .limit(10);
+        .skip(size * (pags - 1))
+        .limit(size).sort(orden);
     } catch (error) {
       console.log("error: ", error);
     }

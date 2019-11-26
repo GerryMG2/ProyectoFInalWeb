@@ -70,13 +70,18 @@ class labsService {
     }
   }
 
-  get(filtros, pags, cb) {
+  get(filtros, pags,size, orden, cb) {
     try {
       let filtrosMade = {};
       if (filtros == "") {
       } else {
         filtrosMade = {
-          name: /filtros/
+          $or: [
+            {building: {$regex: '.*' + filtros + '.*'}},
+            {code:{$regex: '.*' + filtros + '.*'}},
+            {name: {$regex: '.*' + filtros + '.*'}}, 
+            {inCharge: {$regex: '.*' + filtros + '.*'}}
+          ],
         };
       }
 
@@ -101,7 +106,7 @@ class labsService {
               }
             });
           }
-        }).skip(10 * (pags - 1)).limit(10);
+        }).skip(10 * (pags - 1)).limit(size).sort(orden);
     } catch (error) {
       cb(false, {}, 0);
       console.log("Error: ");

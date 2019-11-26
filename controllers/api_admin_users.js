@@ -44,7 +44,7 @@ async function updateEmail(req, res) {
                 }
             });
 
-        } else{
+        } else {
             res.status(500).json({ result: "error", msg: "No se pudo actualizar" });
 
         }
@@ -109,10 +109,10 @@ module.exports.deleteUser = deleteUser;
 
 async function getUsers(req, res) {
     try {
-        console.log("params", req.query.filtros);
+        console.log("params", req.query);
         userService.get(
             req.query.filtros,
-            parseInt(req.query.page),
+            parseInt(req.query.page), parseInt(req.query.size), JSON.parse(req.query.orden),
             (validar, docs, pags) => {
                 if (validar) {
                     var respuesta = {
@@ -153,23 +153,23 @@ async function getSuperUserCode(req, res) {
 
 module.exports.getSuperUsers = getSuperUserCode;
 
-async function upload(req, res){
+async function upload(req, res) {
     try {
         console.log(req.files.avatar)
-        if(!req.files){
-            res.status(500).json({result: "Error", msg: "No se pudo cargar la imagen"})
-        }else{
+        if (!req.files) {
+            res.status(500).json({ result: "Error", msg: "No se pudo cargar la imagen" })
+        } else {
             console.log(req.files.avatar);
             let avatar = req.files.avatar;
- 
+
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
             avatar.mv(`./public/images/user${req.session.user}.png`);
-            res.status(200).json({result: "success", msg: "La imagen se subió con éxito"});
+            res.status(200).json({ result: "success", msg: "La imagen se subió con éxito" });
         }
-        
+
     } catch (error) {
         console.log("Error: ", error);
-        res.status(500).json({result: "error", msg: "No se pudo cargar la imagen"});
+        res.status(500).json({ result: "error", msg: "No se pudo cargar la imagen" });
     }
 }
 
