@@ -40,6 +40,15 @@ class labsReservations {
     }
   }
 
+  static getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
   async getEventos(cb) {
     try {
       this.dbR.find({ status: "aprobada" }, function(err, docs) {
@@ -51,8 +60,9 @@ class labsReservations {
         } else {
 
           let lista = docs.map(e => {
+            let color = labsReservations.getRandomColor();    
             return e.eventos.map(l => {
-              return { title: e.LabIdR.name, start: l.inicio, end: l.fin };
+              return { title: e.LabIdR.name, start: l.inicio, end: l.fin, color: color, overlap: false, resourceId: e.LabId };
             });
           });
 
