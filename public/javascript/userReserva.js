@@ -111,6 +111,7 @@ start = () => {
 
         options['body'] = JSON.stringify({
             LabId: labos.selectedOptions[0].getAttribute("valor"),
+            LabIdR: labos.selectedOptions[0].getAttribute("_id"),
             description: descripcion.value,
             eventos: eventos
         });
@@ -158,6 +159,7 @@ start = () => {
           opcion = document.createElement("option");
           opcion.innerHTML = `${element.name}|${element.code}`;
           opcion.setAttribute("valor", element.code);
+          opcion.setAttribute("_id", element._id);
           labos.appendChild(opcion);
         });
       });

@@ -53,6 +53,7 @@ async function createReserva(req, res) {
         var reserva = {
             userId: req.session.user,
             LabId: req.body.LabId,
+            LabIdR: req.body.LabIdR,
             eventos: req.body.eventos,
             description: req.body.description
         };

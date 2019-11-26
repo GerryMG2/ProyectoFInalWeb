@@ -119,7 +119,7 @@ class labsService {
             cb(false, {});
           } else {
             let lista = docs.map(function (e){
-                return {name: e.name, code: e.code}
+                return {name: e.name, code: e.code, _id: e._id}
             });
             cb(true, lista);
           }
