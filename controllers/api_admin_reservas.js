@@ -27,7 +27,7 @@ async function getReserva(req, res) {
         console.log("params", req.query.filtros);
         ReservasServicio.get(
             req.query.filtros,
-            parseInt(req.query.page),
+            parseInt(req.query.page),parseInt(req.query.size), JSON.parse(req.query.orden),
             (validar, docs, pags) => {
                 if(validar) {
                     var respuesta = {

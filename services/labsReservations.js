@@ -216,7 +216,7 @@ class labsReservations {
       } else {
         filtrosMade = {
           $or: [
-            {status: {$regex: '.*' + filtros + '.*'}/},
+            {status: {$regex: '.*' + filtros + '.*'}},
             {LabId: {$regex: '.*' + filtros + '.*'}},
             {userId: {$regex: '.*' + filtros + '.*'}}
           ],

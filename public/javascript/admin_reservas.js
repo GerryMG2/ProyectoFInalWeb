@@ -28,6 +28,8 @@ borrarReserva = (
   verHorario,
   conteHora,
   conteDesc,
+  size,
+  orden,
   e
 ) => {
   e.preventDefault();
@@ -65,6 +67,8 @@ borrarReserva = (
           verHorario,
           conteHora,
           conteDesc,
+          size, 
+          orden,
           e
         );
       }, 500);
@@ -80,6 +84,8 @@ getReservas = (
   verHorarios,
   conteHora,
   conteDesc,
+  size, 
+  orden,
   e
 ) => {
   if (e) {
@@ -88,7 +94,9 @@ getReservas = (
 
   let params = {
     filtros: filtros,
-    page: pagina
+    page: pagina, 
+    size: size, 
+    orden: JSON.stringify(orden)
   };
 
   let query = Object.keys(params)
@@ -216,6 +224,8 @@ getReservas = (
             verHorario,
             conteHora,
             conteDesc,
+            size, 
+            orden,
             e
           );
         });
@@ -273,6 +283,121 @@ start = () => {
   var conteHora = document.getElementById("contenidoHorarios");
   var modelDescrip = document.getElementById("verDescripcion");
   var conteDesc = document.getElementById("contenidoDescrip");
+  var nombreOrder = document.getElementById("nombreOrder");
+  var labOrder = document.getElementById("labOrder");
+  var fechaOrder = document.getElementById("fechaOrder");
+  var orden ={
+
+  };
+
+
+// 
+nombreOrder.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (nombreOrder.getAttribute("ordenValue") == "-1") {
+      orden = {
+          userId: 1
+      };
+      nombreOrder.classList = "fas fa-sort-up";
+      nombreOrder.removeAttribute("ordenValue");
+      nombreOrder.setAttribute("ordenValue", "1")
+
+  } else {
+      orden = {
+          userId: -1
+      }
+      nombreOrder.classList = "fas fa-sort-down";
+
+      nombreOrder.removeAttribute("ordenValue");
+      nombreOrder.setAttribute("ordenValue", "-1")
+
+  }
+  getReservas(
+    "",
+    1,
+    totalPaginas,
+    tablaReservas,
+    formulario,
+    verHorarios,
+    conteHora,
+    conteDesc, 
+    10, 
+    orden
+  );
+});
+
+labOrder.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (labOrder.getAttribute("ordenValue") == "-1") {
+      orden = {
+          LabId: 1
+      };
+      labOrder.classList = "fas fa-sort-up";
+
+      labOrder.removeAttribute("ordenValue");
+      labOrder.setAttribute("ordenValue", "1")
+
+
+  } else {
+      orden = {
+          code: -1
+      }
+      labOrder.classList = "fas fa-sort-down";
+      labOrder.removeAttribute("ordenValue");
+      labOrder.setAttribute("ordenValue", "-1")
+
+      
+  }
+  getReservas(
+    "",
+    1,
+    totalPaginas,
+    tablaReservas,
+    formulario,
+    verHorarios,
+    conteHora,
+    conteDesc, 
+    10, 
+    orden
+  );
+});
+
+fechaOrder.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (fechaOrder.getAttribute("ordenValue") == "-1") {
+      orden = {
+          date: 1
+      };
+      fechaOrder.classList = "fas fa-sort-up";
+
+      fechaOrder.removeAttribute("ordenValue");
+      fechaOrder.setAttribute("ordenValue", "1")
+
+  } else {
+      orden = {
+          date: -1
+      }
+      fechaOrder.classList = "fas fa-sort-down";
+
+      fechaOrder.removeAttribute("ordenValue");
+      fechaOrder.setAttribute("ordenValue", "-1")
+
+  }
+  getReservas(
+    "",
+    1,
+    totalPaginas,
+    tablaReservas,
+    formulario,
+    verHorarios,
+    conteHora,
+    conteDesc, 
+    10, 
+    orden
+  );
+});
+
+  // 
 
   closeDescripcion.onclick = function() {
     modelDescrip.style.display = "none";
@@ -378,6 +503,7 @@ start = () => {
                 verHorarios,
                 conteHora,
                 conteDesc,
+                10, orden,
                 e
               );
         });
@@ -394,7 +520,9 @@ start = () => {
     formulario,
     verHorarios,
     conteHora,
-    conteDesc
+    conteDesc, 
+    10, 
+    orden
   );
 };
 

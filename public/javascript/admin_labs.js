@@ -61,18 +61,20 @@ LabBorrar = (id, formulario, totalPaginas, e) => {
     .then(() => {
       console.log("esperar medio segundo");
       setTimeout(() => {
-        getLabs("", 1, totalPaginas, bodytable, e);
+        getLabs("", 1, totalPaginas, bodytable,10, orden, e);
       }, 500);
     });
 };
 
-getLabs = (filtros, pagina, paginatotales, tabla, formulario, e) => {
+getLabs = (filtros, pagina, paginatotales, tabla, formulario,size,orden, e) => {
   if (e) {
     e.preventDefault();
   }
   let params = {
     filtros: filtros,
-    page: pagina
+    page: pagina, 
+    size: size,
+    orden: JSON.stringify(orden),
   };
 
   let query = Object.keys(params)
@@ -122,7 +124,7 @@ getLabs = (filtros, pagina, paginatotales, tabla, formulario, e) => {
 
         btnBorrar.addEventListener("click", function (e) {
           e.preventDefault();
-          LabBorrar(element._id, formulario, paginatotales, e);
+          LabBorrar(element._id, formulario, paginatotales, orden, e);
         });
         opciones.appendChild(btnBorrar);
 
@@ -152,7 +154,7 @@ getLabs = (filtros, pagina, paginatotales, tabla, formulario, e) => {
     });
 };
 
-crearLabFetch = (e, body, formulario, totalPaginas) => {
+crearLabFetch = (e, body, formulario, totalPaginas, orden) => {
   e.preventDefault();
   let options_and_body = {
     method: "GET",
@@ -179,7 +181,7 @@ crearLabFetch = (e, body, formulario, totalPaginas) => {
     .then(() => {
       console.log("esperar medio segundo");
       setTimeout(() => {
-        getLabs("", 1, totalPaginas, bodytable, formulario, e);
+        getLabs("", 1, totalPaginas, bodytable, formulario,10, orden, e);
       }, 500);
     });
 };
@@ -198,6 +200,137 @@ function start() {
   var bodytable = document.getElementById("bodytable");
   var totalPaginas = 0;
   var btnActualizar = document.getElementById("btn-actualizar");
+  var nombreOrder = document.getElementById("nombreOrder");
+  var codigoOrder = document.getElementById("codigoOrder");
+  var edificioOrder = document.getElementById("edificioOrder");
+  var encargadoOrder = document.getElementById("encargadoOrder");
+  var capacidadOrder = document.getElementById("capacidadOrder");
+  
+  var orden = {
+    name: -1
+  };
+
+  nombreOrder.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (nombreOrder.getAttribute("ordenValue") == "-1") {
+        orden = {
+            name: 1
+        };
+        nombreOrder.classList = "fas fa-sort-up";
+        nombreOrder.removeAttribute("ordenValue");
+        nombreOrder.setAttribute("ordenValue", "1")
+
+    } else {
+        orden = {
+            name: -1
+        }
+        nombreOrder.classList = "fas fa-sort-down";
+
+        nombreOrder.removeAttribute("ordenValue");
+        nombreOrder.setAttribute("ordenValue", "-1")
+
+    }
+    getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+});
+
+codigoOrder.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (codigoOrder.getAttribute("ordenValue") == "-1") {
+        orden = {
+            code: 1
+        };
+        codigoOrder.classList = "fas fa-sort-up";
+
+        codigoOrder.removeAttribute("ordenValue");
+        codigoOrder.setAttribute("ordenValue", "1")
+
+
+    } else {
+        orden = {
+            code: -1
+        }
+        codigoOrder.classList = "fas fa-sort-down";
+        codigoOrder.removeAttribute("ordenValue");
+        codigoOrder.setAttribute("ordenValue", "-1")
+
+        
+    }
+    getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+});
+
+edificioOrder.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (edificioOrder.getAttribute("ordenValue") == "-1") {
+        orden = {
+            building: 1
+        };
+        edificioOrder.classList = "fas fa-sort-up";
+
+        edificioOrder.removeAttribute("ordenValue");
+        edificioOrder.setAttribute("ordenValue", "1")
+
+    } else {
+        orden = {
+            building: -1
+        }
+        edificioOrder.classList = "fas fa-sort-down";
+
+        edificioOrder.removeAttribute("ordenValue");
+        edificioOrder.setAttribute("ordenValue", "-1")
+
+    }
+    getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+});
+
+encargadoOrder.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (encargadoOrder.getAttribute("ordenValue") == "-1") {
+        orden = {
+            inCharge: 1
+        };
+        encargadoOrder.classList = "fas fa-sort-up";
+
+        encargadoOrder.removeAttribute("ordenValue");
+        encargadoOrder.setAttribute("ordenValue", "1");
+       
+
+    } else {
+        orden = {
+          inCharge: -1
+        }
+        encargadoOrder.classList = "fas fa-sort-down";
+
+        encargadoOrder.removeAttribute("ordenValue");
+        encargadoOrder.setAttribute("ordenValue", "-1")
+
+    }
+    getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+});
+
+capacidadOrder.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (capacidadOrder.getAttribute("ordenValue") == "-1") {
+      orden = {
+          capacity: 1
+      };
+      capacidadOrder.classList = "fas fa-sort-up";
+
+      capacidadOrder.removeAttribute("ordenValue");
+      capacidadOrder.setAttribute("ordenValue", "1");
+     
+
+  } else {
+      orden = {
+          capacity: -1
+      }
+      capacidadOrder.classList = "fas fa-sort-down";
+
+      capacidadOrder.removeAttribute("ordenValue");
+      capacidadOrder.setAttribute("ordenValue", "-1")
+
+  }
+  getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);;
+});
 
 
   btn_limpiar.addEventListener("click", e => {
@@ -250,7 +383,7 @@ function start() {
         .then(() => {
           console.log("esperar medio segundo");
           setTimeout(() => {
-            getLabs("", 1, totalPaginas, bodytable, formulario, e);
+            getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden, e);
           }, 500);
         });
 
@@ -273,7 +406,7 @@ function start() {
         building: selectEdificios.value
       };
       console.log("body: ", body);
-      crearLabFetch(event, body, formulario, totalPaginas);
+      crearLabFetch(event, body, formulario, totalPaginas, orden);
     } else {
       // TODO: Agregar mensajes al usuario
     }
@@ -316,7 +449,7 @@ function start() {
   llenarEdificios(selectEdificios);
   llenarEncargados(selectEncargado);
 
-  getLabs("", 1, totalPaginas, bodytable, formulario);
+  getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);
 }
 
 window.onload = start;

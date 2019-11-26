@@ -3,8 +3,14 @@ table#tablaLista.table.is-fullwidth
         tr
             th(title="Posicion") # 
             th(title="Nombre") Hecha por
+                span.icon
+                    i#nombreOrder.fas.fa-sort-down(ordenValue="-1")
             th(title="codigoLab") Laboratorio
-            th(title="fechaReali") Fecha de solicitud 
+                span.icon
+                    i#labOrder.fas.fa-sort-down(ordenValue="-1")
+            th(title="fechaReali") Fecha de solicitud
+                span.icon
+                    i#fechaOrder.fas.fa-sort-down(ordenValue="-1")
             th(title="rango") Días de reserva
             th(title="descrip") Descripción
             th(title="estado") Estado
