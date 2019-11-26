@@ -8,6 +8,7 @@ start = () => {
   var btnActualizar = document.getElementById("btn-actualizar");
   let contador = 1;
 
+
   btnHorario.addEventListener("click", e => {
     e.preventDefault();
     console.log("dio click");
@@ -24,7 +25,7 @@ start = () => {
       1}-${annio.getDate()}T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_inputi${contador}">
             <input class="form-control inicioH" size="16" type="text" value="" readonly id="inicioH">
             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar glyphicon-th"></span></span>
         </div>
         <input type="hidden" id="dtp_inputi${contador}" value=""  />`;
     contenedorHoraFin.innerHTML = `
@@ -32,7 +33,7 @@ start = () => {
       1}-${annio.getDate()}T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_inputf${contador}">
             <input class="form-control finH" size="16" type="text" value="" readonly id="finH">
             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar glyphicon-th"></span></span>
         </div>
         <input type="hidden" id="dtp_inputf${contador}" value="" />`;
     contenedorHorario.appendChild(contenedorHoraInicio);
@@ -41,19 +42,20 @@ start = () => {
 
     let btnBorrar = document.createElement("button");
     btnBorrar.innerHTML = "Borrar";
-    btnBorrar.classList.add("btn-small");
+    btnBorrar.classList.add("btn-medium");
+    btnBorrar.classList.add("btn-danger")
     btnBorrar.classList.add("btn-outline-danger");
 
     contenedorOpciones.appendChild(btnBorrar);
     contenedor.appendChild(contenedorOpciones);
     li.appendChild(contenedor);
+    li.appendChild(document.createElement("br"))
     btnBorrar.addEventListener("click", e => {
       e.preventDefault();
       listaHorario.removeChild(li);
     });
     listaHorario.appendChild(li);
     $(".form_datetime").datetimepicker({
-      //language:  'fr',
       weekStart: 1,
       todayBtn: 1,
       autoclose: 1,
@@ -62,6 +64,8 @@ start = () => {
       forceParse: 0,
       showMeridian: 1
     });
+
+ 
 
     contador++;
   });
