@@ -89,6 +89,7 @@ async function updateReserva(req, res) {
             if(validar) {
                 res.status(201).json({ result: "success", msg: "Reserva actualizada"});
             } else {
+                console.log("Dio falso")
                 res.status(500).json({ result: "error", msg: "No se pudo actualizar"});
             }
         });
