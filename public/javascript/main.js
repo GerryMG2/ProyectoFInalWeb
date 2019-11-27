@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
   var localeSelectorEl = document.getElementById("locale-selector");
   var calendarEl = document.getElementById("calendar");
   var diaActual = new Date();
-  var dia = diaActual.toISOString().split("T")[0];
+  var dia = diaActual.toLocaleDateString().replace("/","-").replace("/","-").replace("/","-").split("-").reverse().join("-");
+  
   console.log(dia)
   URL_ENCARGADOS = "/api/admin/reservas/eventos";
   options = {
