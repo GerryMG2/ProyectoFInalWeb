@@ -59,17 +59,31 @@ class labsReservations {
             console.log(err);
             cb(false, {});
           } else {
+            console.log(docs)
             let lista = docs.map(e => {
               let color = labsReservations.getRandomColor();
               return e.eventos.map(l => {
-                return {
-                  title: e.LabIdR.name,
-                  start: l.inicio,
-                  end: l.fin,
-                  color: color,
-                  overlap: false,
-                  resourceId: e.LabId
-                };
+                console.log(e);
+                if(e.LabIdR){
+                  return {
+                    title: e.LabIdR.name,
+                    start: l.inicio,
+                    end: l.fin,
+                    color: color,
+                    overlap: false,
+                    resourceId: e.LabId
+                  };
+                }else{
+                  return {
+                    title: "Laboratorio Eliminado",
+                    start: l.inicio,
+                    end: l.fin,
+                    color: color,
+                    overlap: false,
+                    resourceId: e.LabId
+                  };
+                }
+                
               });
             });
 

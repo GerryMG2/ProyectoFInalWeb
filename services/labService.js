@@ -121,8 +121,10 @@ class labsService {
             console.log("Paginas: ");
             console.log("Error: ");
             console.log(err);
+            console.log(docs);
             cb(false, {});
           } else {
+            console.log(docs);
             let lista = docs.map(function (e){
                 return {name: e.name, code: e.code, _id: e._id}
             });
