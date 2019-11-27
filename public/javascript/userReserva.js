@@ -21,17 +21,17 @@ start = () => {
     let contenedorHoraInicio = document.createElement("div");
     let contenedorHoraFin = document.createElement("div");
     contenedorHoraInicio.innerHTML = `
-        <div class="input-group date form_datetime col-md-5" data-date="${annio.getFullYear()}-${annio.getMonth() +
+        <div class="input-group date form_datetime " data-date="${annio.getFullYear()}-${annio.getMonth() +
       1}-${annio.getDate()}T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_inputi${contador}">
-            <input class="form-control inicioH" size="16" type="text" value="" readonly id="inicioH">
+            <input class="form-control inicioH" size="12" type="text" value="" readonly id="inicioH">
             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar glyphicon-th"></span></span>
         </div>
         <input type="hidden" id="dtp_inputi${contador}" value=""  />`;
     contenedorHoraFin.innerHTML = `
-        <div class="input-group date form_datetime col-md-5" data-date="${annio.getFullYear()}-${annio.getMonth() +
+        <div class="input-group date form_datetime " data-date="${annio.getFullYear()}-${annio.getMonth() +
       1}-${annio.getDate()}T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_inputf${contador}">
-            <input class="form-control finH" size="16" type="text" value="" readonly id="finH">
+            <input class="form-control finH" size="12" type="text" value="" readonly id="finH">
             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar glyphicon-th"></span></span>
         </div>
@@ -50,6 +50,7 @@ start = () => {
     contenedor.appendChild(contenedorOpciones);
     li.appendChild(contenedor);
     li.appendChild(document.createElement("br"))
+    li.classList.add("list-item");
     btnBorrar.addEventListener("click", e => {
       e.preventDefault();
       listaHorario.removeChild(li);
@@ -134,17 +135,17 @@ start = () => {
                 console.log("success: ", response);
                 Swal.fire(response.msg, "Continua haciendo reservas", response.ok);
               }else{
-                Swal.fire("Hubo un problema en crear la reserva!", "Continua haciendo reservas", "error");
+                Swal.fire("Hubo un problema en crear la reserva!", "Su horario posiblemente choca con una reserva aprobada. Comunicarse con el encargado", "error");
               }
             
           });
       }else{
-        console.log("entro a error por descripcion")
-      Swal.fire("Hubo un problema en crear la reserva!", "Ingresa una descripcion", "error");
+        
+        Swal.fire("Hubo un problema en crear la reserva!", "Hay un problema con la descripcion o los horarios estan puestos en el orden incorrecto", "error");
       }
     } else {
-      
-      Swal.fire("Hubo un problema en crear la reserva!", "Continua haciendo reservas", "error");
+      console.log("entro a error por descripcion")
+      Swal.fire("Hubo un problema en crear la reserva!", "Hay un problema con la descripcion o los horarios estan puestos en el orden incorrecto", "error");
     }
   });
 
@@ -175,6 +176,46 @@ start = () => {
 
   console.log("empezo");
   llenarEncargados();
+
+  labos.addEventListener("change", ()=>{
+    var calendarEl = document.getElementById("calendar");
+    console.log(calendar);
+    var initialLocaleCode = "es";
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      height: "parent",
+      schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+      defaultView: "resourceTimelineDay",
+      plugins: [
+        "interaction",
+        "dayGrid",
+        "timeGrid",
+        "list",
+        "resourceTimeline"
+      ],
+      header: {
+        left: "prev,next today",
+        center: "title",
+        right: "resourceTimelineDay,timeGridDay"
+      },
+      buttonText: {
+
+        resourceTimelineDay: 'Horario por Labo'
+      },
+     
+      locale: initialLocaleCode,
+      resources: {},
+      buttonIcons: false, // show the prev/next text
+      weekNumbers: true,
+      navLinks: true, // can click day/week names to navigate views
+      editable: false,
+      eventLimit: true, // allow "more" link when too many events
+      events: {}
+    });
+
+    calendar.render();
+  });
+
+  
 };
 
 window.onload = start;

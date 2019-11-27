@@ -2,12 +2,13 @@ extends layout_all
 
 block header
     include header
+    br
 block content
-    section.section#formulario.container.has-background-grey-lighter
-            include form_users
+    section.section#formulario.container.box
+        include form_users
    
            
-    section.section#lista.container
+    section.section#lista.container.box
         .table-container
             include table_users
         .container

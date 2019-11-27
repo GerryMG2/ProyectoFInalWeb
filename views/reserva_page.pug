@@ -4,19 +4,33 @@ block header
     include header
     link(href='jscss/bootstrap.min.css' rel='stylesheet' media='screen')
     link(href='jscss/bootstrap-datetimepicker.min.css' rel='stylesheet' media='screen')
-
+    link(href='fullcalendar/core/main.css' rel='stylesheet')
+    link(href='fullcalendar/daygrid/main.css' rel='stylesheet')
+    link(href='fullcalendar/timegrid/main.css' rel='stylesheet')
+    link(href='fullcalendar/list/main.css' rel='stylesheet')
+    link(href='fullcalendar/timeline/main.css' rel='stylesheet')
+    link(href='fullcalendar/resource-timeline/main.css' rel='stylesheet')
+    script(src='fullcalendar/core/main.js')
+    script(src='fullcalendar/core/locales-all.js')
+    script(src='fullcalendar/interaction/main.js')
+    script(src='fullcalendar/daygrid/main.js')
+    script(src='fullcalendar/timegrid/main.js')
+    script(src='fullcalendar/list/main.js')
+    script(src="javascript/main.js")
+    script(src='fullcalendar/timeline/main.js')
+    script(src='fullcalendar/resource-common/main.js')
+    script(src='fullcalendar/resource-timeline/main.js')
 block content
-    section.section#formulario.container.has-background-grey-lighter
+    section.section#formulario.container.box
         include form_reserva
-    section.section#listaHorario
+    section
         .container
-            ul#listaHorario
-            
-            
-
-
-
-
+        .columns
+            .column.is-half.box
+                ul#listaHorario
+            .column
+                .calendario.box
+                    #calendar
 //- 
 
       

@@ -2,12 +2,13 @@ extends layout_all
 
 block header
     include header
+    br
 block content
-    section.section#formulario.container.has-background-grey-lighter
+    section.section#formulario.container.box
         include admin_reservas
    
            
-    section.section#lista.container
+    section.section#lista.container.box
         .table-container
             include table_reservas
         .container
