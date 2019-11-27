@@ -58,7 +58,11 @@ document.addEventListener("DOMContentLoaded", function() {
               center: "title",
               right: "resourceTimelineDay,dayGridMonth,timeGridWeek,timeGridDay,listMonth"
             },
-            defaultDate: dia,
+            buttonText: {
+
+              resourceTimelineDay: 'Horario por Labo'
+            },
+           
             locale: initialLocaleCode,
             resources: resources,
             buttonIcons: false, // show the prev/next text

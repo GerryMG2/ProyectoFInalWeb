@@ -6,7 +6,10 @@ var pagina1 = document.getElementById("pagina1");
 var pagina2 = document.getElementById("pagina2");
 var pagina3 = document.getElementById("pagina3");
 var currPage = 1;
-
+var filtrosT = "";
+var orden = {
+  name: -1
+};
 options = {
   method: "GET",
   credentials: "same-origin",
@@ -39,7 +42,7 @@ llenarEncargados = encargados => {
     });
 };
 
-LabBorrar = (id, formulario, totalPaginas,orden,filstroT, e) => {
+LabBorrar = (id, formulario, totalPaginas,orden2,filtros, e) => {
   e.preventDefault();
   let options_and_body = {
     method: "DELETE",
@@ -66,7 +69,8 @@ LabBorrar = (id, formulario, totalPaginas,orden,filstroT, e) => {
     .then(() => {
       console.log("esperar medio segundo");
       setTimeout(() => {
-        getLabs(filstroT, 1, totalPaginas, bodytable,10, orden, e);
+        console.log(orden)
+        getLabs(filtrosT, 1, totalPaginas, bodytable,formulario,10, orden, e);
       }, 500);
     });
 };
@@ -206,7 +210,7 @@ if (currPage == 1) {
         btnBorrar.addEventListener("click", function (e) {
           btnBorrar.disabled = true;
           e.preventDefault();
-          LabBorrar(element._id, formulario, paginatotales, orden,filstroT, e);
+          LabBorrar(element._id, formulario, paginatotales, orden,filtrosT, e);
           btnBorrar.disabled = false;
         });
         opciones.appendChild(btnBorrar);
@@ -288,10 +292,8 @@ function start() {
   var edificioOrder = document.getElementById("edificioOrder");
   var encargadoOrder = document.getElementById("encargadoOrder");
   var capacidadOrder = document.getElementById("capacidadOrder");
-  var filtrosT = "";
-  var orden = {
-    name: -1
-  };
+  
+  
 
   nombreOrder.addEventListener("click", (e) => {
     e.preventDefault();
@@ -546,7 +548,7 @@ buscar.addEventListener("click", (e)=>{
   getLabs("", 1, totalPaginas, bodytable, formulario, 10, orden);
 
   function go_to(page) {
-    getLabs("", page, totalPaginas, bodytable, formulario, 10, orden);
+    getLabs(filtrosT, page, totalPaginas, bodytable, formulario, 10, orden);
   }
 
   siguiente.addEventListener("click", () => {
