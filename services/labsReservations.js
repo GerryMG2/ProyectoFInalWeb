@@ -64,7 +64,7 @@ class labsReservations {
               let color = labsReservations.getRandomColor();
               return e.eventos.map(l => {
                 console.log(e);
-                if(e.LabIdR){
+                try {
                   return {
                     title: e.LabIdR.name,
                     start: l.inicio,
@@ -73,16 +73,18 @@ class labsReservations {
                     overlap: false,
                     resourceId: e.LabId
                   };
-                }else{
+                } catch (error) {
+                  console.log("error: ", error)
                   return {
                     title: "Laboratorio Eliminado",
                     start: l.inicio,
                     end: l.fin,
                     color: color,
                     overlap: false,
-                    resourceId: e.LabId
+                    resourceId: "00000"
                   };
                 }
+            
                 
               });
             });
