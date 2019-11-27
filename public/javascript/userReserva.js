@@ -134,13 +134,17 @@ start = () => {
                 console.log("success: ", response);
                 Swal.fire(response.msg, "Continua haciendo reservas", response.ok);
               }else{
-                  alert("No se pudo crear");
+                Swal.fire("Hubo un problema en crear la reserva!", "Continua haciendo reservas", "error");
               }
             
           });
+      }else{
+        console.log("entro a error por descripcion")
+      Swal.fire("Hubo un problema en crear la reserva!", "Ingresa una descripcion", "error");
       }
     } else {
-      alert("Alguna fecha de finalizacion es menor o igual que una de inicio");
+      
+      Swal.fire("Hubo un problema en crear la reserva!", "Continua haciendo reservas", "error");
     }
   });
 

@@ -25,6 +25,7 @@ opcionUsuarios = users => {
 };
 
 borrarUser = (codeU, formulario, totalPaginas, tableUser, e) => {
+
   e.preventDefault();
   let options_and_body = {
     method: "DELETE",
@@ -223,8 +224,10 @@ start = () => {
           btnBorrar.classList.add("is-outlined");
 
           btnBorrar.addEventListener("click", function(e) {
+              btnBorrar.disabled = true;
             e.preventDefault();
             borrarUser(element.code, formulario, paginatotales, tableUser, e);
+            btnBorrar.disabled = false;
           });
           opciones.appendChild(btnBorrar);
 
@@ -255,10 +258,12 @@ start = () => {
   };
 
   btn_buscar.addEventListener("click", e => {
+    btn_buscar.disabled = true;
     e.preventDefault();
     console.log("filtros", filtros.value);
     filtrosT = filtros.value;
     getUsers(filtrosT, 1, totalPaginas, tableUser, formulario, 10, e);
+    btn_buscar.disabled = false;
   });
 
   nombreOrder.addEventListener("click", e => {

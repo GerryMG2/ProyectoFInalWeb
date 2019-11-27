@@ -204,8 +204,10 @@ if (currPage == 1) {
         btnBorrar.classList.add("is-outlined");
 
         btnBorrar.addEventListener("click", function (e) {
+          btnBorrar.disabled = true;
           e.preventDefault();
           LabBorrar(element._id, formulario, paginatotales, orden,filstroT, e);
+          btnBorrar.disabled = false;
         });
         opciones.appendChild(btnBorrar);
 

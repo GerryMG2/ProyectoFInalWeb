@@ -562,6 +562,7 @@ start = () => {
   };
 
   btn_actualizar.addEventListener("click", e => {
+    btn_actualizar.disabled = true;
     e.preventDefault();
     let reservaUpdate = {
       _id: user.getAttribute("_id"),
@@ -611,7 +612,9 @@ start = () => {
           filtrosT2,
           e
         );
+        btn_actualizar.disabled = false;
       });
+
   });
 
   estadoReserva(estadoRes);
