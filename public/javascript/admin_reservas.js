@@ -1,7 +1,11 @@
-
 var filtrosT2 = "";
 URL_API_RESERVAS = "/api/admin/reservas";
-
+var siguiente = document.getElementById("siguiente");
+var anterior = document.getElementById("anterior");
+var pagina1 = document.getElementById("pagina1");
+var pagina2 = document.getElementById("pagina2");
+var pagina3 = document.getElementById("pagina3");
+var currPage = 1;
 options = {
   method: "GET",
   credentials: "same-origin",
@@ -71,7 +75,7 @@ borrarReserva = (
           verHorario,
           conteHora,
           conteDesc,
-          size, 
+          size,
           orden,
           "",
           e
@@ -89,7 +93,7 @@ getReservas = (
   verHorarios,
   conteHora,
   conteDesc,
-  size, 
+  size,
   orden,
   filtrosT,
   e
@@ -97,11 +101,12 @@ getReservas = (
   if (e) {
     e.preventDefault();
   }
+  currPage = pagina;
 
   let params = {
     filtros: filtrosT,
-    page: pagina, 
-    size: size, 
+    page: pagina,
+    size: size,
     orden: JSON.stringify(orden)
   };
 
@@ -126,6 +131,78 @@ getReservas = (
     .then(response => {
       console.log("success: ", response);
       paginatotales = response.pagina;
+
+      //
+
+      paginasTotales = response.paginas;
+      console.log(currPage);
+      //
+      if (currPage == 1) {
+        if (paginasTotales == 1) {
+          //paginas totales = 1
+          anterior.disabled = true;
+          pagina1.disabled = true;
+          pagina1.innerHTML = "";
+          pagina2.disabled = false;
+          pagina2.setAttribute("page", "1");
+          pagina2.innerHTML = "1";
+
+          pagina3.disabled = true;
+          pagina3.innerHTML = "";
+          siguiente.disabled = true;
+        } else {
+          siguiente.disabled = false;
+          anterior.disabled = true;
+          siguiente.setAttribute("page", "2");
+          pagina1.disabled = true;
+          pagina1.innerHTML = "";
+          pagina2.disabled = false;
+          pagina2.setAttribute("page", "1");
+          pagina2.innerHTML = "1";
+          pagina3.disabled = false;
+          pagina3.setAttribute("page", "2");
+          pagina3.innerHTML = "2";
+
+          //mas de una pagina
+        }
+      } else {
+        if (currPage == paginasTotales) {
+          let valorPage = paginasTotales - 1;
+          anterior.disabled = false;
+          anterior.setAttribute("page", valorPage);
+          siguiente.disabled = true;
+          pagina1.disabled = false;
+
+          pagina1.setAttribute("page", valorPage);
+          pagina1.innerHTML = valorPage;
+          pagina2.disabled = false;
+          pagina2.setAttribute("page", paginasTotales);
+          pagina2.innerHTML = paginasTotales;
+          pagina3.disabled = true;
+          pagina3.innerHTML = "";
+
+          //final
+        } else {
+          //en medio
+          let valorAnterior = currPage - 1;
+          let valorsiguiente = currPage + 1;
+          anterior.disabled = false;
+          anterior.setAttribute("page", valorAnterior);
+          siguiente.disabled = false;
+          siguiente.setAttribute("page", valorsiguiente);
+          pagina1.disabled = false;
+          pagina1.setAttribute("page", valorAnterior);
+          pagina1.innerHTML = valorAnterior;
+          pagina2.disabled = false;
+          pagina2.setAttribute("page", currPage);
+          pagina2.innerHTML = currPage;
+          pagina3.disabled = false;
+          pagina3.setAttribute("page", valorsiguiente);
+          pagina3.innerHTML = valorsiguiente;
+        }
+      }
+
+      //
       let cont = (pagina - 1) * 10 + 1;
       response.docs.forEach(element => {
         let row = document.createElement("tr");
@@ -230,7 +307,7 @@ getReservas = (
             verHorario,
             conteHora,
             conteDesc,
-            size, 
+            size,
             orden,
             filtrosT2,
             e
@@ -293,144 +370,132 @@ start = () => {
   var nombreOrder = document.getElementById("nombreOrder");
   var labOrder = document.getElementById("labOrder");
   var fechaOrder = document.getElementById("fechaOrder");
-  
-  var orden ={
+
+  var orden = {
     date: -1
   };
 
-
-// 
-nombreOrder.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (nombreOrder.getAttribute("ordenValue") == "-1") {
+  //
+  nombreOrder.addEventListener("click", e => {
+    e.preventDefault();
+    if (nombreOrder.getAttribute("ordenValue") == "-1") {
       orden = {
-          userId: 1
+        userId: 1
       };
       nombreOrder.classList = "fas fa-sort-up";
       nombreOrder.removeAttribute("ordenValue");
-      nombreOrder.setAttribute("ordenValue", "1")
-
-  } else {
+      nombreOrder.setAttribute("ordenValue", "1");
+    } else {
       orden = {
-          userId: -1
-      }
+        userId: -1
+      };
       nombreOrder.classList = "fas fa-sort-down";
 
       nombreOrder.removeAttribute("ordenValue");
-      nombreOrder.setAttribute("ordenValue", "-1")
+      nombreOrder.setAttribute("ordenValue", "-1");
+    }
+    getReservas(
+      filtros,
+      currPage,
+      totalPaginas,
+      tablaReservas,
+      formulario,
+      verHorarios,
+      conteHora,
+      conteDesc,
+      10,
+      orden,
+      filtrosT2
+    );
+  });
 
-  }
-  getReservas(
-    filtros,
-    1,
-    totalPaginas,
-    tablaReservas,
-    formulario,
-    verHorarios,
-    conteHora,
-    conteDesc, 
-    10, 
-    orden,
-    filtrosT2
-
-  );
-});
-
-labOrder.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (labOrder.getAttribute("ordenValue") == "-1") {
+  labOrder.addEventListener("click", e => {
+    e.preventDefault();
+    if (labOrder.getAttribute("ordenValue") == "-1") {
       orden = {
-          LabId: 1
+        LabId: 1
       };
       labOrder.classList = "fas fa-sort-up";
 
       labOrder.removeAttribute("ordenValue");
-      labOrder.setAttribute("ordenValue", "1")
-
-
-  } else {
+      labOrder.setAttribute("ordenValue", "1");
+    } else {
       orden = {
-          code: -1
-      }
+        code: -1
+      };
       labOrder.classList = "fas fa-sort-down";
       labOrder.removeAttribute("ordenValue");
-      labOrder.setAttribute("ordenValue", "-1")
+      labOrder.setAttribute("ordenValue", "-1");
+    }
+    getReservas(
+      filtros,
+      currPage,
+      totalPaginas,
+      tablaReservas,
+      formulario,
+      verHorarios,
+      conteHora,
+      conteDesc,
+      10,
+      orden,
+      filtrosT2
+    );
+  });
 
-      
-  }
-  getReservas(
-    filtros,
-    1,
-    totalPaginas,
-    tablaReservas,
-    formulario,
-    verHorarios,
-    conteHora,
-    conteDesc, 
-    10, 
-    orden,
-    filtrosT2
-  );
-});
-
-fechaOrder.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (fechaOrder.getAttribute("ordenValue") == "-1") {
+  fechaOrder.addEventListener("click", e => {
+    e.preventDefault();
+    if (fechaOrder.getAttribute("ordenValue") == "-1") {
       orden = {
-          date: 1
+        date: 1
       };
       fechaOrder.classList = "fas fa-sort-up";
 
       fechaOrder.removeAttribute("ordenValue");
-      fechaOrder.setAttribute("ordenValue", "1")
-
-  } else {
+      fechaOrder.setAttribute("ordenValue", "1");
+    } else {
       orden = {
-          date: -1
-      }
+        date: -1
+      };
       fechaOrder.classList = "fas fa-sort-down";
 
       fechaOrder.removeAttribute("ordenValue");
-      fechaOrder.setAttribute("ordenValue", "-1")
+      fechaOrder.setAttribute("ordenValue", "-1");
+    }
+    getReservas(
+      filtros,
+      currPage,
+      totalPaginas,
+      tablaReservas,
+      formulario,
+      verHorarios,
+      conteHora,
+      conteDesc,
+      10,
+      orden,
+      filtrosT2
+    );
+  });
 
-  }
-  getReservas(
-    filtros,
-    1,
-    totalPaginas,
-    tablaReservas,
-    formulario,
-    verHorarios,
-    conteHora,
-    conteDesc, 
-    10, 
-    orden,
-    filtrosT2
-  );
-});
+  btn_buscar.addEventListener("click", e => {
+    e.preventDefault();
+    console.log("filtros", filtros.value);
+    filtrosT2 = filtros.value;
+    getReservas(
+      filtros,
+      1,
+      totalPaginas,
+      tablaReservas,
+      formulario,
+      verHorarios,
+      conteHora,
+      conteDesc,
+      10,
+      orden,
+      filtrosT2
+    );
+  });
 
-
-btn_buscar.addEventListener("click", (e)=>{
-  e.preventDefault();
-  console.log("filtros", filtros.value)
-  filtrosT2 = filtros.value;
-  getReservas(
-    filtros,
-    1,
-    totalPaginas,
-    tablaReservas,
-    formulario,
-    verHorarios,
-    conteHora,
-    conteDesc, 
-    10, 
-    orden, 
-    filtrosT2
-  );
-} );
-
-
-  // 
+  //
 
   closeDescripcion.onclick = function() {
     modelDescrip.style.display = "none";
@@ -499,50 +564,54 @@ btn_buscar.addEventListener("click", (e)=>{
   btn_actualizar.addEventListener("click", e => {
     e.preventDefault();
     let reservaUpdate = {
-        _id: user.getAttribute("_id"),
-        userId: user.value,
-        LabId: lab.value,
-        eventos: eventos,
-        status: estadoRes.value, 
-        description: descripRes.value
+      _id: user.getAttribute("_id"),
+      userId: user.value,
+      LabId: lab.value,
+      eventos: eventos,
+      status: estadoRes.value,
+      description: descripRes.value
     };
     console.log(reservaUpdate);
 
     let options_and_body = {
-        method: "PUT",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      };
-      options_and_body["body"] = JSON.stringify(reservaUpdate);
-    
-      fetch(URL_API_RESERVAS, options_and_body)
-        .then(res => res.json())
-        .catch(error => {
-          console.log("error: ", error);
-          Swal.fire("Hubo un problema para actualizar la reserva", error, "error");
-        })
-        .then(response => {
-          console.log("success: ", response);
-          Swal.fire(response.msg, "Continua gestionando reservas", response.ok);
-        }).then(something => {
-            getReservas(
-              filtros,
-                1,
-                totalPaginas,
-                tablaReservas,
-                formulario,
-                verHorarios,
-                conteHora,
-                conteDesc,
-                10, orden,
-                filtrosT2,
-                e
-              );
-        });
+      method: "PUT",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    options_and_body["body"] = JSON.stringify(reservaUpdate);
 
-
+    fetch(URL_API_RESERVAS, options_and_body)
+      .then(res => res.json())
+      .catch(error => {
+        console.log("error: ", error);
+        Swal.fire(
+          "Hubo un problema para actualizar la reserva",
+          error,
+          "error"
+        );
+      })
+      .then(response => {
+        console.log("success: ", response);
+        Swal.fire(response.msg, "Continua gestionando reservas", response.ok);
+      })
+      .then(something => {
+        getReservas(
+          filtros,
+          1,
+          totalPaginas,
+          tablaReservas,
+          formulario,
+          verHorarios,
+          conteHora,
+          conteDesc,
+          10,
+          orden,
+          filtrosT2,
+          e
+        );
+      });
   });
 
   estadoReserva(estadoRes);
@@ -554,11 +623,54 @@ btn_buscar.addEventListener("click", (e)=>{
     formulario,
     verHorarios,
     conteHora,
-    conteDesc, 
-    10, 
+    conteDesc,
+    10,
     orden,
     filtrosT2
   );
+
+  function go_to(page) {
+    getReservas(
+      filtros,
+      page,
+      totalPaginas,
+      tablaReservas,
+      formulario,
+      verHorarios,
+      conteHora,
+      conteDesc,
+      10,
+      orden,
+      filtrosT2
+    );
+  }
+
+  siguiente.addEventListener("click", () => {
+    currPage++;
+    go_to(parseInt(siguiente.getAttribute("page")));
+  });
+
+  anterior.addEventListener("click", () => {
+    currPage--;
+    go_to(parseInt(anterior.getAttribute("page")));
+  });
+
+  pagina1.addEventListener("click", () => {
+    currPage--;
+    go_to(parseInt(pagina1.getAttribute("page")));
+  });
+
+  pagina2.addEventListener("click", () => {
+    go_to(parseInt(pagina2.getAttribute("page")));
+  });
+
+  pagina3.addEventListener("click", () => {
+    currPage++;
+    go_to(parseInt(pagina3.getAttribute("page")));
+  });
+
+
+
 };
 
 window.onload = start;
