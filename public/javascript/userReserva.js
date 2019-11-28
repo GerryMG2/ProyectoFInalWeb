@@ -23,7 +23,7 @@ start = () => {
     contenedorHoraInicio.innerHTML = `
         <div class="input-group date form_datetime " data-date="${annio.getFullYear()}-${annio.getMonth() +
       1}-${annio.getDate()}T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_inputi${contador}">
-            <input class="form-control inicioH" size="12" type="text" value="" readonly id="inicioH">
+            <input class="form-control inicioH" size="12" type="text" value="" placeholder="Fecha Inicio" readonly id="inicioH">
             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar glyphicon-th"></span></span>
         </div>
@@ -31,7 +31,7 @@ start = () => {
     contenedorHoraFin.innerHTML = `
         <div class="input-group date form_datetime " data-date="${annio.getFullYear()}-${annio.getMonth() +
       1}-${annio.getDate()}T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_inputf${contador}">
-            <input class="form-control finH" size="12" type="text" value="" readonly id="finH">
+            <input class="form-control finH" size="12" type="text" value="" placeholder="Fecha Fin" readonly id="finH">
             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar glyphicon-th"></span></span>
         </div>
