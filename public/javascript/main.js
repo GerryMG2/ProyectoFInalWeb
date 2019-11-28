@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
               title: element.name
             });
           });
+          resources.push({id: "00000", title: "Laboratorio Eliminado"})
 
           var calendar = new FullCalendar.Calendar(calendarEl, {
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
