@@ -13,18 +13,17 @@ class userService {
           var passHash = bycrypt.hashSync(newPass, 10);
 
           var query = { "code": code };
-          this.db.findOneAndUpdate(query, { password: passHash }, { upsert: true }, function (
-            err, doc
-          ) {
-            if (err) {
+
+
+          this.db.findOneAndUpdate(query, { password: passHash }, { upsert: true })
+            .then(doc => {
+              console.log("Document: ", doc);
+              cb(true); // Call the callback with true if successful
+            })
+            .catch(err => {
               console.log("Error: ", err);
-              cb(false);
-            } else {
-              console.log("Document: ");
-              console.log(doc);
-              cb(true);
-            }
-          });
+              cb(false); // Call the callback with false if there's an error
+            });
 
         } else {
           cb(false);
@@ -38,22 +37,21 @@ class userService {
     }
   }
 
-  updateEmail(newMail,code, cb) {
+  updateEmail(newMail, code, cb) {
     try {
       if (newMail != "") {
         var query = { "code": code };
-        this.db.findOneAndUpdate(query, {email: newMail}, function (
-          err, doc
-        ) {
-          if (err) {
+
+        this.db.findOneAndUpdate(query, { email: newMail })
+          .then(doc => {
+            console.log("Document: ", doc);
+            cb(true); // Llama al callback con true si tiene éxito
+          })
+          .catch(err => {
             console.log("Error: ", err);
-            cb(false);
-          } else {
-            console.log("Document: ");
-            console.log(doc);
-            cb(true);
-          }
-        });
+            cb(false); // Llama al callback con false si hay un error
+          });
+
       } else {
         cb(false);
       }
@@ -69,16 +67,15 @@ class userService {
   getByCode(code, cb) {
     try {
       console.log(code);
-      this.db.find({ code: code }, function (err, docs) {
-        if (err) {
-          console.log("Error: ");
-          console.log(err);
-          cb(false, {});
-        } else {
+      this.db.find({ code: code })
+        .then(docs => {
           console.log(docs);
-          cb(true, docs);
-        }
-      });
+          cb(true, docs); // Llama al callback con true y los documentos si tiene éxito
+        })
+        .catch(err => {
+          console.log("Error: ", err);
+          cb(false, {}); // Llama al callback con false y un objeto vacío si hay un error
+        });
 
     } catch (error) {
       cb(false, {});
@@ -90,15 +87,14 @@ class userService {
 
   getEncargados(cb) {
     try {
-      this.db.find({ superUser: true }, function (err, docs) {
-        if (err) {
-          console.log("Error: ");
-          console.log(err);
-          cb(false, {});
-        } else {
-          cb(true, docs);
-        }
-      });
+      this.db.find({ superUser: true })
+        .then(docs => {
+          cb(true, docs); // Llama al callback con true y los documentos si tiene éxito
+        })
+        .catch(err => {
+          console.log("Error: ", err);
+          cb(false, {}); // Llama al callback con false y un objeto vacío si hay un error
+        });
 
     } catch (error) {
       cb(false, {});
@@ -107,38 +103,40 @@ class userService {
     }
   }
 
-  get(filtros, pags, size, orden ,cb) {
+  get(filtros, pags, size, orden, cb) {
     try {
       let filtrosMade = {};
       if (filtros == "") {
       } else {
         filtrosMade = {
           $or: [
-            {name: {$regex: '.*' + filtros + '.*'}},
-            {code: {$regex: '.*' + filtros + '.*'}},
-            {email: {$regex: '.*' + filtros + '.*'}}
+            { name: { $regex: '.*' + filtros + '.*' } },
+            { code: { $regex: '.*' + filtros + '.*' } },
+            { email: { $regex: '.*' + filtros + '.*' } }
           ],
         };
       }
       console.log(filtrosMade);
 
-      this.db.find(filtrosMade, function (err, docs) {
-        if (err) {
-          console.log("Error: ");
-          console.log(err);
-          cb(false, {}, 0);
-        } else {
-          dbUser.find(filtrosMade, (err, docs2) => {
-            if (!err) {
-              var paginas = docs2.length;
-              paginas = Math.ceil(paginas / 10);
-              cb(true, docs, paginas);
-            } else {
-              cb(false, {}, 0);
-            }
-          });
-        }
-      }).skip(size * (pags - 1)).limit(size).sort(orden);
+      this.db.find(filtrosMade)
+        .skip(size * (pags - 1))
+        .limit(size)
+        .sort(orden)
+        .then(docs => {
+          dbUser.find(filtrosMade)
+            .then(docs2 => {
+              var paginas = Math.ceil(docs2.length / 10); // Calcular el número de páginas
+              cb(true, docs, paginas); // Llama al callback con los resultados
+            })
+            .catch(err => {
+              console.log("Error: ", err);
+              cb(false, {}, 0); // Llama al callback con error
+            });
+        }).catch(err => {
+          console.log("Error: ", err);
+          cb(false, {}, 0); // Llama al callback con error
+        });
+
 
     } catch (error) {
       cb(false, {}, 0);
@@ -151,22 +149,17 @@ class userService {
   create(usuario, cb) {
     try {
       const newUsuario = new this.db(usuario);
-      newUsuario.save((err, result) => {
-
-        if (err) {
-          console.log("Error: ");
+      newUsuario.save().then(savedUser => {
+        console.log(savedUser);
+        cb(true);
+      })
+        .catch(err => {
           console.log(err);
-          console.log("*****");
-          cb(false);
-        } else {
+          cb(false)
+        });
 
-          console.log("Resultado: ");
-          console.log(result);
-          console.log("*******");
-          cb(true);
-        }
-      });
     } catch (error) {
+      cb(false)
       console.log("Error Try Catch Service: ");
       console.log(error);
     }
@@ -176,18 +169,15 @@ class userService {
     //TODO: method to update users
     try {
       var query = { "code": usuario.code };
-      this.db.findOneAndUpdate(query, usuario, { upsert: true }, function (
-        err, doc
-      ) {
-        if (err) {
+      this.db.findOneAndUpdate(query, usuario, { upsert: true })
+        .then(doc => {
+          console.log("Document: ", doc);
+          cb(true); // Llama al callback con true si tiene éxito
+        })
+        .catch(err => {
           console.log("Error: ", err);
-          cb(false);
-        } else {
-          console.log("Document: ");
-          console.log(doc);
-          cb(true);
-        }
-      });
+          cb(false); // Llama al callback con false si hay un error
+        });
     } catch (error) {
       console.log(error);
       cb(false);
@@ -196,15 +186,14 @@ class userService {
 
   delete(id, cb) {
     try {
-      this.db.remove({ code: id }, function (error) {
-        if (error) {
-          console.log("Error users: ");
-          console.log(error);
-          cb(false);
-        } else {
-          cb(true);
-        }
-      });
+      this.db.remove({ code: id })
+        .then(() => {
+          cb(true); // Llama al callback con true si la eliminación tiene éxito
+        })
+        .catch(error => {
+          console.log("Error users: ", error);
+          cb(false); // Llama al callback con false si hay un error
+        });
     } catch (error) {
       console.log("Error en delete users: ")
       console.log(error);
@@ -214,34 +203,33 @@ class userService {
 
   validate(code, password, cb) {
     try {
-      this.db.findOne({ code: code }, "password superUser", (err, user) => {
-        if (err) {
-
-          console.log(err);
-          cb(false, false);
-        } else {
-          try {
-            console.log("user: ", user)
-            if (bycrypt.compareSync(password, user.password)) {
-              if (user.superUser) {
-                console.log("es super user");
-                cb(true, true);
-              } else {
-
-                console.log("no super user");
-                cb(true, false);
-              }
-            } else {
-              cb(false, false);
-            }
-          } catch (error) {
-            console.log(error);
-            cb(false, false);
+      this.db.findOne({ code: code }, "password superUser").exec()
+        .then(user => {
+          if (!user) {
+            console.log("Usuario no encontrado");
+            return cb(false, false); // Usuario no encontrado
           }
 
+          console.log("user: ", user);
 
-        }
-      });
+          // Comparar la contraseña usando bcrypt
+          if (bycrypt.compareSync(password, user.password)) {
+            if (user.superUser) {
+              console.log("es super user");
+              cb(true, true); // Es un super usuario
+            } else {
+              console.log("no super user");
+              cb(true, false); // No es un super usuario
+            }
+          } else {
+            console.log("Contraseña incorrecta");
+            cb(false, false); // Contraseña incorrecta
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          cb(false, false); // Manejo de errores en la búsqueda
+        });
     } catch (error) {
 
       console.log(error);

@@ -15,8 +15,8 @@ var profileRouter = require('./routes/profile');
 var reservas = require("./routes/reserva_labs");
 var adminReservasRouter = require("./routes/admin_reservas");
 const fileUpload = require('express-fileupload');
-
-
+require('dotenv').config();
+const MONGO = process.env.MONGO_URL;
 var app = express();
 
 
@@ -30,8 +30,8 @@ var session = require('express-session');
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://crisarevalom:krismiranda7@pw2019-shard-00-00-lg9ht.mongodb.net:27017,pw2019-shard-00-01-lg9ht.mongodb.net:27017,pw2019-shard-00-02-lg9ht.mongodb.net:27017/test?ssl=true&replicaSet=PW2019-shard-0&authSource=admin&retryWrites=true&w=majority';
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+var mongoDB = MONGO;
+mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));

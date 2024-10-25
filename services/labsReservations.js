@@ -51,52 +51,49 @@ class labsReservations {
 
   async getEventos(cb) {
     try {
-      this.dbR
-        .find({ status: "aprobada" }, function(err, docs) {
-          if (err) {
-            console.log("Paginas: ");
-            console.log("Error: ");
-            console.log(err);
-            cb(false, {});
-          } else {
-            console.log(docs)
-            let lista = docs.map(e => {
-              let color = labsReservations.getRandomColor();
-              return e.eventos.map(l => {
-                console.log(e);
-                try {
-                  return {
-                    title: e.LabIdR.name,
-                    start: l.inicio,
-                    end: l.fin,
-                    color: color,
-                    overlap: false,
-                    resourceId: e.LabId
-                  };
-                } catch (error) {
-                  console.log("error: ", error)
-                  return {
-                    title: "Laboratorio Eliminado",
-                    start: l.inicio,
-                    end: l.fin,
-                    color: color,
-                    overlap: false,
-                    resourceId: "00000"
-                  };
-                }
-            
-                
-              });
+      this.dbR.find({ status: "aprobada" })
+        .populate({ path: "LabIdR", model: "lab" })
+        .then(docs => {
+          console.log(docs);
+          let lista = docs.map(e => {
+            let color = labsReservations.getRandomColor();
+            return e.eventos.map(l => {
+              console.log(e);
+              try {
+                return {
+                  title: e.LabIdR.name,
+                  start: l.inicio,
+                  end: l.fin,
+                  color: color,
+                  overlap: false,
+                  resourceId: e.LabId
+                };
+              } catch (error) {
+                console.log("error: ", error);
+                return {
+                  title: "Laboratorio Eliminado",
+                  start: l.inicio,
+                  end: l.fin,
+                  color: color,
+                  overlap: false,
+                  resourceId: "00000"
+                };
+              }
             });
+          });
 
-            let eventos = [].concat.apply([], lista);
-
-            console.log(eventos);
-
-            cb(true, eventos);
-          }
+          let eventos = [].concat.apply([], lista);
+          console.log(eventos);
+          cb(true, eventos); // Llama al callback con true y los eventos
         })
-        .populate({ path: "LabIdR", model: "lab" });
+        .catch(err => {
+          console.log("Paginas: ");
+          console.log("Error: ", err);
+          cb(false, {}); // Llama al callback con error
+        });
+
+
+
     } catch (error) {
       console.log("error: ", error);
       cb(false, {});
@@ -122,18 +119,12 @@ class labsReservations {
   }
 
   async validateEvents(reserva, cb) {
-    this.dbR.find({ status: "aprobada", LabId: reserva.LabId }, function(
-      err,
-      docs
-    ) {
-      if (err) {
-        cb(false);
-      } else {
-        let eventoAprobados = docs.map(u => {
-          return u.eventos;
-        });
+    this.dbR.find({ status: "aprobada", LabId: reserva.LabId })
+      .then(docs => {
+        let eventoAprobados = docs.map(u => u.eventos);
         let eventosAprobados = [].concat.apply([], eventoAprobados);
         console.log("Eventos Aprobados: ", eventosAprobados);
+
         let error = 0;
         eventosAprobados.forEach(eveA => {
           reserva.eventos.forEach(eve => {
@@ -142,6 +133,7 @@ class labsReservations {
             }
           });
         });
+
         console.log(error);
         console.log(reserva.eventos);
 
@@ -151,13 +143,14 @@ class labsReservations {
 
         console.log(error);
 
-        if (error == 0) {
-          cb(true);
-        } else {
-          cb(false);
-        }
-      }
-    });
+        // Llama al callback basado en la variable error
+        cb(error === 0); // true si no hay errores, false si hay
+      })
+      .catch(err => {
+        console.log("Error: ", err);
+        cb(false); // Llama al callback con false en caso de error
+      });
+
   }
 
   async create(reserva, cb) {
@@ -166,17 +159,17 @@ class labsReservations {
       this.validateEvents(reserva, validar => {
         if (validar) {
           const newReserva = new this.dbR(reserva);
-          newReserva.save((err, result) => {
-            if (err) {
-              console.log("Error: ", err);
-              cb(false);
-            } else {
+          newReserva.save()
+            .then(result => {
               console.log("Result: ", result);
-              cb(true);
-            }
-          });
+              cb(true);  // Llamada al callback con true si todo salió bien
+            })
+            .catch(err => {
+              console.log("Error: ", err);
+              cb(false);  // Llamada al callback con false si ocurrió un error
+            });
         } else {
-          cb(false);
+          cb(false);  // Llamada al callback con false si la validación falla
         }
       });
     } catch (error) {
@@ -191,41 +184,35 @@ class labsReservations {
         var query = {
           _id: reserva._id
         };
-        this.dbR.findOneAndUpdate(query, reserva, (err, result) => {
-          if (err) {
+        this.dbR.findOneAndUpdate(query, reserva)
+          .then(result => {
+            console.log("Document: ", result);
+            cb(true); // Llama al callback con true si la actualización tiene éxito
+          })
+          .catch(err => {
             console.log("Error: ", err);
             console.log("Primer falso");
-            cb(false);
-          } else {
-            console.log("Document: ");
-            console.log(result);
-            cb(true);
-          }
-        });
+            cb(false); // Llama al callback con false si hay un error
+          });
       } else {
-        this.dbR.find({ _id: reserva._id }, (err, docs) => {
-          if (err) {
-            console.log("err: ", err);
-            console.log("Segundo falso");
-            cb(false);
-          } else {
+        this.dbR.find({ _id: reserva._id }).then(
+          docs => {
             console.log(docs[0].status);
             if (docs[0].status == "aprobada") {
               console.log("Ya estaba aprobada")
               var query = {
                 _id: reserva._id
               };
-              this.dbR.findOneAndUpdate(query, reserva, (err, result2) => {
-                if (err) {
+              this.dbR.findOneAndUpdate(query, reserva)
+                .then(result2 => {
+                  console.log("Document: ", result2);
+                  cb(true); // Llama al callback con true si la actualización tiene éxito
+                })
+                .catch(err => {
                   console.log("Error: ", err);
                   console.log("Tercer falso");
-                  cb(false);
-                } else {
-                  console.log("Document: ");
-                  console.log(result2);
-                  cb(true);
-                }
-              });
+                  cb(false); // Llama al callback con false si hay un error
+                });
             } else {
               console.log("No estaba aprobada")
               this.validateEvents(reserva, validar => {
@@ -233,17 +220,16 @@ class labsReservations {
                   var query = {
                     _id: reserva._id
                   };
-                  this.dbR.findOneAndUpdate(query, reserva, (err, result3) => {
-                    if (err) {
+                  this.dbR.findOneAndUpdate(query, reserva)
+                    .then(result3 => {
+                      console.log("Document: ", result3);
+                      cb(true); // Llama al callback con true si la actualización tiene éxito
+                    })
+                    .catch(err => {
                       console.log("Error: ", err);
-                      console.log("Cuarto Falso falso");
-                      cb(false);
-                    } else {
-                      console.log("Document: ");
-                      console.log(result3);
-                      cb(true);
-                    }
-                  });
+                      console.log("cuarto falso");
+                      cb(false); // Llama al callback con false si hay un error
+                    });
                 } else {
                   console.log("Quinto falso");
                   cb(false);
@@ -251,7 +237,12 @@ class labsReservations {
               });
             }
           }
-        });
+        ).catch(
+          err => {
+            console.log("err: ", err);
+            console.log("Segundo falso");
+            cb(false);
+          });
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -276,27 +267,27 @@ class labsReservations {
       }
 
       this.dbR
-        .find(filtrosMade, function(err, docs) {
-          if (err) {
-            console.log("Paginas: ");
-            console.log("Error: ");
-            console.log(err);
-            cb(false, {}, 0);
-          } else {
-            dbReserv.find(filtrosMade, (err, docs2) => {
-              if (!err) {
-                var paginas = docs2.length;
-                paginas = Math.ceil(paginas / 10);
-                cb(true, docs, paginas);
-              } else {
-                cb(false, {}, 0);
-              }
-            });
-          }
-        })
-        .skip(size * (pags - 1))
+        .find(filtrosMade).skip(size * (pags - 1))
         .limit(size)
-        .sort(orden);
+        .sort(orden).then(docs => {
+          dbReserv.find(filtrosMade).then(docs2 =>{
+            var paginas = docs2.length;
+            paginas = Math.ceil(paginas / 10);
+            cb(true, docs, paginas);
+          }).catch(err =>{
+            cb(false, {}, 0);
+          });
+          
+        }).catch(err => {
+          console.log("Paginas: ");
+          console.log("Error: ");
+          console.log(err);
+          cb(false, {}, 0);
+        });
+        
+        
+      
+       
     } catch (error) {
       console.log("error: ", error);
     }
@@ -305,15 +296,14 @@ class labsReservations {
   async delete(_id, cb) {
     //TODO: method to delete reservations
     try {
-      this.dbR.remove({ _id: _id }, function(error) {
-        if (error) {
-          console.log("Error ");
-          console.log(error);
-          cb(false);
-        } else {
-          cb(true);
-        }
+      this.dbR.remove({ _id: _id }).then(res => {
+        cb(true);
+      }).catch(error =>{
+        console.log("Error ");
+        console.log(error);
+        cb(false);
       });
+      
     } catch (error) {
       console.log("Error en delete: ");
       console.log(error);
